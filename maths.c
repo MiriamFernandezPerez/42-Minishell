@@ -6,13 +6,13 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:59:43 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/06 19:03:04 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/06 19:40:05 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.c>
 
-int modulo_negatif(int a)
+int modulo_negativ(int a)
 {
     int r;
 
