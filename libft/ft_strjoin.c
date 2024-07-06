@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 18:10:25 by esellier          #+#    #+#             */
-/*   Updated: 2024/01/25 17:12:42 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/06 20:07:07 by mirifern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	ls = ft_strlen(s1) + ft_strlen(s2);
 	ls1 = ft_strlen(s1);
-	if (s1 >= 0 && s2 >= 0)
+	if (s1 && s2)
 	{
 		m = (char *)malloc(ls + 1);
 		if (!m)

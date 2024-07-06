@@ -6,23 +6,11 @@
 /*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:07:08 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/06 16:57:03 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/07/06 20:07:35 by mirifern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int ft_strlen(char *s)
-{
-	int i;
-	
-	i = 0;
-	if(!s)
-		return(-1);
-	while(s[i] != '\0')
-		i++;
-	return(i);
-}
 
 int	ft_msn(char *s, int fd)
 {
