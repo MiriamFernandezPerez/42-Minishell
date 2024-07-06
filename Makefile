@@ -27,7 +27,7 @@ all:
 	$(MAKE) $(NAME)
 	
 $(NAME): $(OBJS) libft/$(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LIB_READ) libft/$(LIBFT) #-o $@ 
+	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LIB_READ) libft/$(LIBFT) -o $@ 
 
 %.o: %.c Makefile libft/$(LIBFT)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
@@ -36,11 +36,11 @@ $(NAME): $(OBJS) libft/$(LIBFT)
 
 clean:
 	rm -f $(OBJS) $(DEPS)
-	$(MAKE) -C $(LIBFT) clean
+	$(MAKE) -C libft clean
 
 fclean: clean
 	rm -f $(NAME)
-	$(MAKE) -C $(LIBFT) fclean
+	$(MAKE) -C libft fclean
 
 re: fclean all
 
