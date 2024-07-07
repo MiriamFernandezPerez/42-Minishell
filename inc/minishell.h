@@ -6,7 +6,7 @@
 /*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/08 00:20:51 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/07/08 00:30:03 by mirifern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,7 @@ typedef struct s_data
 }			t_data;
 
 //Main minishell.c
-char	**ft_tokenize(char *input);
-int		ft_isdelimiter(char c);
-int		ft_msn(char *s, int fd);
+int	main(int ac, char **av, char **env);
 
 //read_prompt.c
 int		ft_initialize(t_data **data);
