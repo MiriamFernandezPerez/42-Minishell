@@ -4,9 +4,9 @@ NAME = minishell
 
 HEADER_NAME = minishell.h
 
-#LIB_DIR = libft
+LIB_DIR = libft
 
-#LIBFT = libft.a
+LIBFT = libft.a
 
 CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address -fsanitize=leak
 
@@ -16,31 +16,33 @@ INCLUDES = -I $(HEADER_DIR)
 
 LIB_READ = -lreadline
 
-SRC = minishell.c \
+SRC = 	minishell.c \
+		builtins_exit.c \
+		maths.c \
 
 OBJS = src/$(SRC:.c=.o)
 
 DEPS = src/$(SRC:.c=.d)
 
 all:
-	#$(MAKE) -C $(LIB_DIR)
+	$(MAKE) -C $(LIB_DIR)
 	$(MAKE) $(NAME)
 	
-$(NAME): $(OBJS) #libft/$(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LIB_READ) #libft/$(LIBFT) -o $@ 
+$(NAME): $(OBJS) libft/$(LIBFT)
+	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LIB_READ) libft/$(LIBFT) -o $@ 
 
-%.o: %.c Makefile #libft/$(LIBFT)
+%.o: %.c Makefile libft/$(LIBFT)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 -include $(DEPS) 
 
 clean:
 	rm -f $(OBJS) $(DEPS)
-	#$(MAKE) -C $(LIBFT) clean
+	$(MAKE) -C $(LIBFT) clean
 
 fclean: clean
 	rm -f $(NAME)
-	#$(MAKE) -C $(LIBFT) fclean
+	$(MAKE) -C $(LIBFT) fclean
 
 re: fclean all
 

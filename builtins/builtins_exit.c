@@ -6,13 +6,13 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/06 20:33:14 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/08 19:44:14 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	make_builtins(char **str)
+/*void	make_builtins(char **str)
 {
 	if (ft_strcmp("echo", str[0], 4) == 1)//with option -n
 		make_echo(str);
@@ -29,7 +29,7 @@ void	make_builtins(char **str)
 	else if(ft_strcmp("exit", str[0], 4) == 1) // no options
 		make_exit(str);
 	return ;	
-}
+}*/
 
 
 
@@ -37,7 +37,7 @@ void	make_exit(char **str) // attention pas de '\0'a la fin de l'array dans cett
 {
 	int num;
 	
-	if (!str[1] || str[1] == "0") // si juste exit (ou exit 0) sans rien apres (si quelque chose avant, a gerer comme une commande avant)
+	if (!str[1] || str[1] == NULL) // si juste exit (ou exit 0) sans rien apres (si quelque chose avant, a gerer comme une commande avant)
 	{
 		write(2, "exit\n", 5);
 		//fonction final_free
@@ -86,4 +86,11 @@ void	make_exit(char **str) // attention pas de '\0'a la fin de l'array dans cett
 			//a combiner avec l'option au de deux args.
 		}
 	}*/
+}
+
+int main(int argc, char **argv)
+{
+	(void)argc;
+	make_exit(argv);
+	return(0);
 }

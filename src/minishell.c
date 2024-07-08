@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
+/*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:07:08 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/06 16:57:03 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/07/08 19:48:26 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int ft_strlen(char *s)
-{
-	int i;
-	
-	i = 0;
-	if(!s)
-		return(-1);
-	while(s[i] != '\0')
-		i++;
-	return(i);
-}
 
 int	ft_msn(char *s, int fd)
 {
