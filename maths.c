@@ -6,11 +6,11 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:59:43 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/06 19:40:05 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/08 20:08:53 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.c>
+#include <minishell.h>
 
 int modulo_negativ(int a)
 {

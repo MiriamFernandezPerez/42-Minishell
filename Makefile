@@ -17,8 +17,8 @@ INCLUDES = -I $(HEADER_DIR)
 LIB_READ = -lreadline
 
 SRC = 	minishell.c \
-		builtins_exit.c \
 		maths.c \
+		builtins/builtins_exit.c \
 
 OBJS = src/$(SRC:.c=.o)
 
@@ -38,11 +38,11 @@ $(NAME): $(OBJS) libft/$(LIBFT)
 
 clean:
 	rm -f $(OBJS) $(DEPS)
-	$(MAKE) -C $(LIBFT) clean
+	$(MAKE) -C libft clean
 
 fclean: clean
 	rm -f $(NAME)
-	$(MAKE) -C $(LIBFT) fclean
+	$(MAKE) -C libft fclean
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:07:08 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/08 19:48:26 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/08 20:10:05 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ft_initialize(t_data **data)
 	return(0);
 }
 
-int main(int ac, char **av, char **env)
+/*int main(int ac, char **av, char **env)
 {
 	(void)av;
 	(void)env;
@@ -60,4 +60,4 @@ int main(int ac, char **av, char **env)
 		ft_read_prompt(&data);
 	}
     return (0);
-}
+}*/
