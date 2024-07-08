@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:07:08 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/08 20:10:05 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/08 20:13:30 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_initialize(t_data **data)
 	if (!*data)
 		return(EXIT_FAILURE);
 	(*data)->prompt = NULL;
-	(*data)->tokens = NULL;
+	(*data)->parser = NULL;
 
 	return(0);
 }
