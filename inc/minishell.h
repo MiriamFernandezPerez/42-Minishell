@@ -6,7 +6,7 @@
 /*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/08 00:30:03 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/07/08 18:47:46 by mirifern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,29 @@
 
 # define MAX_TOKENS 100
 # define TOKEN_SIZE 64
+# define PIPE 
 
+/*
 typedef struct s_tokens
+{
+	char	*value;
+	char	*expander;
+	char	*TYPE (Command/file/delimiters);
+	t_tokens	*previous;
+	t_tokens	*next;
+}			t_tokens;*/
+
+
+typedef struct s_parser
 {
 	char	**arr;
 
-}			t_tokens;
+}			t_parser;
 
 typedef struct s_data
 {
 	char		*prompt;
-	t_tokens	*tokens;
+	t_parser	*parser;
 }			t_data;
 
 //Main minishell.c

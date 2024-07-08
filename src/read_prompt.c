@@ -6,7 +6,7 @@
 /*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 18:44:22 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/08 00:23:24 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/07/08 18:46:37 by mirifern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_initialize(t_data **data)
 	if (!*data)
 		exit(EXIT_FAILURE);
 	(*data)->prompt = NULL;
-	(*data)->tokens = NULL;
+	(*data)->parser = NULL;
 	return (0);
 }
 
@@ -39,12 +39,12 @@ void	ft_read_prompt(t_data **data)
 		}
 		if ((*data)->prompt[0] != '\0')
 			add_history((*data)->prompt);
-		(*data)->tokens = malloc(sizeof(t_tokens));
-		if (!(*data)->tokens)
+		(*data)->parser = malloc(sizeof(t_parser));
+		if (!(*data)->parser)
 			exit(EXIT_FAILURE);
-		(*data)->tokens->arr = ft_tokenize((*data)->prompt);
+		(*data)->parser->arr = ft_tokenize((*data)->prompt);
 		//limpiar el array de tokens y rehacer la tokenizacion para que este correcta
-		print_tokens((*data)->tokens->arr); //Linea a eliminar
+		print_tokens((*data)->parser->arr); //Linea a eliminar
 		ft_free_data(data);
 	}
 	if ((*data)->prompt)

@@ -6,7 +6,7 @@
 /*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:05:55 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/08 00:21:19 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/07/08 18:45:41 by mirifern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	ft_free(char **arr)
 void	ft_free_data(t_data **data)
 {
 	free((*data)->prompt);
-	ft_free((*data)->tokens->arr);
-	free((*data)->tokens);
+	ft_free((*data)->parser->arr);
+	free((*data)->parser);
 }
 
 //Write msn function
