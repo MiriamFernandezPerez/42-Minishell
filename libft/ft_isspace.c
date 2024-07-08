@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/05 22:07:08 by mirifern          #+#    #+#             */
-/*  Updated: 2024/07/08 00:16:18 by mirifern         ###   ########.fr       */
+/*   Created: 2024/07/06 22:33:56 by mirifern          #+#    #+#             */
+/*   Updated: 2024/07/06 22:34:59 by mirifern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-
-int	main(int ac, char **av, char **env)
+int		ft_isspace(int c)
 {
-	t_data	*data;
-
-	(void)av;
-	(void)env;
-	data = NULL;
-	if (ac != 1)
-		return (ft_msn(NO_ARGS, 2));
-	ft_initialize(&data);	
-	ft_read_prompt(&data);
+	c = (unsigned char)c;
+	if ((c >= 9 && c <= 13) || c == 32)
+		return (1);
 	return (0);
 }
