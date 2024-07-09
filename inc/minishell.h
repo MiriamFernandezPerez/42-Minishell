@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/08 21:34:03 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/09 19:24:40 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,11 @@ void	print_tokens(char **arr);
 //builtins
 void	make_builtins(char **str);
 void	make_exit(char **str);
-void	make_echo(char *str);
+void	make_echo(char **str);
 
 //maths
 int modulo_negativ(int a);
+int check_minmax(char *str);
+int	strncmp_long(const char *s1, const char *s2);
 
 #endif

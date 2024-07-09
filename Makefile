@@ -18,7 +18,7 @@ LIB_READ = -lreadline
 
 SRC = 	minishell.c \
 		maths.c \
-		builtins/builtins_exit.c \
+		builtins/builtins.c \
 
 OBJS = src/$(SRC:.c=.o)
 

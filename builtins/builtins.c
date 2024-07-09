@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_exit.c                                    :+:      :+:    :+:   */
+/*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/08 21:40:38 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/09 20:00:27 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 
 void	make_exit(char **str) // attention AVEC '\0'a la fin de l'array
 {
-	int num;
+	long long int num;
 	
 	if (!str[1] || (ft_strncmp(str[1], "0", 1) == 0 && !str[2])) // si juste exit (ou exit 0)
 	{
@@ -45,7 +45,7 @@ void	make_exit(char **str) // attention AVEC '\0'a la fin de l'array
 	}
 	if (str[1]) // si 2 args et plus
 	{
-		if (ft_atoi(str[1]) != 0 || ft_strncmp(str[1], "0", 1) == 0) // est un nombre
+		if (check_minmax(str[1]) == 0) // est un nombre
 		{
 			num = ft_atoi(str[1]);
 			if (!str[2])
@@ -75,27 +75,37 @@ void	make_exit(char **str) // attention AVEC '\0'a la fin de l'array
 
 /*int main() // test exit
 {
-	char *argv[4];
+	char *argv[3];
 	
 	argv[0] = "exit";
-	argv[1] = "0";
-	argv[2]	= "-520";
-	argv[3]	= '\0';
+	argv[1] = "-9223372036854775";
+	//argv[2]	= "-520";
+	argv[2]	= '\0';
 	make_exit(argv);
 	return(0);
 }*/
 
-void	make_echo(char *str) // avec char null a la fin
+void	make_echo(char **str) // avec char null a la fin
 {
-	write(1, str, ft_strlen(str));//verifier les STDIN/ERROR des write
-	write(1, "\n", 1);
+	if (str[1])
+		write(1, str[1], ft_strlen(str[1]));//verifier les STDIN/ERROR des write
+	if (ft_strncmp(str[0], "echo -n", 7) != 0)
+		write(1, "\n", 1);
 	return;
 }
 
 /*int main() // test echo
 {
-	char *str = "hola que tal?";
+	char *str[2];
 	
+	str[0] = "echo -n";
+	//str[1] = "hola que tal?";
+	str[1] = '\0';
 	make_echo(str);
 	return(0);
+}*/
+
+/*void	make_cd(char **str)
+{
+	
 }*/
