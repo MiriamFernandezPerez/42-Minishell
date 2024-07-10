@@ -6,13 +6,13 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/09 20:00:27 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/10 20:20:25 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-/*void	make_builtins(char **str) // en faire un deuxieme pour qund je recois une simple string comme echo?
+/*void	make_builtins(char **str, char **env) // en faire un deuxieme pour qund je recois une simple string comme echo?
 {
 	if (ft_strcmp("echo", str[0], 4) == 1)//with option -n
 		make_echo(str);
@@ -105,7 +105,57 @@ void	make_echo(char **str) // avec char null a la fin
 	return(0);
 }*/
 
-/*void	make_cd(char **str)
+void	adjust_env(int j, char **env)
 {
+	int i;
 	
-}*/
+	i = 0;
+	while (env[i])
+		i++;
+	while (j < i)
+	{
+		env[j] = env[j + 1];
+		j++;
+	}
+	//printf("%s\n", env[23]);
+	//free(env[j]);
+	return ;
+}
+
+void	make_unset(char **str, char **env)
+{
+	int i;
+	int j;
+
+	i = 2; // mettre 2 pour le test avec le main sinon 1
+	while (str[i]) //check si on n'est pas en read only? ok env sans
+	{
+		j = 0;
+		while (env[j])
+		{
+			//printf("%d = ", ft_strncmp(str[i], env[j], ft_strlen(str[i])));
+			//printf("%s\n", env[j]);
+			if (ft_strncmp(str[i], env[j], ft_strlen(str[i]) != 0))
+				j++;
+			else
+			{
+				//free(getenv(env[j])); //la valeur
+				//env[j] = NULL;
+				//free(env[j]); //le nom
+				adjust_env(j, env);//rearanger les autres lignes pour ne pas avoir de trous
+				break;
+			}
+		}
+		i++; // passer a l'argument suivant si il y a
+	}
+	write (1, "\n", 1);
+	return ;
+}
+
+int main(int argc, char **argv, char **env) // test unset
+{
+	(void)argc;
+
+	make_unset(argv, env);
+	return(0);
+}

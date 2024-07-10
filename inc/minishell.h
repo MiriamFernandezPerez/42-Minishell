@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/09 19:24:40 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/10 19:41:36 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,11 @@ int		ft_isdelimiter(char c);
 void	print_tokens(char **arr);
 
 //builtins
-void	make_builtins(char **str);
+void	make_builtins(char **str, char **env);
 void	make_exit(char **str);
 void	make_echo(char **str);
+void	adjust_env(int j, char **env);
+void	make_unset(char **str, char **env);
 
 //maths
 int modulo_negativ(int a);
