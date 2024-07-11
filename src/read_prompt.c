@@ -6,48 +6,61 @@
 /*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 18:44:22 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/08 18:46:37 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/07/10 19:25:09 by mirifern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_initialize(t_data **data)
+/*Funcion que verifica si el string esta compuesto
+solo por espacios y/o tabulaciones*/
+int	only_spaces(char *s)
 {
-	*data = malloc(sizeof(t_data));
-	if (!*data)
-		exit(EXIT_FAILURE);
-	(*data)->prompt = NULL;
-	(*data)->parser = NULL;
+	int	i;
+	int	check;
+
+	i = 0;
+	check = 0;
+	while (s[i] != '\0')
+	{
+		if (ft_isspace(s[i]))
+			check++;
+		i++;
+	}
+	if (i == check)
+		return (1);
 	return (0);
 }
 
-/*	Esto seria igual que el PWD del env
-	char	current_dir[PATH_MAX + 3];
-
-	if (getcwd(current_dir, sizeof(current_dir)) == NULL)
-		ft_msn(NO_GETCWD, 2);*/
+/*lee el input del prompt
+lo anade al history
+lo tokeniza
+...
+si detecta un EOF (ctr+d) muestra un exit y sale del bucle para 
+cerrar el shell liberando el input a la salida del bucle
+libera el prompt en cada nuevo input*/
 void	ft_read_prompt(t_data **data)
 {
 	while (1)
 	{
 		(*data)->prompt = readline("\033[1;34m👯 minishell> \033[0m");
-		if ((*data)->prompt == NULL) //Gestiona el EOF ctr+D
+		printf("prompt = %s\n", (*data)->prompt);
+		if ((*data)->prompt == NULL)
 		{
 			ft_msn(EXIT, 2);
 			break ;
 		}
-		if ((*data)->prompt[0] != '\0')
+		else if (!(only_spaces((*data)->prompt)))
+		{
 			add_history((*data)->prompt);
-		(*data)->parser = malloc(sizeof(t_parser));
-		if (!(*data)->parser)
-			exit(EXIT_FAILURE);
-		(*data)->parser->arr = ft_tokenize((*data)->prompt);
-		//limpiar el array de tokens y rehacer la tokenizacion para que este correcta
-		print_tokens((*data)->parser->arr); //Linea a eliminar
-		ft_free_data(data);
+			if (parse_and_token(data, (*data)->prompt) == 0)
+			{
+				printf("tokenizacion completada, pasar al executor\n");
+			}
+		}
+		free((*data)->prompt);
 	}
 	if ((*data)->prompt)
-		free((*data)->prompt);
-	free(*data);
+		free ((*data)->prompt);
+	//free(data);
 }

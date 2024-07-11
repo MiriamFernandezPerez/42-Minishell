@@ -6,14 +6,14 @@
 /*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:05:55 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/08 18:45:41 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/07/10 17:17:18 by mirifern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //Function to free arrays
-void	ft_free(char **arr)
+void	ft_free(t_tokens **arr)
 {
 	int	i;
 
@@ -30,9 +30,17 @@ void	ft_free(char **arr)
 
 void	ft_free_data(t_data **data)
 {
-	free((*data)->prompt);
-	ft_free((*data)->parser->arr);
-	free((*data)->parser);
+	if (data && *data)
+	{
+		if ((*data)->prompt)
+			free((*data)->prompt);
+		if ((*data)->tokens)
+		{
+			ft_free((*data)->tokens);
+		}
+		free((*data)->tokens);
+	}
+	free(data);
 }
 
 //Write msn function
@@ -47,24 +55,37 @@ int	ft_msn(char *s, int fd)
 //Check if character is a delimiter or a space
 int	ft_isdelimiter(char c)
 {
-	if (ft_isspace(c) || c == '|' || c == '>' || c == '<'
-		|| c == '"' || c == '\'')
-		return (1);
+	if (ft_isspace(c))
+		return (SPACES);
+	else if (c == '|')
+		return (PIPE);
+	else if (c == '<')
+		return (INPUT);
+	else if (c == '>')
+		return (TRUNC);
+	else if (c == '"')
+		return (DQUOTE);
+	else if (c == '\'')
+		return (SQUOTE);
+	else if (c == '\0')
+		return (END);
 	return (0);
 }
 
 //Write Tokens array
-void	print_tokens(char **arr)
+void	print_tokens(t_data **data)
 {
-	int	i;
+	int		i;
 
 	i = 0;
-	while (arr[i])
+	while (i < (*data)->tokens_qt)
 	{
 		ft_putstr_fd("Token ", 1);
 		ft_putnbr_fd(i, 1);
 		write(1, " ", 1);
-		ft_putstr_fd(arr[i], 1);
+		ft_putstr_fd((*data)->tokens[i]->value, 1);
+		ft_putstr_fd(" | Type:  ", 1);
+		ft_putnbr_fd((*data)->tokens[i]->type, 1);
 		write(1, "\n", 1);
 		i++;
 	}
