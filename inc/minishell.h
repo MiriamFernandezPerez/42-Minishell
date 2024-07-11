@@ -85,7 +85,7 @@ int		ft_parser(char *input);
 int		parse_and_token(t_data **data, char *input);
 
 //parse_delimiters.c
-int		find_end_quote(char *input, char c, int i);
+int		end_quote(char *input, char c, int i);
 int		find_pipes(char *input);
 int		find_quotes(char *input, int squote, int dquote);
 

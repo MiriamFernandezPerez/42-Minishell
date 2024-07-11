@@ -55,6 +55,7 @@ void	ft_read_prompt(t_data **data)
 			add_history((*data)->prompt);
 			if (parse_and_token(data, (*data)->prompt) == 0)
 			{
+
 				printf("tokenizacion completada, pasar al executor\n");
 			}
 		}

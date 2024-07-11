@@ -47,36 +47,33 @@ char	*tok_nodelimiter(t_data **data, int *ind, int *start, int end)
 	return (str);
 }
 
-int	ft_tokenizer(t_data **data, char *s, int len, int start)
+void	ft_tokenizer(t_data **d, int len, int start, int index)
 {
-	int	index;
 	int	end;
 
-	index = 0;
-	(*data)->tokens = malloc(MAX_TOKENS * sizeof(t_tokens *));
-	if (!(*data)->tokens)
+	(*d)->tokens = malloc(MAX_TOKENS * sizeof(t_tokens *));
+	if (!(*d)->tokens)
 		exit(EXIT_FAILURE);
 	while (start < len)
 	{
 		end = start;
-		if (ft_isdelimiter(s[start]) == 5 || ft_isdelimiter(s[start]) == 6)
+		if (ft_isdelimiter((*d)->prompt[start]) == 5
+			|| ft_isdelimiter((*d)->prompt[start]) == 6)
 		{
-			end = find_end_quote(s, s[start], start + 1);
-			end++;
-			tok_nodelimiter(data, &index, &start, end);
+			end = end_quote((*d)->prompt, (*d)->prompt[start], start + 1) + 1;
+			tok_nodelimiter(d, &index, &start, end);
 		}
-		else if (ft_isdelimiter(s[start]))
-			tok_delimiter(data, s, &index, &start);
+		else if (ft_isdelimiter((*d)->prompt[start]))
+			tok_delimiter(d, (*d)->prompt, &index, &start);
 		else
 		{
-			while (end < len && !ft_isdelimiter(s[end]))
+			while (end < len && !ft_isdelimiter((*d)->prompt[end]))
 				end++;
-			tok_nodelimiter(data, &index, &start, end);
+			tok_nodelimiter(d, &index, &start, end);
 		}
 	}
-	(*data)->tokens[index] = NULL;
-	(*data)->tokens_qt = index;
-	return (0);
+	(*d)->tokens[index] = NULL;
+	(*d)->tokens_qt = index;
 }
 
 /*busca que haya comillas bien cerradas y solo un pipe fuera de comillas 
@@ -100,8 +97,7 @@ int	parse_and_token(t_data **data, char *input)
 	len = ft_strlen(input);
 	if (ft_parser(input) == 1)
 		return (1);
-	if (ft_tokenizer(data, input, len, 0) == 1)
-		return (1);
+	ft_tokenizer(data, len, 0, 0);
 	print_tokens(data);
 	return (0);
 }

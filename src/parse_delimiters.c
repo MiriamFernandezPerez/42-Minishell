@@ -15,7 +15,7 @@
 /*funcion que busca el mismo tipo de comilla que char c
 (comilla doble o simple) y devuelve el contador que es la
 posicion donde la funcion find_pipe debe seguir avanzando*/
-int	find_end_quote(char *input, char c, int i)
+int	end_quote(char *input, char c, int i)
 {
 	while (input[i] != '\0')
 	{
@@ -53,7 +53,7 @@ int	find_pipes(char *input)
 	while (input[i] != '\0')
 	{
 		if (input[i] == '\'' || input[i] == '"')
-			i = find_end_quote(input, input[i], i + 1);
+			i = end_quote(input, input[i], i + 1);
 		if (input[i] == '|' && (input[i + 1] == '|' || input[i + 1] == '\0'))
 		{
 			ft_msn(ERR_PIPE, 2);
