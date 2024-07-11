@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/10 19:41:36 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/11 21:19:34 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ typedef struct s_tokens
 	t_tokens	*next;
 }			t_tokens;*/
 
+typedef struct s_env
+{
+	char			*name;
+	char			*value;
+	struct s_env	*next;
+}				t_env;
 
 typedef struct s_parser
 {
@@ -58,7 +64,7 @@ typedef struct s_data
 //int	main(int ac, char **av, char **env);
 
 //read_prompt.c
-int		ft_initialize(t_data **data);
+int	ft_initialize(t_data **data);
 int	ft_read_prompt(t_data **data);
 
 //tokenizer.c
@@ -75,12 +81,18 @@ void	print_tokens(char **arr);
 void	make_builtins(char **str, char **env);
 void	make_exit(char **str);
 void	make_echo(char **str);
-void	adjust_env(int j, char **env);
-void	make_unset(char **str, char **env);
+t_env	**adjust_env(t_env **env_lst, t_env *to_del);
+t_env	**make_unset(char **str, t_env **env_lst);
+int		check_path(t_env **env_lst);
 
 //maths
 int modulo_negativ(int a);
 int check_minmax(char *str);
 int	strncmp_long(const char *s1, const char *s2);
+
+//env
+t_env	*ft_env_new(char *str);
+t_env **create_env(char **env);
+
 
 #endif

@@ -17,8 +17,9 @@ INCLUDES = -I $(HEADER_DIR)
 LIB_READ = -lreadline
 
 SRC = 	minishell.c \
+		env_manage.c \
 		maths.c \
-		builtins/builtins.c \
+		builtins/builtins.c 
 
 OBJS = src/$(SRC:.c=.o)
 
@@ -28,7 +29,7 @@ all:
 	$(MAKE) -C $(LIB_DIR)
 	$(MAKE) $(NAME)
 	
-$(NAME): $(OBJS) libft/$(LIBFT)
+$(NAME):	libft/$(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LIB_READ) libft/$(LIBFT) -o $@ 
 
 %.o: %.c Makefile libft/$(LIBFT)

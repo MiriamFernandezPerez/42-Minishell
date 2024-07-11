@@ -6,13 +6,13 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/10 20:20:25 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/11 21:21:52 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-/*void	make_builtins(char **str, char **env) // en faire un deuxieme pour qund je recois une simple string comme echo?
+/*int	make_builtins(char **str, char **env) // en faire un deuxieme pour qund je recois une simple string comme echo?
 {
 	if (ft_strcmp("echo", str[0], 4) == 1)//with option -n
 		make_echo(str);
@@ -23,12 +23,16 @@
 	else if(ft_strcmp("export", str[0], 6) == 1) // no options
 		make_export(str);
 	else if(ft_strcmp("unset", str[0], 5) == 1) // no options
+	{
+		if (check_path(env_lst) == 1) //pas possible de verifier sans le prompt
+			return (127);
 		make_unset(str);
+	}
 	else if(ft_strcmp("env", str[0], 3) == 1) // no option, no args
 		make_env(str);
 	else if(ft_strcmp("exit", str[0], 4) == 1) // no options
 		make_exit(str);
-	return ;	
+	return (0);	
 }*/
 
 
@@ -105,57 +109,95 @@ void	make_echo(char **str) // avec char null a la fin
 	return(0);
 }*/
 
-void	adjust_env(int j, char **env)
+int	check_path(t_env **env_lst)
 {
-	int i;
-	
-	i = 0;
-	while (env[i])
-		i++;
-	while (j < i)
+	t_env	*current;
+
+	current = (*env_lst);
+	while (current)
 	{
-		env[j] = env[j + 1];
-		j++;
+		if (ft_strncmp(current->name, "PATH=", 5)== 0)
+			return(0);
+		current = current->next;
 	}
-	//printf("%s\n", env[23]);
-	//free(env[j]);
-	return ;
+	write(1, "👯 minishell> : env: No such file or directory", 48);
+	return (1);
 }
 
-void	make_unset(char **str, char **env)
+t_env	**adjust_env(t_env **env_lst, t_env *to_del)
 {
-	int i;
-	int j;
+	t_env	*previous;
+	t_env	*current;
+	
+	previous = NULL;
+	current = (*env_lst);
+	while ((current) != to_del)
+	{
+		previous = (current);
+		(current) = (current)->next;
+	}
+	free((current)->name);
+	free((current)->value);
+	if (previous)
+		previous->next = (current)->next;
+	if (!previous)
+		*env_lst = (current)->next;
+	free(current);
+	return (env_lst);
+}
 
-	i = 2; // mettre 2 pour le test avec le main sinon 1
+t_env	**make_unset(char **str, t_env **env_lst)
+{
+	t_env	*current;
+	int		i;
+	
+	i = 1;
 	while (str[i]) //check si on n'est pas en read only? ok env sans
 	{
-		j = 0;
-		while (env[j])
+		current = (*env_lst);
+		while (current)
 		{
-			//printf("%d = ", ft_strncmp(str[i], env[j], ft_strlen(str[i])));
-			//printf("%s\n", env[j]);
-			if (ft_strncmp(str[i], env[j], ft_strlen(str[i]) != 0))
-				j++;
-			else
+			if (ft_strncmp(str[i], current->name, ft_strlen(current->name) - 1) == 0)
 			{
-				//free(getenv(env[j])); //la valeur
-				//env[j] = NULL;
-				//free(env[j]); //le nom
-				adjust_env(j, env);//rearanger les autres lignes pour ne pas avoir de trous
-				break;
+				env_lst = adjust_env(env_lst, current); //supprimer le node
+				current = *env_lst;
 			}
+			else
+				current = current->next;
 		}
 		i++; // passer a l'argument suivant si il y a
 	}
-	write (1, "\n", 1);
-	return ;
+	//write (1, "\n", 1);
+	return (env_lst);
 }
 
-int main(int argc, char **argv, char **env) // test unset
+int main(int argc, char **argv, char **env) //unset
 {
+	t_env	**envi;
 	(void)argc;
-
-	make_unset(argv, env);
-	return(0);
+	t_env	*current;
+	t_env	*to_print;
+	
+	envi = create_env(env);
+	if (check_path(envi) == 1)
+			return (127);
+	check_path(envi);
+	envi = make_unset(argv, envi);
+	to_print = (*envi);
+	while (to_print)
+	{
+        printf("%s", to_print->name);
+        printf("%s\n", to_print->value);
+		to_print = to_print->next;
+	}
+	while(*envi)
+	{
+		current = (*envi);
+		free(current->name);
+		free(current->value);
+		(*envi) = current->next;
+		free (current);
+	}
+	free (envi);
+    return(0);
 }
