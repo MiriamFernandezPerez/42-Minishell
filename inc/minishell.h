@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/11 21:19:34 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/12 21:37:56 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,15 @@ void	print_tokens(char **arr);
 
 //builtins
 void	make_builtins(char **str, char **env);
+void	exit_number(char **str);
 void	make_exit(char **str);
+void	make_env(t_env **env_lst);
+
+//builtins_unset
 void	make_echo(char **str);
+int		check_path(t_env **env_lst);
 t_env	**adjust_env(t_env **env_lst, t_env *to_del);
 t_env	**make_unset(char **str, t_env **env_lst);
-int		check_path(t_env **env_lst);
 
 //maths
 int modulo_negativ(int a);
