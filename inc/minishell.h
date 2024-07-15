@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/12 21:37:56 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/15 19:27:34 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ typedef struct s_data
 {
 	char		*prompt;
 	t_parser	*parser;
+	int			rt_value;
+	t_env		**env_lst;
+	t_env		**exp_lst;
 }			t_data;
 
 //Main minishell.c
@@ -78,16 +81,19 @@ int		ft_isdelimiter(char c);
 void	print_tokens(char **arr);
 
 //builtins
-void	make_builtins(char **str, char **env);
-void	exit_number(char **str);
-void	make_exit(char **str);
-void	make_env(t_env **env_lst);
+void	make_builtins(char **str, char **env, t_data *data);
+void	exit_number(char **str, t_data *data);
+void	make_exit(char **str, t_data *data);
+void	make_echo(char **str, t_data *data);
+//void	make_rtvalue(char **str, t_data *data);
 
-//builtins_unset
-void	make_echo(char **str);
-int		check_path(t_env **env_lst);
+//builtins_env
 t_env	**adjust_env(t_env **env_lst, t_env *to_del);
-t_env	**make_unset(char **str, t_env **env_lst);
+t_env	**make_unset(char **str, t_env **env_lst, t_data *data);
+int		check_path(t_env **env_lst);
+void	make_env(t_env **env_lst, t_data *data);
+void	print_export(t_data *data);
+void	make_export(char **str, t_data *data);
 
 //maths
 int modulo_negativ(int a);
@@ -95,8 +101,11 @@ int check_minmax(char *str);
 int	strncmp_long(const char *s1, const char *s2);
 
 //env
-t_env	*ft_env_new(char *str);
+t_env	*env_new(char *str);
 t_env **create_env(char **env);
+t_env	*exp_new(char *str);
+t_env **create_exp(char **str);
+void env_data(t_data *data, char **env) //a faire avec toutes les donnees de la structure !?
 
 
 #endif
