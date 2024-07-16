@@ -20,7 +20,8 @@ SRC = 	minishell.c \
 		env_manage.c \
 		maths.c \
 		builtins/builtins.c \
-		builtins/builtins_env.c
+		builtins/builtins_env.c \
+		utils.c
 
 OBJS = src/$(SRC:.c=.o)
 

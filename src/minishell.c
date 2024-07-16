@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:07:08 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/08 20:13:30 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/16 20:01:05 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,27 +20,29 @@ int	ft_msn(char *s, int fd)
 		return(EXIT_SUCCESS);
 }
 
-int	ft_read_prompt(t_data **data)
+int	ft_read_prompt(t_data *data)
 {
 /*	Esto seria igual que el PWD del env
 	char	current_dir[PATH_MAX + 3];
 
 	if (getcwd(current_dir, sizeof(current_dir)) == NULL)
 		ft_msn(NO_GETCWD, 2);*/
-    (*data)->prompt = readline("👯 minishell> ");
-	printf("%s\n", (*data)->prompt);
-	free((*data)->prompt);
+    data->prompt = readline("👯 minishell> ");
+	printf("%s\n", data->prompt);
+	free(data->prompt);
     return (0);
 }
 
-int	ft_initialize(t_data **data)
+int	ft_initialize(t_data **data, char **env)
 {
 	*data = malloc(sizeof(t_data));
-	if (!*data)
-		return(EXIT_FAILURE);
+	if (!data)
+		return(EXIT_FAILURE); // exit?
 	(*data)->prompt = NULL;
 	(*data)->parser = NULL;
-
+	(*data)->rt_value = 0;
+	(*data)->env_lst = create_env(env);
+	//printf("%s\n", data->env_lst->name);
 	return(0);
 }
 

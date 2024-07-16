@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:14:34 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/16 20:00:56 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/16 13:54:22 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,62 +33,98 @@ t_env	*env_new(char *str)
 	new_node->value = malloc ((j + 1) * sizeof(char));
 	ft_strlcpy(new_node->value, &str[i - j], j);
 	new_node->value[j] = '\0';
-	new_node->flag = 'v';
 	return (new_node);
 }
 
-t_env *create_env(char **env)
+t_env **create_env(char **env)
 {   
 	int     i;
-	t_env   *env_lst;
+	t_env   **env_lst;
 	t_env	*temp;
 
 	i = 0;
-	env_lst = env_new(env[i]);
-	temp = env_lst;
+	while (env[i])
+		i++;
+	env_lst = malloc((i + 1) * sizeof(t_env *));
+	i = 0;
+	(*env_lst) = env_new(env[i]);
+	temp = (*env_lst);
 	i++;
 	while (env[i])
 	{
-		env_lst->next = env_new(env[i]);
-		env_lst= env_lst->next;
+		(*env_lst)->next = env_new(env[i]);
+		(*env_lst)= (*env_lst)->next;
 		i++;
 	}
-	env_lst->next = '\0';
-	env_lst = temp;
+	(*env_lst)->next = '\0';
+	(*env_lst) = temp;
 	return (env_lst);
 }
 
 void env_data(t_data *data, char **env) //a faire avec toutes les donnees de la structure !?
-//== ft_initialize
 {
 	data->env_lst = create_env(env);
 	//data->exp_lst = malloc(sizeof(t_env *));
 	return ;
 }
 
+/*t_env	*exp_new(char *str)
+{
+	t_env	*new_node;
+
+	new_node = malloc(sizeof(t_env));
+	if (!new_node)
+		return (0);
+	new_node->value = NULL;
+	new_node->name = ft_strdup(str);
+	return (new_node);
+}
+
+
+t_env *change_exp(char **str, t_data *data)
+{
+	t_env	*temp;
+	int i;
+	
+	i = 1;
+	data->exp_lst = exp_new(str[i]);
+	temp = data->exp_lst;
+	i++;
+	while (str[i])
+	{
+		data->exp_lst->next = exp_new(str[i]);
+		data->exp_lst= data->exp_lst->next;
+		i++;
+	}
+	data->exp_lst->next = '\0';
+	data->exp_lst = temp;
+	return (data->exp_lst);
+}*/
+
 /*int main(int argc, char **argv, char **env)
 {
-	t_env	*envi;
+	t_env	**envi;
 	(void)argc;
 	(void)argv;
 	t_env	*tmp;
 	
 	envi = create_env(env);
-	tmp = envi;
-	while (envi)
+	tmp = (*envi);
+	while (*envi)
 	{
-        printf("%s", envi->name);
-        printf("%s\n", envi->value);
-		envi = envi->next;
+        printf("%s", (*envi)->name);
+        printf("%s\n", (*envi)->value);
+		*envi = (*envi)->next;
 	}
-	envi = tmp;
-	while(envi)
+	(*envi) = tmp;
+	while(*envi)
 	{
-		tmp = envi;
-		free(envi->name);
-		free(envi->value);
-		envi = envi->next;
+		tmp = (*envi);
+		free((*envi)->name);
+		free((*envi)->value);
+		(*envi) = (*envi)->next;
 		free (tmp);
 	}
-	return(0);
+	free (envi);
+    return(0);
 }*/
