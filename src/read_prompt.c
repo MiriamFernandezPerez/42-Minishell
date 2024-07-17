@@ -6,7 +6,7 @@
 /*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 18:44:22 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/17 21:36:57 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/07/17 22:43:49 by mirifern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,22 @@ int	only_spaces(char *s)
 	return (0);
 }
 
-/*lee el input del prompt
-lo anade al history
-lo tokeniza
+/*1 - lee el input del prompt
+2 - Si detecta un EOF (ctr+d) muestra un exit y devuelve -1 para que
+se salga del bucle while(1) del main y cerrar el shell liberando
+el input
+3 - Anade el input al history
+4 - Paso el input para depurarlo a la funcion ft_parser
+5 - Tokeniza el input
 ...
-si detecta un EOF (ctr+d) muestra un exit y sale del bucle para 
-cerrar el shell liberando el input a la salida del bucle
-libera el prompt en cada nuevo input*/
+*/
 int	ft_read_prompt(t_data *data)
 {
 	data->prompt = readline("\033[1;34m👯 minishell> \033[0m");
 	if (!data->prompt)
 	{
-		write(1, "exit\n", 5);
-		return (1);
+		ft_msn(EXIT, 2);
+		return (-1);
 	}
 	if (*data->prompt)
 		add_history(data->prompt);

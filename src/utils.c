@@ -6,7 +6,7 @@
 /*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:05:55 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/17 21:38:35 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/07/17 22:44:44 by mirifern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ void	ft_free_data(t_data *data)
 int	ft_msn(char *s, int fd)
 {
 	if (write(fd, s, ft_strlen(s)) == -1)
-		exit (EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	else
-		exit (EXIT_SUCCESS);
+		return (EXIT_SUCCESS);
 }
 
 //Check if character is a delimiter or a space

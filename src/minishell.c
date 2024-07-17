@@ -35,7 +35,7 @@ int	main(int ac, char **av, char **env)
 	ft_initialize(&data);
 	while (1)
 	{
-		if (ft_read_prompt(data))
+		if (ft_read_prompt(data) == -1)
 			break ;
 	}
 	ft_free_data(data);

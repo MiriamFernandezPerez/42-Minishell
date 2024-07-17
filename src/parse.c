@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/17 20:55:53 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/17 21:37:57 by mirifern         ###   ########.fr       */
+/*   Created: 2024/07/17 22:44:10 by mirifern          #+#    #+#             */
+/*   Updated: 2024/07/17 22:44:25 by mirifern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,9 +125,8 @@ int	ft_parser(char *input)
 	if (!input)
 		exit(EXIT_FAILURE);
 	trim_input = ft_strtrim(input, " ");
-	if (ft_strlcpy(input, trim_input, ft_strlen(trim_input) + 1) != 0)
-		free(trim_input);
-	printf("trim = %s\n", input);
+	ft_strlcpy(input, trim_input, ft_strlen(trim_input) + 1);
+	free(trim_input);
 	if (find_quotes(input, 0, 0) == 1)
 		return (1);
 	if (find_pipes(input) < 0)
