@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:07:08 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/16 20:01:05 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/17 16:58:12 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	ft_initialize(t_data **data, char **env)
 	(*data)->parser = NULL;
 	(*data)->rt_value = 0;
 	(*data)->env_lst = create_env(env);
-	//printf("%s\n", data->env_lst->name);
 	return(0);
 }
 

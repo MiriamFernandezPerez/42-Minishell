@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/16 20:27:17 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/17 18:17:01 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	make_env(t_data *data)
 	t_env	*current;
 	
 	current = data->env_lst;
-	while(current)
+	while(current && current->value)
 	{
 		printf("%s", current->name);
         printf("%s\n", current->value);
@@ -144,18 +144,16 @@ void	make_env(t_data *data)
 }*/
 
 
-void	print_export(t_data *data)
+void	print_export(t_env *env_lst)
 {
 	t_env	*to_print;
 	t_env	*current;
 	t_env	*old;
-	t_env	*temp;
-	
-	current = data->env_lst;
-	while (current->flag == 'x')
-		current = current->next;
+		
+	current = env_lst;
+	//while (current->flag == 'x')
+	//	current = current->next;
 	to_print = current;
-	temp = current;
 	while(current)
 	{
 		if(current->flag == 'v' && ft_strcmp(current->name, to_print->name) == -1)
@@ -167,7 +165,7 @@ void	print_export(t_data *data)
 	to_print->flag = 'x';
 	while(to_print == old)
 	{	
-		current = temp;
+		current = env_lst;
 		while (current && current->flag == 'x')
 			current = current->next;
 		if (!current)
@@ -175,7 +173,7 @@ void	print_export(t_data *data)
 		to_print = current;
 		while (current)
 		{
-			if(current->value && ft_strcmp(current->name, to_print->name) == -1
+			if(current->flag == 'v' && ft_strcmp(current->name, to_print->name) == -1
 				&& ft_strcmp(old->name, current->name) == -1)
 				to_print = current;
 			current = current->next;
@@ -184,40 +182,71 @@ void	print_export(t_data *data)
 		old = to_print;
 		to_print->flag = 'x';
 	}
+	return ;
 }
 
 
 void	make_export(char **str, t_data *data)
 {
 	t_env	*current;
-
+	int	i;
+	
 	current = data->env_lst;
 	if (!str[1]) // pour afficher la liste des export (quand il y a seulement cette commande)
 	{
-		print_export(data);
-		while (current)
+		print_export(current);
+		while (current) //remettre bien les flags (plus simple que copier la liste)
 		{
-			if (current->value)
+			if (ft_strcmp(current->name, "_=") != 0 && current->value)
 				current->flag = 'v';
 			current = current->next;
 		}
+		/*current = data->env_lst;
+		while (current)
+		{
+			printf("%s%s FLAG=%d\n", current->name, current->value, current->flag);
+			current = current->next;
+		}*/
 	}
+	else
+	{
+		while(current->next)
+			current = current->next;
+		i = 1;
+		while(str[i])
+		{
+			current->next = exp_new(str[i]);
+			i++;		
+		}
+		current->next = NULL;
+	}
+	data->rt_value = 0;
 	return ;
-	//faire les ajout et les modifs quand il y a des args
+	//faire les modifs quand il y a des args
 }
 
 int main(int argc, char **argv, char **env)
 {
-	char *str[2];
+	char *str[3];
 	t_data	*data;
 	(void)argc;
+	t_env	*current;
 
 	data = NULL;
 	str[0]= argv[1];
-	str[1]= '\0';
+	str[1]= argv[2];
+	//printf("%s\n", str[0]);
+	//printf("%s\n", str[1]);
+	str[2]= '\0';
 	ft_initialize(&data, env);
 	make_export(str, data);
-	//free
+	current = data->env_lst;
+	while (current)
+	{
+		printf("%s%s FLAG=%d\n", current->name, current->value, current->flag);
+		current = current->next;
+	}
+	final_free(data);
 	return(0);
 }
 

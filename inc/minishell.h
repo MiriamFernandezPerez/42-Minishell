@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/16 19:57:41 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/17 18:04:57 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int		check_path(t_data *data);
 //int		check_path(t_env **env_lst);
 void	make_env(t_data *data);
 //void	make_env(t_env **env_lst, t_data *data);
-void	print_export(t_data *data);
+void	print_export(t_env *env_lst);
 void	make_export(char **str, t_data *data);
 
 //maths
@@ -109,10 +109,10 @@ int	strncmp_long(const char *s1, const char *s2);
 //env
 t_env	*env_new(char *str);
 t_env *create_env(char **env);
-//t_env	*exp_new(char *str);
+t_env	*exp_new(char *str);
 //t_env **create_exp(char **str);
-//void env_data(t_data *data, char **env); ==ft_initialize
 
 //utils
-int	ft_strcmp(char *s1, char *s2);
+int		ft_strcmp(char *s1, char *s2);
+void    final_free(t_data *data);
 #endif

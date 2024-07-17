@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/16 18:57:08 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/17 16:30:58 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	exit_number(char **str, t_data *data)
 		if (num > 255)
 			num = num % 256;
 		write(2, "exit\n", 5);
+		data->rt_value = num; // pas necessaire si on free derriere ?
 		//fonction final_free
-		data->rt_value = num;
 		exit (num);
 	}
 	else
