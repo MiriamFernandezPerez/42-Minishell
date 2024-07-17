@@ -41,10 +41,10 @@ que devuelva error pq me pasaria de lineas...*/
 int	find_pipes(char *input)
 {
 	int	i;
-	int	pipes;
+	//int	pipes;
 
 	i = 0;
-	pipes = 0;
+	//pipes = 0;
 	if (input && input[0] == '|')
 	{
 		ft_msn(ERR_PIPE, 2);
@@ -59,11 +59,11 @@ int	find_pipes(char *input)
 			ft_msn(ERR_PIPE, 2);
 			return (-1);
 		}
-		else if (input[i] == '|')
-			pipes++;
+		/*else if (input[i] == '|')
+			pipes++;*/
 		i++;
 	}
-	return (pipes);
+	return (0);
 }
 
 /*funcion que busca la siguiente comilla del mismo tipo que quote_type.
@@ -117,7 +117,8 @@ int	find_quotes(char *input, int squote, int dquote)
 y por detras el input con ft_strtrim.
 2 - Busca que haya comillas bien cerradas, ya sean dobles o simples.
 3 - Busca que no haya pipes ni al principio ni al final de input, pero si
-acepta pipes que esten dentro de comillas*/
+acepta pipes en medio pero las que esten dentro de comillas no las detecte
+como pipes, sino como texto plano*/
 int	ft_parser(char *input)
 {
 	char	*trim_input;

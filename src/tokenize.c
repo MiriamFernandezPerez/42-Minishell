@@ -61,6 +61,9 @@ char	*tok_nodelimiter(t_data *data, int *ind, int *start, int *end)
 
 void	define_delimiter(t_data *data, int *start, int *end, int *index)
 {
+	//printf("d=%d\n", ft_isdelimiter(32));
+	//printf("delimiter = %d\n", ft_isdelimiter(data->prompt[*start + 1]));
+	//printf("start = %d\n", *start + 1);
 	if (ft_isdelimiter(data->prompt[*start]) == SQUOTE
 		|| ft_isdelimiter(data->prompt[*start]) == DQUOTE)
 	{
@@ -79,6 +82,9 @@ void	define_delimiter(t_data *data, int *start, int *end, int *index)
 		*end = end_quote(data->prompt, data->prompt[*start], *start + 1) + 1;
 		tok_nodelimiter(data, index, start, end);
 	}
+	else if (ft_isdelimiter(data->prompt[*start]) == SPACES
+		&& ft_isdelimiter(data->prompt[(*start) + 1]) == SPACES)
+		(*start)++;
 	else
 		tok_delimiter(data, data->prompt, index, start);
 }

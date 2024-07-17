@@ -88,7 +88,7 @@ void	print_tokens(t_data *data)
 		ft_putnbr_fd(i, 1);
 		write(1, " ", 1);
 		ft_putstr_fd(data->tokens[i]->value, 1);
-		ft_putstr_fd(" | Type:  ", 1);
+		ft_putstr_fd(" * Type:  ", 1);
 		ft_putnbr_fd(data->tokens[i]->type, 1);
 		write(1, "\n", 1);
 		i++;
