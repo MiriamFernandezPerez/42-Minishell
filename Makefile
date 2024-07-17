@@ -19,8 +19,8 @@ LIB_READ = -lreadline
 SRC = minishell.c \
 		src/read_prompt.c\
 		src/utils.c\
+		src/parse.c\
 		src/tokenize.c\
-		src/parse_delimiters.c\
 
 OBJS = src/$(SRC:.c=.o)
 

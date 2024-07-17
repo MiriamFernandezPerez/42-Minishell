@@ -6,7 +6,7 @@
 /*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:05:55 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/10 17:17:18 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/07/17 21:38:35 by mirifern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,34 +22,38 @@ void	ft_free(t_tokens **arr)
 		return ;
 	while (arr[i])
 	{
+		free(arr[i]->value);
 		free(arr[i]);
 		i++;
 	}
 	free(arr);
 }
 
-void	ft_free_data(t_data **data)
+void	ft_free_data(t_data *data)
 {
-	if (data && *data)
+	if (data)
 	{
-		if ((*data)->prompt)
-			free((*data)->prompt);
-		if ((*data)->tokens)
+		if (data->prompt)
 		{
-			ft_free((*data)->tokens);
+			free(data->prompt);
+			data->prompt = NULL;
 		}
-		free((*data)->tokens);
+		if (data->tokens)
+		{
+			ft_free(data->tokens);
+			data->tokens = NULL;
+		}
+		free(data);
 	}
-	free(data);
 }
 
 //Write msn function
 int	ft_msn(char *s, int fd)
 {
 	if (write(fd, s, ft_strlen(s)) == -1)
-		return (EXIT_FAILURE);
+		exit (EXIT_FAILURE);
 	else
-		return (EXIT_SUCCESS);
+		exit (EXIT_SUCCESS);
 }
 
 //Check if character is a delimiter or a space
@@ -73,19 +77,19 @@ int	ft_isdelimiter(char c)
 }
 
 //Write Tokens array
-void	print_tokens(t_data **data)
+void	print_tokens(t_data *data)
 {
 	int		i;
 
 	i = 0;
-	while (i < (*data)->tokens_qt)
+	while (i < data->tokens_qt)
 	{
 		ft_putstr_fd("Token ", 1);
 		ft_putnbr_fd(i, 1);
 		write(1, " ", 1);
-		ft_putstr_fd((*data)->tokens[i]->value, 1);
+		ft_putstr_fd(data->tokens[i]->value, 1);
 		ft_putstr_fd(" | Type:  ", 1);
-		ft_putnbr_fd((*data)->tokens[i]->type, 1);
+		ft_putnbr_fd(data->tokens[i]->type, 1);
 		write(1, "\n", 1);
 		i++;
 	}

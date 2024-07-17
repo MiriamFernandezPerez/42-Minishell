@@ -77,12 +77,14 @@ int		main(int ac, char **av, char **env);
 
 //read_prompt.c
 int		ft_initialize(t_data **data);
-void	ft_read_prompt(t_data **data);
+int		ft_read_prompt(t_data *data);
+
+//parse.c
+int		ft_parser(char *input);
+int		parse_and_token(t_data *data, char *input);
 
 //tokenize.c
-
-int		ft_parser(char *input);
-int		parse_and_token(t_data **data, char *input);
+void	ft_tokenizer(t_data *d, int len, int start, int index);
 
 //parse_delimiters.c
 int		end_quote(char *input, char c, int i);
@@ -91,9 +93,9 @@ int		find_quotes(char *input, int squote, int dquote);
 
 //utils.c
 void	ft_free(t_tokens **arr);
-void	ft_free_data(t_data **data);
+void	ft_free_data(t_data *data);
 int		ft_msn(char *s, int fd);
 int		ft_isdelimiter(char c);
-void	print_tokens(t_data **data);
+void	print_tokens(t_data *data);
 
 #endif

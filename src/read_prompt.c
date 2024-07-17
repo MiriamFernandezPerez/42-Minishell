@@ -6,7 +6,7 @@
 /*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 18:44:22 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/10 19:25:09 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/07/17 21:36:57 by mirifern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,29 +39,26 @@ lo tokeniza
 si detecta un EOF (ctr+d) muestra un exit y sale del bucle para 
 cerrar el shell liberando el input a la salida del bucle
 libera el prompt en cada nuevo input*/
-void	ft_read_prompt(t_data **data)
+int	ft_read_prompt(t_data *data)
 {
-	while (1)
+	data->prompt = readline("\033[1;34m👯 minishell> \033[0m");
+	if (!data->prompt)
 	{
-		(*data)->prompt = readline("\033[1;34m👯 minishell> \033[0m");
-		printf("prompt = %s\n", (*data)->prompt);
-		if ((*data)->prompt == NULL)
-		{
-			ft_msn(EXIT, 2);
-			break ;
-		}
-		else if (!(only_spaces((*data)->prompt)))
-		{
-			add_history((*data)->prompt);
-			if (parse_and_token(data, (*data)->prompt) == 0)
-			{
-
-				printf("tokenizacion completada, pasar al executor\n");
-			}
-		}
-		free((*data)->prompt);
+		write(1, "exit\n", 5);
+		return (1);
 	}
-	if ((*data)->prompt)
-		free ((*data)->prompt);
-	//free(data);
+	if (*data->prompt)
+		add_history(data->prompt);
+	if (ft_parser(data->prompt) == 1)
+	{
+		free(data->prompt);
+		return (0);
+	}
+	ft_tokenizer(data, ft_strlen(data->prompt), 0, 0);
+	print_tokens(data);
+	free(data->prompt);
+	data->prompt = NULL;
+	ft_free(data->tokens);
+	data->tokens = NULL;
+	return (0);
 }

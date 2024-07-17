@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_delimiters.c                                 :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/10 17:55:46 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/10 18:00:50 by mirifern         ###   ########.fr       */
+/*   Created: 2024/07/17 20:55:53 by mirifern          #+#    #+#             */
+/*   Updated: 2024/07/17 21:37:57 by mirifern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,5 +110,27 @@ int	find_quotes(char *input, int squote, int dquote)
 		}
 		i++;
 	}
+	return (0);
+}
+
+/*1 - Comprueba que exista input y seguidamente quita los espacios por delante
+y por detras el input con ft_strtrim.
+2 - Busca que haya comillas bien cerradas, ya sean dobles o simples.
+3 - Busca que no haya pipes ni al principio ni al final de input, pero si
+acepta pipes que esten dentro de comillas*/
+int	ft_parser(char *input)
+{
+	char	*trim_input;
+
+	if (!input)
+		exit(EXIT_FAILURE);
+	trim_input = ft_strtrim(input, " ");
+	if (ft_strlcpy(input, trim_input, ft_strlen(trim_input) + 1) != 0)
+		free(trim_input);
+	printf("trim = %s\n", input);
+	if (find_quotes(input, 0, 0) == 1)
+		return (1);
+	if (find_pipes(input) < 0)
+		return (1);
 	return (0);
 }

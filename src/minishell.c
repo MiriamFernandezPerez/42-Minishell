@@ -33,6 +33,11 @@ int	main(int ac, char **av, char **env)
 	if (ac != 1)
 		return (ft_msn(NO_ARGS, 2));
 	ft_initialize(&data);
-	ft_read_prompt(&data);
+	while (1)
+	{
+		if (ft_read_prompt(data))
+			break ;
+	}
+	ft_free_data(data);
 	return (0);
 }
