@@ -37,6 +37,7 @@
 # define TOKEN_SIZE 64
 
 //delimiters
+# define CMD 0//Command
 # define SPACES 1 //Spaces and tabs
 # define PIPE 2 // |
 # define INPUT 3 // <
@@ -46,7 +47,7 @@
 # define HEREDOC 7 // <<
 # define APPEND 8 // >>
 # define END 9
-# define ARG 10 // string or command
+# define ARG 10 // string or argument
 
 /*
 typedef struct s_??????

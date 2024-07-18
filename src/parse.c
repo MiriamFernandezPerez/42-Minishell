@@ -41,10 +41,8 @@ que devuelva error pq me pasaria de lineas...*/
 int	find_pipes(char *input)
 {
 	int	i;
-	//int	pipes;
 
 	i = 0;
-	//pipes = 0;
 	if (input && input[0] == '|')
 	{
 		ft_msn(ERR_PIPE, 2);
@@ -59,8 +57,6 @@ int	find_pipes(char *input)
 			ft_msn(ERR_PIPE, 2);
 			return (-1);
 		}
-		/*else if (input[i] == '|')
-			pipes++;*/
 		i++;
 	}
 	return (0);
