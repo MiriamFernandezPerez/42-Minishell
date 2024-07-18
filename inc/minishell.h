@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/17 18:04:57 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/18 14:20:00 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct s_data
 	t_parser	*parser;
 	int			rt_value;
 	t_env		*env_lst;
-	//t_env		*exp_lst;
+
 }			t_data;
 
 //Main minishell.c

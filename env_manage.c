@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:14:34 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/17 18:12:11 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/18 18:11:55 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,20 @@ t_env	*env_new(char *str)
 	i = 0;
 	while (str[i] && str[i] != '=')
 		i++;
-	new_node->name = malloc((i + 3) * sizeof(char));
+	new_node->name = malloc((i + 1) * sizeof(char));
 	if (!new_node->name)
-		return(0);
-	ft_strlcpy(new_node->name, str, i + 2);
-	new_node->name[i + 2] = '\0';
+		return(free(new_node), NULL);
+	ft_strlcpy(new_node->name, str, i + 1);
+	new_node->name[i] = '\0';
 	j = 0;
 	while (str[i++])
 		j++;
 	new_node->value = malloc((j + 1) * sizeof(char));
 	if (!new_node->value)
-		return(0);
+		return(free(new_node), NULL);
 	ft_strlcpy(new_node->value, &str[i - j], j);
 	new_node->value[j] = '\0';
-	if (ft_strcmp(new_node->name, "_=") == 0)
+	if (ft_strcmp(new_node->name, "_") == 0)
 		new_node->flag = 'x';
 	else
 		new_node->flag = 'v';
@@ -104,28 +104,33 @@ t_env	*exp_new(char *str)
 	i = 0;
 	while (str[i] && str[i] != '=')
 		i++;
-	if (str[i] == '=')
-		new_node->name = malloc ((i + 3) * sizeof(char));
-	else
-		new_node->name = malloc ((i + 2) * sizeof(char)); // ou + 1  a tester
+	new_node->name = malloc((i + 1)* sizeof(char));
 	if (!new_node->name)
-		return(0);
-	ft_strlcpy(new_node->name, str, i + 2); //copie le char null
+		return(free(new_node), NULL);
+	ft_strlcpy(new_node->name, str, i + 1);
+	new_node->name[i] = '\0';
+	j = 0;
 	if (str[i] == '=')
 	{
-		new_node->name[i + 2] = '\0';
-		j = 0;
 		while (str[i++])
-			j++;
-		new_node->value = malloc ((j + 1) * sizeof(char));
+		j++;
+		new_node->value = malloc((j + 1)* sizeof(char));
 		if (!new_node->value)
-			return(0);
-		ft_strlcpy(new_node->value, &str[i - j], j);
-			new_node->value[j] = '\0';
-	}
-	if (ft_strcmp(new_node->name, "_=") == 0)
-		new_node->flag = 'x';
-	else
+		{	
+			free(new_node->name);
+			return(free(new_node), NULL);
+		}
+		ft_strlcpy(new_node->value, &str[i - j], j + 1);
 		new_node->flag = 'v';
+	}
+	else
+	{
+		new_node->value = NULL;
+		new_node->flag = 'x';
+	}
+	/*printf("NAME= %s\n", new_node->name);
+	if (new_node->value)
+		printf("VALUE= %s\n", new_node->value);
+	printf("FLAG= %d\n", new_node->flag);*/
 	return (new_node);
 }

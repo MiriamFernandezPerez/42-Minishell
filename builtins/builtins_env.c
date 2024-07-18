@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/17 18:17:01 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/18 17:09:42 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,7 @@ void	make_env(t_data *data)
 	current = data->env_lst;
 	while(current && current->value)
 	{
-		printf("%s", current->name);
-        printf("%s\n", current->value);
+		printf("%s=%s\n", current->name, current->value);
 		current = current->next;
 	}
 	data->rt_value = 0;
@@ -151,8 +150,6 @@ void	print_export(t_env *env_lst)
 	t_env	*old;
 		
 	current = env_lst;
-	//while (current->flag == 'x')
-	//	current = current->next;
 	to_print = current;
 	while(current)
 	{
@@ -160,7 +157,7 @@ void	print_export(t_env *env_lst)
 			to_print = current;
 		current = current->next;
 	}
-	printf("declare -x %s\"%s\"\n", to_print->name, to_print->value);
+	printf("declare -x %s=\"%s\"\n", to_print->name, to_print->value);
 	old = to_print;
 	to_print->flag = 'x';
 	while(to_print == old)
@@ -178,7 +175,7 @@ void	print_export(t_env *env_lst)
 				to_print = current;
 			current = current->next;
 		}
-		printf("declare -x %s\"%s\"\n", to_print->name, to_print->value);
+		printf("declare -x %s=\"%s\"\n", to_print->name, to_print->value);
 		old = to_print;
 		to_print->flag = 'x';
 	}
@@ -197,7 +194,7 @@ void	make_export(char **str, t_data *data)
 		print_export(current);
 		while (current) //remettre bien les flags (plus simple que copier la liste)
 		{
-			if (ft_strcmp(current->name, "_=") != 0 && current->value)
+			if (ft_strcmp(current->name, "_") != 0 && current->value)
 				current->flag = 'v';
 			current = current->next;
 		}
@@ -216,11 +213,20 @@ void	make_export(char **str, t_data *data)
 		while(str[i])
 		{
 			current->next = exp_new(str[i]);
+			current = current->next;
 			i++;		
 		}
 		current->next = NULL;
 	}
 	data->rt_value = 0;
+	current = data->env_lst;
+	while (current)
+	{
+		printf("%s FLAG=%d\n", current->name, current->flag);
+		if (current->value)
+			printf(" %s\n", current->value);
+		current = current->next;
+	}
 	return ;
 	//faire les modifs quand il y a des args
 }
@@ -230,8 +236,9 @@ int main(int argc, char **argv, char **env)
 	char *str[3];
 	t_data	*data;
 	(void)argc;
-	t_env	*current;
-
+	(void)argv;
+	//t_env	*current;
+	
 	data = NULL;
 	str[0]= argv[1];
 	str[1]= argv[2];
@@ -239,13 +246,14 @@ int main(int argc, char **argv, char **env)
 	//printf("%s\n", str[1]);
 	str[2]= '\0';
 	ft_initialize(&data, env);
+	//make_env(data);
 	make_export(str, data);
-	current = data->env_lst;
+	/*current = data->env_lst;
 	while (current)
 	{
-		printf("%s%s FLAG=%d\n", current->name, current->value, current->flag);
+		printf("%s=%s FLAG=%d\n", current->name, current->value, current->flag);
 		current = current->next;
-	}
+	}*/
 	final_free(data);
 	return(0);
 }

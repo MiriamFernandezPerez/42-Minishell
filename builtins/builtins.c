@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/17 16:30:58 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/18 15:04:23 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@
 	else
 		return(1);
 	return (0);	
-}*/
+	if (une des fonctions == 1)(mettre toutes les fonctions ici)
+		final_free.
+		exit.
+}*/ // faire des return int 1 en cas d'erreur pour toutes les fonctions et final free si probleme?
 
 void	exit_number(char **str, t_data *data)
 {
