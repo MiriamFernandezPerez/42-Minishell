@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/18 14:20:00 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/19 12:44:08 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void	print_tokens(char **arr);
 
 //builtins
 void	make_builtins(char **str, t_data *data);
-//void	make_builtins(char **str, char **env, t_data *data);
 void	exit_number(char **str, t_data *data);
 void	make_exit(char **str, t_data *data);
 void	make_echo(char **str, t_data *data);
@@ -91,15 +90,12 @@ void	make_echo(char **str, t_data *data);
 
 //builtins_env
 t_env	*adjust_env(t_data *data, t_env *to_del);
-//t_env	**adjust_env(t_env **env_lst, t_env *to_del);
-t_env	*make_unset(char **str, t_data *data);
-//t_env	**make_unset(char **str, t_env **env_lst, t_data *data);
-int		check_path(t_data *data);
+void	make_unset(char **str, t_data *data);
+//int		check_path(t_data *data);
 //int		check_path(t_env **env_lst);
 void	make_env(t_data *data);
-//void	make_env(t_env **env_lst, t_data *data);
 void	print_export(t_env *env_lst);
-void	make_export(char **str, t_data *data);
+int		make_export(char **str, t_data *data);
 
 //maths
 int modulo_negativ(int a);
@@ -109,7 +105,7 @@ int	strncmp_long(const char *s1, const char *s2);
 //env
 t_env	*env_new(char *str);
 t_env *create_env(char **env);
-t_env	*exp_new(char *str);
+int	exp_new(char *str, t_env *new_node);
 //t_env **create_exp(char **str);
 
 //utils

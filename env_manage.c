@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:14:34 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/18 18:11:55 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/19 12:50:03 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,21 +92,17 @@ t_env *create_env(char **env)
 	return(0);
 }*/
 
-t_env	*exp_new(char *str)
+int	exp_new(char *str, t_env *new_node)
 {
-	t_env	*new_node;
 	int		i;
 	int		j;
 	
-	new_node = malloc(sizeof(t_env));
-	if (!new_node)
-		return (0);
 	i = 0;
 	while (str[i] && str[i] != '=')
 		i++;
 	new_node->name = malloc((i + 1)* sizeof(char));
 	if (!new_node->name)
-		return(free(new_node), NULL);
+		return(free(new_node), 1);
 	ft_strlcpy(new_node->name, str, i + 1);
 	new_node->name[i] = '\0';
 	j = 0;
@@ -118,7 +114,7 @@ t_env	*exp_new(char *str)
 		if (!new_node->value)
 		{	
 			free(new_node->name);
-			return(free(new_node), NULL);
+			return(free(new_node), 1);
 		}
 		ft_strlcpy(new_node->value, &str[i - j], j + 1);
 		new_node->flag = 'v';
@@ -132,5 +128,5 @@ t_env	*exp_new(char *str)
 	if (new_node->value)
 		printf("VALUE= %s\n", new_node->value);
 	printf("FLAG= %d\n", new_node->flag);*/
-	return (new_node);
+	return (0);
 }

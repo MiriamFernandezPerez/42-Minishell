@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/18 17:09:42 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/19 14:49:11 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_env	*adjust_env(t_data *data, t_env *to_del)
 	return (data->env_lst);
 }
 
-t_env	*make_unset(char **str, t_data *data)
+void	make_unset(char **str, t_data *data)
 {
 	t_env	*current;
 	int		i;
@@ -59,7 +59,7 @@ t_env	*make_unset(char **str, t_data *data)
 	}
 	//write (1, "\n", 1);
 	data->rt_value = 0;
-	return (data->env_lst);
+	return ;
 }
 
 /*int main(int argc, char **argv, char **env) //unset
@@ -92,7 +92,7 @@ t_env	*make_unset(char **str, t_data *data)
 	return(0);
 }*/
 
-int	check_path(t_data *data) // pas sur que ce soit necessaire, car c'est possible qu'on doive voir l'env dans tous les cas
+/*int	check_path(t_data *data) // pas sur que ce soit necessaire, car c'est possible qu'on doive voir l'env dans tous les cas
 {
 	t_env	*current;
 
@@ -105,7 +105,7 @@ int	check_path(t_data *data) // pas sur que ce soit necessaire, car c'est possib
 	}
 	write(1, "👯 minishell> : env: No such file or directory", 48);
 	return (1);
-}
+}*/
 
 void	make_env(t_data *data)
 {
@@ -182,78 +182,104 @@ void	print_export(t_env *env_lst)
 	return ;
 }
 
-
-void	make_export(char **str, t_data *data)
+int	check_name(char *str, t_data *data)
 {
 	t_env	*current;
+	char	*name;
+	char	*value;
+	int	i;
+	int j;
+
+	i = 0;
+	while (str[i] && str[i] != '=')
+		i++;
+	if(str[i] != '=')
+		return(0);
+	name = malloc((i + 1)* sizeof(char));
+	ft_strlcpy(name, str, i + 1);
+	//printf("%s\n", name);
+	current = data->env_lst;
+	if (current && ft_strcmp(name, current->name) != 0)
+		current= current->next;
+	if (current && ft_strcmp(name, current->name) == 0 && current->value)
+	{//changer la value
+		j = 0;
+		while (str[i++])
+		j++;
+		value = malloc((j + 1)* sizeof(char));
+		ft_strlcpy(value, &str[i - j], j + 1);
+		free(current->value);
+		current->value = value;
+		//printf("%s\n", value);
+		free(name);
+		return(1);
+	}
+	free(name);
+	return(0);
+}
+
+int	make_export(char **str, t_data *data)
+{
+	t_env	*current;
+	t_env	*new;
 	int	i;
 	
 	current = data->env_lst;
 	if (!str[1]) // pour afficher la liste des export (quand il y a seulement cette commande)
 	{
 		print_export(current);
-		while (current) //remettre bien les flags (plus simple que copier la liste)
+		while (current) //remettre bien les flags
 		{
-			if (ft_strcmp(current->name, "_") != 0 && current->value)
+			if (ft_strcmp(current->name, "_") != 0 && current->value) //gerer si je cree un truc avec _test (doit s'imprimer)
 				current->flag = 'v';
 			current = current->next;
-		}
-		/*current = data->env_lst;
-		while (current)
-		{
-			printf("%s%s FLAG=%d\n", current->name, current->value, current->flag);
-			current = current->next;
-		}*/
+		}//quand je cree l.env je mets un flag sur la ligne a pas imprimer, un troisieme qui ne change jamais)
 	}
 	else
 	{
 		while(current->next)
 			current = current->next;
 		i = 1;
-		while(str[i])
+		while(str[i] && check_name(str[i], data) == 0)//la variable n'existe pas
 		{
-			current->next = exp_new(str[i]);
+			new = malloc(sizeof(t_env));
+			if (!new)
+				return (1);
+			if (exp_new(str[i], new) == 1)
+				return (1);
+			current->next = new;
 			current = current->next;
-			i++;		
+			current->next = NULL;
+			i++;
 		}
-		current->next = NULL;
 	}
 	data->rt_value = 0;
-	current = data->env_lst;
-	while (current)
-	{
-		printf("%s FLAG=%d\n", current->name, current->flag);
-		if (current->value)
-			printf(" %s\n", current->value);
-		current = current->next;
-	}
-	return ;
-	//faire les modifs quand il y a des args
+	return (0);
 }
+
 
 int main(int argc, char **argv, char **env)
 {
-	char *str[3];
+	char *str[4];
 	t_data	*data;
 	(void)argc;
 	(void)argv;
-	//t_env	*current;
+	t_env	*current;
 	
 	data = NULL;
 	str[0]= argv[1];
 	str[1]= argv[2];
-	//printf("%s\n", str[0]);
-	//printf("%s\n", str[1]);
-	str[2]= '\0';
+	str[2]= argv[3];
+	str[3]= '\0';
 	ft_initialize(&data, env);
-	//make_env(data);
+	make_env(data);
 	make_export(str, data);
-	/*current = data->env_lst;
+	current = data->env_lst;
 	while (current)
 	{
 		printf("%s=%s FLAG=%d\n", current->name, current->value, current->flag);
 		current = current->next;
-	}*/
+	}
 	final_free(data);
 	return(0);
 }

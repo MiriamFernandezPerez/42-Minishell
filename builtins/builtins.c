@@ -6,13 +6,13 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/18 15:04:23 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/19 12:36:22 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-/*int	make_builtins(char **str, t_data *data) // en faire un deuxieme pour qund je recois une simple string comme echo?
+/*int	make_builtins(char **str, t_data *data) //checker avec un pipe et autres args ensuite // en faire un deuxieme pour qund je recois une simple string comme echo?
 {
 	if (ft_strcmp("echo", str[0], 4) == 1)//with option -n
 		make_echo(str, data);
@@ -24,24 +24,23 @@
 		make_export(str);
 	else if(ft_strcmp("unset", str[0], 5) == 1) // no options
 	{
-		if (check_path(data->env_lst) == 1) //pas possible de verifier sans le prompt
-		{
-			data->rt_value = 127; // pour pas que l'environnement s'ouvre si deja unset path
-			return (0);
-		}
+		//if (check_path(data->env_lst) == 1) //pas possible de verifier sans le prompt
+		//{
+		//	data->rt_value = 127; // pour pas que l'environnement s'ouvre si deja unset path
+		//	return (0);
+		//}
 		make_unset(str, data);
 	}
 	else if(ft_strcmp("env", str[0], 3) == 1) // no option, no args
 		make_env(data);
 	else if(ft_strcmp("exit", str[0], 4) == 1) // no options
 		make_exit(str, data);
-	else
-		return(1);
+	else // peut etre pas necessaire si type dans la structure, on vient aue si builtins
+		return(2); //pour pas confondre avec un erreur de malloc
+	if (make_cd == 1 || make_pwd == 1 || make_export == 1)
+		return (1);
 	return (0);	
-	if (une des fonctions == 1)(mettre toutes les fonctions ici)
-		final_free.
-		exit.
-}*/ // faire des return int 1 en cas d'erreur pour toutes les fonctions et final free si probleme?
+}*/
 
 void	exit_number(char **str, t_data *data)
 {
@@ -56,7 +55,7 @@ void	exit_number(char **str, t_data *data)
 			num = num % 256;
 		write(2, "exit\n", 5);
 		data->rt_value = num; // pas necessaire si on free derriere ?
-		//fonction final_free
+		final_free(data);
 		exit (num);
 	}
 	else
@@ -75,7 +74,7 @@ void	make_exit(char **str, t_data *data)
 	{
 		write(2, "exit\n", 5);
 		data->rt_value = 0;
-		//fonction final_free
+		final_free(data);
 		exit (0);
 	}
 	if (str[1]) // si 2 args et plus
@@ -87,11 +86,12 @@ void	make_exit(char **str, t_data *data)
 			write(2, "exit\n👯 minishell> : exit: ", 29);
 			write(2, &(*str[1]), ft_strlen(str[1]));
 			write(2, ": numeric argument required\n", 28);	
-			//fonction final_free
+			final_free(data);
 			data->rt_value = 2;
 			exit (2);
 		}
 	}
+	return ;
 }
 
 /*int main() // test exit
