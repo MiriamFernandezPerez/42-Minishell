@@ -86,46 +86,6 @@ void	define_delimiter(t_data *data, int *start, int *end, int *index)
 		tok_delimiter(data, data->prompt, index, start);
 }
 
-void	ft_move_tokens(t_data *data, int *i, int *j)
-{
-	while (*j < data->tokens_qt - 1)
-	{
-		data->tokens[*j] = data->tokens[*j + 1];
-		(*j)++;
-	}
-	data->tokens_qt--;
-	data->tokens[data->tokens_qt] = NULL;
-	(*i)--;
-}
-
-void	join_tokens(t_data *d, int i, int j)
-{
-	char	*new_value;
-
-	while (i < d->tokens_qt - 1)
-	{
-		if (d->tokens[i]->type == ARG && d->tokens[i + 1]->type == ARG)
-		{
-			new_value = malloc(strlen(d->tokens[i]->value)
-					+ strlen(d->tokens[i + 1]->value) + 1);
-			if (!new_value)
-				exit(EXIT_FAILURE);
-			ft_strlcpy(new_value, d->tokens[i]->value,
-				ft_strlen(d->tokens[i]->value) + 1);
-			ft_strlcat(new_value, d->tokens[i + 1]->value,
-				(ft_strlen(new_value)
-					+ ft_strlen(d->tokens[i + 1]->value)) + 1);
-			free(d->tokens[i]->value);
-			d->tokens[i]->value = new_value;
-			free(d->tokens[i + 1]->value);
-			free(d->tokens[i + 1]);
-			j = i + 1;
-			ft_move_tokens(d, &i, &j);
-		}
-		i++;
-	}
-}
-
 void	ft_tokenizer(t_data *d, int len, int start, int index)
 {
 	int	end;
@@ -150,4 +110,5 @@ void	ft_tokenizer(t_data *d, int len, int start, int index)
 	d->tokens[index] = NULL;
 	d->tokens_qt = index;
 	join_tokens(d, 0, 0);
+	clean_tokens(d);
 }

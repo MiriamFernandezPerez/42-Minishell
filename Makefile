@@ -8,7 +8,7 @@ LIB_DIR = libft
 
 LIBFT = libft.a
 
-CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address -fsanitize=leak
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address -fsanitize=leak
 
 HEADER_DIR = inc/
 
@@ -21,6 +21,7 @@ SRC = minishell.c \
 		src/utils.c\
 		src/parse.c\
 		src/tokenize.c\
+		src/tokenize_utils.c\
 
 OBJS = src/$(SRC:.c=.o)
 

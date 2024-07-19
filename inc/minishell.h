@@ -74,23 +74,31 @@ typedef struct s_data
 }			t_data;
 
 //Main minishell.c
+int		ft_initialize(t_data **data);
 int		main(int ac, char **av, char **env);
 
 //read_prompt.c
-int		ft_initialize(t_data **data);
+int		only_spaces(char *s);
 int		ft_read_prompt(t_data *data);
 
 //parse.c
-int		ft_parser(char *input);
-int		parse_and_token(t_data *data, char *input);
-
-//tokenize.c
-void	ft_tokenizer(t_data *d, int len, int start, int index);
-
-//parse_delimiters.c
 int		end_quote(char *input, char c, int i);
 int		find_pipes(char *input);
+int		find_pair_quote(char *input, int *i, char quote_type);
 int		find_quotes(char *input, int squote, int dquote);
+int		ft_parser(char *input);
+
+//tokenize.c
+void	tok_delimiter(t_data *data, char *input, int *ind, int *start);
+char	*tok_nodelimiter(t_data *data, int *ind, int *start, int *end);
+void	define_delimiter(t_data *data, int *start, int *end, int *index);
+void	ft_tokenizer(t_data *d, int len, int start, int index);
+
+//tokenize_utils.c
+void	remove_quotes(char *str);
+void	clean_tokens(t_data *d);
+void	ft_move_tokens(t_data *data, int *i, int *j);
+void	join_tokens(t_data *d, int i, int j);
 
 //utils.c
 void	ft_free(t_tokens **arr);

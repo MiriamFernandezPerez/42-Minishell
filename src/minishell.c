@@ -38,6 +38,6 @@ int	main(int ac, char **av, char **env)
 		if (ft_read_prompt(data) == -1)
 			break ;
 	}
-	//ft_free_data(data);
+	ft_free_data(data);
 	return (0);
 }
