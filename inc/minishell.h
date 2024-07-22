@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/19 12:44:08 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/22 19:27:52 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_env
 	char			*value;
 	struct s_env	*next;
 	char			flag;
+	int				print;
 }				t_env;
 
 typedef struct s_parser
@@ -68,8 +69,8 @@ typedef struct s_data
 //int	main(int ac, char **av, char **env);
 
 //read_prompt.c
-int	ft_initialize(t_data **data, char **env);
-int	ft_read_prompt(t_data *data);
+int		ft_initialize(t_data **data, char **env);
+int		ft_read_prompt(t_data *data);
 
 //tokenizer.c
 char	**ft_tokenize(char *input);
@@ -91,24 +92,29 @@ void	make_echo(char **str, t_data *data);
 //builtins_env
 t_env	*adjust_env(t_data *data, t_env *to_del);
 void	make_unset(char **str, t_data *data);
-//int		check_path(t_data *data);
 //int		check_path(t_env **env_lst);
 void	make_env(t_data *data);
+void	make_pwd(t_data *data);
+
+//builtins_export
+void	p_exp_loop(t_env *to_print, t_env *old, t_env *current, t_env *env_lst);
 void	print_export(t_env *env_lst);
+int		check_name(char *str, int i, t_env *current);
 int		make_export(char **str, t_data *data);
 
 //maths
-int modulo_negativ(int a);
-int check_minmax(char *str);
-int	strncmp_long(const char *s1, const char *s2);
+int		modulo_negativ(int a);
+int		check_minmax(char *str);
+int		strncmp_long(const char *s1, const char *s2);
 
 //env
-t_env	*env_new(char *str);
-t_env *create_env(char **env);
-int	exp_new(char *str, t_env *new_node);
+t_env	*env_new(char *str, t_env *new_node);
+t_env	*create_env(char **env);
+int		exp_new(char *str, t_env *new_node);
+int		create_value(t_env *new_node, int i, int j, char *str);
 //t_env **create_exp(char **str);
 
 //utils
 int		ft_strcmp(char *s1, char *s2);
-void    final_free(t_data *data);
+void	final_free(t_data *data);
 #endif
