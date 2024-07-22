@@ -6,7 +6,7 @@
 /*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 21:48:18 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/19 21:51:57 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/07/20 00:55:09 by mirifern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	remove_quotes(char *str)
 	char	*src;
 	char	*dst;
 
+	printf("STR ANTES DE QUITAR COMILLAS = %s\n", str);
 	src = str;
 	dst = str;
 	while (*src)

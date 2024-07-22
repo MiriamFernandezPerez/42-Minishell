@@ -110,5 +110,5 @@ void	ft_tokenizer(t_data *d, int len, int start, int index)
 	d->tokens[index] = NULL;
 	d->tokens_qt = index;
 	join_tokens(d, 0, 0);
-	clean_tokens(d);
+	//clean_tokens(d);
 }

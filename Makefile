@@ -8,7 +8,7 @@ LIB_DIR = libft
 
 LIBFT = libft.a
 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address -fsanitize=leak
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address -fsanitize=leak
 
 HEADER_DIR = inc/
 
