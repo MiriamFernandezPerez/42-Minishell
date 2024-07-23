@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:25:15 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/22 18:16:30 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/23 21:00:16 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,3 +51,21 @@ void	final_free(t_data *data)
 	}
 	free(data);
 }
+
+t_env	*search_str(char *str, t_data *data)
+{
+	t_env	*current;
+
+	current = data->env_lst;
+	while (current)
+	{
+		if (ft_strcmp(str, current) == 0)
+			return (current);
+		current = current->next;
+	}
+	return (NULL);
+}
+
+//----->faire fonction si malloc fail, avec un 
+//"cannot allocate memory" et retour au prompt snas continuer l'exe, free de tout ce qui q ete fait avant
+//mais pas la structure ou l'env

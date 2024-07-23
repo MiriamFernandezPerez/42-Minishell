@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/22 19:33:15 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/23 19:00:52 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,3 +156,5 @@ int	main(int argc, char **argv, char **env)
 	return (0);
 }
 //verifier avec un nom _test si dans l'export et l'env
+
+//ATTENTION Miriam envoie les args separes de la cmd, changer les fonctions comme ca

@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/22 19:24:04 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/23 15:58:12 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 	if (ft_strcmp("echo", str[0], 4) == 1)//with option -n
 		make_echo(str, data);
 	else if (ft_strcmp("cd", str[0], 2) == 1)// with only relative or absolute path
-		make_cd(str);
+		make_cd(str, t_data *data);
 	else if (ft_strcmp("pwd", str[0], 3) == 1)
 		make_pwd(data);
 	else if (ft_strcmp("export", str[0], 6) == 1)
@@ -30,7 +30,7 @@
 		make_exit(str, data);
 	else // peut etre pas necessaire si type dans la structure, on vient aue si builtins
 		return(2); //pour pas confondre avec un erreur de malloc
-	if (make_cd == 1 || make_export == 1) //a upload
+	if (make_cd == 1 || make_export == 1 || make_pwd == 1) //a upload, erreurs mallocs
 		return (1);
 	return (0);
 }*/
@@ -120,3 +120,39 @@ void	make_echo(char **str, t_data *data) // avec char null a la fin
 	make_echo(str, &data);
 	return(0);
 }*/
+
+/*void	make_pwd(t_data *data)
+{
+	t_env	*current;
+
+	current = data->env_lst;
+	while (ft_strcmp(current->name, "PWD") != 0)
+		current = current->next;
+	if (ft_strcmp(current->name, "PWD") == 0)
+		printf("%s\n", current->value);
+	data->rt_value = 0;
+	return ;
+}*/
+
+int	make_pwd(t_data *data)
+{
+	char	*buf;
+
+	buf = ft_calloc(1, 256 * sizeof(char));
+	if (!buf)
+		return (1);
+	if (getcwd(buf, 256) == 0)
+	{
+		perror ("getcwd error:");
+		data->rt_value = 1;
+		free(buf);
+		return (1);
+	}
+	else
+	{
+		printf("%s\n", buf);
+		data->rt_value = 0;
+	}
+	return (free(buf), 0);
+}
+//getcwd = fonction qui recupere l'adresse actuelle (fonctionne si unset PWD)

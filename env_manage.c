@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:14:34 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/22 18:16:07 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/23 15:42:37 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,3 +141,8 @@ int	exp_new(char *str, t_env *new_node)
 	if (new_node->value)
 		printf("VALUE= %s\n", new_node->value);
 	printf("FLAG= %d\n", new_node->flag);*/
+
+	
+	
+	
+	//------> faire la fonction qui transforme la liste d'env en array
