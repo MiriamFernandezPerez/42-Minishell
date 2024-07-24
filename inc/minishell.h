@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/23 19:51:50 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:16:55 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,9 @@ t_env	*adjust_env(t_data *data, t_env *to_del);
 void	make_unset(char **str, t_data *data);
 //int		check_path(t_env **env_lst);
 void	make_env(t_data *data);
-int		cd_errors(char **str);
-void	make_cd(char **str, t_data *data);
+int		cd_errors(char **str, t_data *data);
+int		change_pwd(t_data *data, char *str);
+int		make_cd(char **str, t_data *data);
 
 
 //builtins_export
@@ -121,5 +122,6 @@ int		create_value(t_env *new_node, int i, int j, char *str);
 int		ft_strcmp(char *s1, char *s2);
 void	final_free(t_data *data);
 t_env	*search_str(char *str, t_data *data);
+int		print_errors(char **str, t_data *data, int i);
 
 #endif

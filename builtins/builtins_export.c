@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/23 19:00:52 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/24 14:40:34 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,33 +128,3 @@ int	make_export(char **str, t_data *data)
 //si exite pas, cree le node, sinon modifie la value de celui-ci
 //p_exp_loop = loops du print_export pour imprimer tous les nodes
 //sauf le premier
-
-int	main(int argc, char **argv, char **env)
-{
-	char	*str[4];
-	t_data	*data;
-	//t_env	*current;
-	(void)argc;
-	(void)argv;
-	data = NULL;
-	str[0]= argv[1];
-	str[1]= argv[2];
-	str[2]= argv[3];
-	str[3]= '\0';
-	ft_initialize(&data, env);
-	//make_env(data);
-	make_export(str, data);
-	make_env(data);
-	make_pwd(data);
-	/*current = data->env_lst;
-	while (current)
-	{
-		printf("%s=%s FLAG=%d\n", current->name, current->value, current->flag);
-		current = current->next;
-	}*/
-	final_free(data);
-	return (0);
-}
-//verifier avec un nom _test si dans l'export et l'env
-
-//ATTENTION Miriam envoie les args separes de la cmd, changer les fonctions comme ca

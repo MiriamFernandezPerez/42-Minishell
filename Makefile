@@ -22,6 +22,7 @@ SRC = 	minishell.c \
 		builtins/builtins.c \
 		builtins/builtins_env.c \
 		builtins/builtins_export.c \
+		builtins/main_Emilie.c \
 		utils.c
 
 OBJS = src/$(SRC:.c=.o)
