@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/24 18:41:20 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/25 16:50:31 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	char	*str[3];
+	
+	char	*str[4];
 	t_data	*data;
 	//t_env	*current;
 	(void)argc;
@@ -22,11 +23,11 @@ int	main(int argc, char **argv, char **env)
 	data = NULL;
 	str[0]= argv[1];
 	str[1]= argv[2];
-	//str[2]= argv[3];
-	str[2]= '\0';
+	str[2]= argv[3];
+	str[3]= '\0';
 	ft_initialize(&data, env);
 	make_cd(str, data);
-	//make_env(data);
+	make_env(data);
 	/*current = data->env_lst;
 	while (current)
 	{

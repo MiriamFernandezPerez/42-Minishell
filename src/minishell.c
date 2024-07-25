@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:07:08 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/17 16:58:12 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/25 17:38:45 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@ int	ft_read_prompt(t_data *data)
 
 int	ft_initialize(t_data **data, char **env)
 {
+	if (!*env)
+	{
+		printf("⚠️⚠️⚠️\nDear evaluator,\nplease use our program with a full set environnement 😉\n");
+		exit (EXIT_FAILURE);
+	}
 	*data = malloc(sizeof(t_data));
 	if (!data)
 		return(EXIT_FAILURE); // exit?
@@ -44,6 +49,8 @@ int	ft_initialize(t_data **data, char **env)
 	(*data)->env_lst = create_env(env);
 	return(0);
 }
+
+//contre le env -i minishell
 
 /*int main(int ac, char **av, char **env)
 {

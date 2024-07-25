@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/23 15:58:12 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/25 17:39:47 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,31 @@
 /*int	make_builtins(char **str, t_data *data) //checker avec un pipe et autres args ensuite
 {
 	if (ft_strcmp("echo", str[0], 4) == 1)//with option -n
-		make_echo(str, data);
-	else if (ft_strcmp("cd", str[0], 2) == 1)// with only relative or absolute path
+		make_echo(str);
+	if (ft_strcmp("cd", str[0], 2) == 1)// with only relative or absolute path
 		make_cd(str, t_data *data);
-	else if (ft_strcmp("pwd", str[0], 3) == 1)
-		make_pwd(data);
-	else if (ft_strcmp("export", str[0], 6) == 1)
+	if (ft_strcmp("pwd", str[0], 3) == 1)
+		make_pwd(void);
+	if (ft_strcmp("export", str[0], 6) == 1)
 		make_export(str);
-	else if (ft_strcmp("unset", str[0], 5) == 1)
+	if (ft_strcmp("unset", str[0], 5) == 1)
 		make_unset(str, data);
-	else if (ft_strcmp("env", str[0], 3) == 1)
+	if (ft_strcmp("env", str[0], 3) == 1)
 		make_env(data);
-	else if (ft_strcmp("exit", str[0], 4) == 1)
+	if (ft_strcmp("exit", str[0], 4) == 1)
 		make_exit(str, data);
 	else // peut etre pas necessaire si type dans la structure, on vient aue si builtins
 		return(2); //pour pas confondre avec un erreur de malloc
-	if (make_cd == 1 || make_export == 1 || make_pwd == 1) //a upload, erreurs mallocs
-		return (1);
-	return (0);
+	if (make_cd == 1 || make_export == 1 || make_pwd == 1 || make_env == 1
+		|| make_exit == 1)
+		return (data->rt_value = 1, 1); // voir comment gerer l'erreur dans l'exe (on stop et retourne le prompt?)
+	return (data->rt_value = 0, 0);
 }*/
-
-
-void	exit_number(char **str, t_data *data)
+//si n,entre pas ici cherche dans l'array du path si la commande existe, avant l'exe
+ // unset retourne tjr 0 et prend tous les args sauf -l... 
+ //(a manager pour tous car pas d'options pour les builtins
+ 
+int	exit_number(char **str, t_data *data)
 {
 	long long	num;
 
@@ -48,7 +51,7 @@ void	exit_number(char **str, t_data *data)
 		if (num > 255)
 			num = num % 256;
 		write(2, "exit\n", 5);
-		data->rt_value = num; // pas necessaire si on free derriere ?
+		//data->rt_value = num; // pas necessaire si on free derriere ?
 		final_free(data);
 		exit (num);
 	}
@@ -56,35 +59,36 @@ void	exit_number(char **str, t_data *data)
 	{
 		write(2, "exit\n👯 minishell> : exit: too many arguments", 47);
 		// a valider avec le prompt car ne doit pas sortir du programme
-		data->rt_value = 1;
+		return (data->rt_value = 1, 1);
 	}
-	return ;
+	return (0);
 }
 
-void	make_exit(char **str, t_data *data)
+int	make_exit(char **str, t_data *data)
 {
 	if (!str[1] || (ft_strncmp(str[1], "0", 1) == 0 && !str[2]))//1 arg
 	{
 		write(2, "exit\n", 5);
-		data->rt_value = 0;
 		final_free(data);
 		exit (0);
 	}
 	if (str[1]) // si 2 args et plus
 	{
 		if (check_minmax(str[1]) == 0) // est un nombre
-			exit_number(str, data);
+		{
+			if (exit_number(str, data) == 1)
+			return (1);
+		}
 		else
 		{
 			write(2, "exit\n👯 minishell> : exit: ", 29);
 			write(2, &(*str[1]), ft_strlen(str[1]));
-			write(2, ": numeric argument required\n", 28);	
+			write(2, ": numeric argument required\n", 28);
 			final_free(data);
-			data->rt_value = 2;
 			exit (2);
 		}
 	}
-	return ;
+	return (0);
 }
 
 /*int main() // test exit
@@ -99,13 +103,12 @@ void	make_exit(char **str, t_data *data)
 	return(0);
 }*/
 
-void	make_echo(char **str, t_data *data) // avec char null a la fin
+void	make_echo(char **str) // avec char null a la fin
 {
 	if (str[1])
-		write (1, str[1], ft_strlen(str[1]));//verifier les STDIN/ERROR des write
+		write (1, str[1], ft_strlen(str[1]));
 	if (ft_strncmp(str[0], "echo -n", 7) != 0)
 		write(1, "\n", 1);
-	data->rt_value = 0;
 	return ;
 }
 
@@ -134,7 +137,7 @@ void	make_echo(char **str, t_data *data) // avec char null a la fin
 	return ;
 }*/
 
-int	make_pwd(t_data *data)
+int	make_pwd(void)
 {
 	char	*buf;
 
@@ -143,16 +146,11 @@ int	make_pwd(t_data *data)
 		return (1);
 	if (getcwd(buf, 256) == 0)
 	{
-		perror ("getcwd error:");
-		data->rt_value = 1;
-		free(buf);
-		return (1);
+		printf("cannot find current directory\n");
+		return (free(buf), 1);
 	}
 	else
-	{
 		printf("%s\n", buf);
-		data->rt_value = 0;
-	}
 	return (free(buf), 0);
 }
 //getcwd = fonction qui recupere l'adresse actuelle (fonctionne si unset PWD)

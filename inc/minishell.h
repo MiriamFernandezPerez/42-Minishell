@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/24 19:16:55 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/25 16:47:13 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,21 +84,16 @@ void	print_tokens(char **arr);
 
 //builtins
 void	make_builtins(char **str, t_data *data);
-void	exit_number(char **str, t_data *data);
-void	make_exit(char **str, t_data *data);
-void	make_echo(char **str, t_data *data);
+int		exit_number(char **str, t_data *data);
+int		make_exit(char **str, t_data *data);
+void	make_echo(char **str);
 //void	make_rtvalue(char **str, t_data *data);
-int		make_pwd(t_data *data);
+int		make_pwd(void);
 
 //builtins_env
 t_env	*adjust_env(t_data *data, t_env *to_del);
 void	make_unset(char **str, t_data *data);
-//int		check_path(t_env **env_lst);
-void	make_env(t_data *data);
-int		cd_errors(char **str, t_data *data);
-int		change_pwd(t_data *data, char *str);
-int		make_cd(char **str, t_data *data);
-
+int		make_env(t_data *data);
 
 //builtins_export
 void	p_exp_loop(t_env *to_print, t_env *old, t_env *current, t_env *env_lst);
@@ -106,6 +101,13 @@ void	print_export(t_env *env_lst);
 int		check_name(char *str, int i, t_env *current);
 int		make_export(char **str, t_data *data);
 
+
+//builtins_cd
+int		cd_errors(char **str, t_data *data);
+int		change_pwd(t_data *data, char *str);
+int		cd_home(char **str, t_data *data);
+int		cd_point(char **str, t_data *data);
+int		make_cd(char **str, t_data *data);
 //maths
 int		modulo_negativ(int a);
 int		check_minmax(char *str);
