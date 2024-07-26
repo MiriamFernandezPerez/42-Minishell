@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/25 17:39:47 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/26 20:40:59 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 	if (ft_strcmp("unset", str[0], 5) == 1)
 		make_unset(str, data);
 	if (ft_strcmp("env", str[0], 3) == 1)
-		make_env(data);
+		make_env(data, str);
 	if (ft_strcmp("exit", str[0], 4) == 1)
 		make_exit(str, data);
 	else // peut etre pas necessaire si type dans la structure, on vient aue si builtins

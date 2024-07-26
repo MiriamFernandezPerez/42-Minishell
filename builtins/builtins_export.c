@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/24 14:40:34 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/26 23:53:14 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,29 @@ int	check_name(char *str, int i, t_env *current)
 	return (free(name), 0);
 }
 
+int	check_args(char *str)
+{
+	int	i;
+
+	i = 0;
+	if ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z')
+		|| str[i] == '_')
+		i++;
+	else
+		return (printf("👯 minishell> : export: '%s': not a valid identifier\n",
+				str), 1);
+	while (str[i] && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z')
+		|| str[i] == '_' || str[i] == '=' || (str[i] >= '0' && str[i] <= '9')))
+		{
+			printf("str[i] = %c\n", str[i]);
+			i++;
+		}
+	if (str[i])
+		return (printf("👯 minishell> : export: '%s': not a valid identifier\n",
+				str), 1);
+	return (0);
+}
+
 int	make_export(char **str, t_data *data)
 {
 	t_env	*current;
@@ -108,20 +131,23 @@ int	make_export(char **str, t_data *data)
 	{
 		while (current->next)
 			current = current->next;
-		i = 1;
-		while (str[i] && check_name(str[i], i, data->env_lst) == 0)
+		i = 0; //mettre 0 pour tester
+		while (str[i])
 		{
-			current->next = malloc(sizeof(t_env));
-			if (!current->next)
-				return (1);
-			if (exp_new(str[i], current->next) == 1)
-				return (1);
-			current = current->next;
-			current->next = NULL;
+			while (check_args(str[i]) == 0
+				&& check_name(str[i], i, data->env_lst) == 0)
+			{
+				current->next = malloc(sizeof(t_env));
+				if (!current->next)
+					return (1);
+				if (exp_new(str[i], current->next) == 1)
+					return (1);
+				current = current->next;
+				current->next = NULL;
+			}
 			i++;
 		}
 	}
-	data->rt_value = 0;
 	return (0);
 }
 //checkname= check si la variable existe ou non,

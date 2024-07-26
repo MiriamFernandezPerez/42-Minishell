@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/25 17:45:23 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/26 22:34:36 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,12 @@ void	make_unset(char **str, t_data *data)
 	return (1);
 }*/
 
-int	make_env(t_data *data)
+int	make_env(t_data *data, char **str)
 {
 	t_env	*current;
 
+	if (str[1])
+		return (printf(" env: '%s': No such file or directory\n", str[1]), 1);
 	current = data->env_lst;
 	if (!current)
 		return (printf("👯 minishell> : env: No such file or directory\n"), 1);

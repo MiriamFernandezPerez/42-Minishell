@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/25 16:47:13 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/26 21:38:40 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,13 @@ int		make_pwd(void);
 //builtins_env
 t_env	*adjust_env(t_data *data, t_env *to_del);
 void	make_unset(char **str, t_data *data);
-int		make_env(t_data *data);
+int		make_env(t_data *data, char **str);
 
 //builtins_export
 void	p_exp_loop(t_env *to_print, t_env *old, t_env *current, t_env *env_lst);
 void	print_export(t_env *env_lst);
 int		check_name(char *str, int i, t_env *current);
+int		check_args(char *str);
 int		make_export(char **str, t_data *data);
 
 
