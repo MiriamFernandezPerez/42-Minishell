@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/26 23:49:56 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:34:39 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	main(int argc, char **argv, char **env)
 		str[i++] = argv[j++];
 	}
 	str[i] = '\0';
-	//printf("str = %s\n", str[3]);
 	/*i = 0;
 	while (str[i])
 	{
@@ -39,7 +38,7 @@ int	main(int argc, char **argv, char **env)
 	}*/
 	ft_initialize(&data, env);
 	make_export(str, data);
-	//make_env(data, str);
+	make_env(data, str);
 	/*current = data->env_lst;
 	while (current)
 	{

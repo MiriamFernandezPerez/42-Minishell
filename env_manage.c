@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:14:34 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/23 15:42:37 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:19:36 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,8 @@ int	exp_new(char *str, t_env *new_node)
 	new_node->print = 0;
 	return (0);
 }
+
+//check si pas d'erreur de free avec la value NULL sans malloc
 
 	/*printf("NAME= %s\n", new_node->name);
 	if (new_node->value)

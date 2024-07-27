@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/26 23:53:14 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:34:30 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,7 @@ int	check_args(char *str)
 				str), 1);
 	while (str[i] && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z')
 		|| str[i] == '_' || str[i] == '=' || (str[i] >= '0' && str[i] <= '9')))
-		{
-			printf("str[i] = %c\n", str[i]);
 			i++;
-		}
 	if (str[i])
 		return (printf("👯 minishell> : export: '%s': not a valid identifier\n",
 				str), 1);
@@ -131,11 +128,11 @@ int	make_export(char **str, t_data *data)
 	{
 		while (current->next)
 			current = current->next;
-		i = 0; //mettre 0 pour tester
+		i = 1;
 		while (str[i])
 		{
-			while (check_args(str[i]) == 0
-				&& check_name(str[i], i, data->env_lst) == 0)
+			if ((check_args(str[i]) == 0)
+				&& (check_name(str[i], i, data->env_lst) == 0))
 			{
 				current->next = malloc(sizeof(t_env));
 				if (!current->next)
