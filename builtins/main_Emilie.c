@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/27 17:34:39 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/28 19:47:31 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	main(int argc, char **argv, char **env)
 	}*/
 	ft_initialize(&data, env);
 	make_export(str, data);
+	print_export(data->env_lst);
 	make_env(data, str);
 	/*current = data->env_lst;
 	while (current)

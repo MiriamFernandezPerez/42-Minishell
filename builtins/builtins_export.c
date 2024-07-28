@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/27 17:34:30 by esellier         ###   ########.fr       */
+/*   Updated: 2024/07/28 19:47:09 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,19 @@ void	p_exp_loop(t_env *to_print, t_env *old, t_env *current, t_env *env_lst)
 		to_print = current;
 		while (current)
 		{
-			if ((current->print == 0 && (current->flag == 'v'
-						|| current->flag == 'V'))
+			if (current->print == 0 && (current->flag == 'v'
+					|| current->flag == 'V' || current->flag == 'W')
 				&& ft_strcmp(current->name, to_print->name) == -1
 				&& ft_strcmp(old->name, current->name) == -1)
 				to_print = current;
 			current = current->next;
 		}
-		printf("declare -x %s=\"%s\"\n", to_print->name, to_print->value);
+		if (to_print->flag == 'W')
+			printf("declare -x %s\n", to_print->name);
+		else if (to_print->value)
+			printf("declare -x %s=\"%s\"\n", to_print->name, to_print->value);
+		else
+			printf("declare -x %s=\"\"\n", to_print->name);
 		old = to_print;
 		to_print->print = 1;
 	}
