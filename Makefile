@@ -8,7 +8,7 @@ LIB_DIR = libft
 
 LIBFT = libft.a
 
-CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address -fsanitize=leak
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address -fsanitize=leak
 
 HEADER_DIR = inc/
 
@@ -19,9 +19,13 @@ LIB_READ = -lreadline
 SRC = minishell.c \
 		src/read_prompt.c\
 		src/utils.c\
-		src/parse.c\
+		src/utils2.c\
+		src/parser.c\
 		src/tokenize.c\
 		src/tokenize_utils.c\
+		src/env_manage.c\
+		src/expander.c\
+		src/expander_utils.c\
 
 OBJS = src/$(SRC:.c=.o)
 
@@ -32,7 +36,7 @@ all:
 	$(MAKE) $(NAME)
 	
 $(NAME): $(OBJS) libft/$(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LIB_READ) libft/$(LIBFT) -o $@ 
+	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LIB_READ) libft/$(LIBFT)
 
 %.o: %.c Makefile libft/$(LIBFT)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@

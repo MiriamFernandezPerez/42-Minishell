@@ -6,7 +6,7 @@
 /*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 18:44:22 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/17 22:43:49 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/08/07 21:13:19 by mirifern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,18 @@ int	ft_read_prompt(t_data *data)
 	}
 	if (*data->prompt)
 		add_history(data->prompt);
-	if (ft_parser(data->prompt) == 1)
+	if (ft_parser(data) == 1)
 	{
 		free(data->prompt);
+		data->prompt = NULL;
 		return (0);
 	}
 	ft_tokenizer(data, ft_strlen(data->prompt), 0, 0);
+	ft_expander(data);
 	print_tokens(data);
+	//join_tokens(data,  0, 0);
+	//print_tokens(data);
+	//clean_tokens_end(data);
 	free(data->prompt);
 	data->prompt = NULL;
 	ft_free(data->tokens);

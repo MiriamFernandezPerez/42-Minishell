@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 22:44:10 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/17 22:44:25 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/08/07 21:13:45 by mirifern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,18 +115,24 @@ y por detras el input con ft_strtrim.
 3 - Busca que no haya pipes ni al principio ni al final de input, pero si
 acepta pipes en medio pero las que esten dentro de comillas no las detecte
 como pipes, sino como texto plano*/
-int	ft_parser(char *input)
+int	ft_parser(t_data *data)
 {
 	char	*trim_input;
 
-	if (!input)
+	if (!data->prompt)
 		exit(EXIT_FAILURE);
-	trim_input = ft_strtrim(input, " ");
-	ft_strlcpy(input, trim_input, ft_strlen(trim_input) + 1);
+	trim_input = ft_strtrim(data->prompt, " ");
+	ft_strlcpy(data->prompt, trim_input, ft_strlen(trim_input) + 1);
 	free(trim_input);
-	if (find_quotes(input, 0, 0) == 1)
+	if (find_quotes(data->prompt, 0, 0) == 1)
+	{
+		data->rt_value = 1;
 		return (1);
-	if (find_pipes(input) < 0)
+	}
+	if (find_pipes(data->prompt) < 0)
+	{
+		data->rt_value = 1;
 		return (1);
+	}
 	return (0);
 }

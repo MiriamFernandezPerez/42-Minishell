@@ -6,68 +6,73 @@
 /*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 21:48:18 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/20 00:55:09 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/08/07 20:09:51 by mirifern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*FUncion que quita las comillas de los argumentos*/
+/*Funcion que quita las comillas de los argumentos*/
 void	remove_quotes(char *str)
 {
 	char	*src;
 	char	*dst;
+	char	c;
 
-	printf("STR ANTES DE QUITAR COMILLAS = %s\n", str);
 	src = str;
 	dst = str;
+	c = str[0];
 	while (*src)
 	{
-		if (*src != '\'' && *src != '"')
+		if (*src != c)
 			*dst++ = *src;
 		src++;
 	}
 	*dst = '\0';
 }
 
+/*Funcion que elimina arrays vacios de tipo END*/
 void	clean_tokens_end(t_data *data)
 {
-	while (data->tokens_qt > 0
-		&& data->tokens[data->tokens_qt - 1]->type == END)
+	int	i;
+
+	i = 0;
+	while (i < data->tokens_qt)
 	{
-		free(data->tokens[data->tokens_qt - 1]->value);
-		free(data->tokens[data->tokens_qt - 1]);
-		data->tokens_qt--;
+		if (data->tokens[i]->type == END)
+		{
+			free(data->tokens[i]->value);
+			free(data->tokens[i]);
+			data->tokens_qt--;
+		}
+		i++;
 	}
-	data->tokens[data->tokens_qt] = NULL;
 }
 
-/*Funcion que elimina los tokens de typo SPACES y END
-y quita las comillas (si hubiera) de los typo ARG*/
-void	clean_tokens(t_data *data)
+/*Funcion que elimina las comillas de los tokens tipo SQUOTE y DQUOTE.
+Ademas verifica si dentro del DQUOTE hay variables para expandir*/
+void	clean_quotes(t_data *d)
 {
 	int	i;
 	int	index;
 
 	i = 0;
 	index = 0;
-	while (i < data->tokens_qt)
+	while (i < d->tokens_qt)
 	{
-		if (data->tokens[i]->type != SPACES)
+		if (d->tokens[i]->type == SQUOTE || d->tokens[i]->type == DQUOTE)
 		{
-			if (data->tokens[i]->type == ARG)
-				remove_quotes(data->tokens[i]->value);
-			data->tokens[index++] = data->tokens[i];
+			remove_quotes(d->tokens[i]->value);
+			if (d->tokens[i]->type == DQUOTE
+				&& find_dollar(d->tokens[i]->value))
+				d->tokens[i]->type = VAR;
+			else
+				d->tokens[i]->type = ARG;
 		}
-		else
-		{
-			free(data->tokens[i]->value);
-			free(data->tokens[i]);
-		}
+		d->tokens[index++] = d->tokens[i];
 		i++;
 	}
-	data->tokens_qt = index;
-	clean_tokens_end(data);
+	d->tokens_qt = index;
 }
 
 void	ft_move_tokens(t_data *data, int *i, int *j)
@@ -88,7 +93,7 @@ void	join_tokens(t_data *d, int i, int j)
 
 	while (i < d->tokens_qt - 1)
 	{
-		if (d->tokens[i]->type == ARG && d->tokens[i + 1]->type == ARG)
+		if (d->tokens[i]->type == ARG || d->tokens[i + 1]->type == ARG)
 		{
 			new_value = malloc(ft_strlen(d->tokens[i]->value)
 					+ ft_strlen(d->tokens[i + 1]->value) + 1);

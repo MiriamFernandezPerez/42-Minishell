@@ -6,11 +6,24 @@
 /*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:09:23 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/19 00:09:17 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/07/25 00:40:24 by mirifern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*funcion que busca el nombre completo de la variable 
+cuando empieza por $ hasta encontrar otro delimitador */
+int	end_variable(char *input, int i)
+{
+	while (input[i] != '\0')
+	{
+		if (ft_isdelimiter(input[i]))
+			return (i - 1);
+		i++;
+	}
+	return (i);
+}
 
 void	tok_delimiter(t_data *data, char *input, int *ind, int *start)
 {
@@ -30,7 +43,7 @@ void	tok_delimiter(t_data *data, char *input, int *ind, int *start)
 	(*start)++;
 }
 
-char	*tok_nodelimiter(t_data *data, int *ind, int *start, int *end)
+void	tok_nodelimiter(t_data *data, int *ind, int *start, int *end)
 {
 	char	*str;
 
@@ -45,20 +58,28 @@ char	*tok_nodelimiter(t_data *data, int *ind, int *start, int *end)
 		exit(EXIT_FAILURE);
 	}
 	data->tokens[*ind]->value = str;
-	if (ft_isdelimiter(data->prompt[*start]) == SQUOTE
-		|| ft_isdelimiter(data->prompt[*start]) == DQUOTE)
-		data->tokens[*ind]->type = ARG;
-	else if (ft_isdelimiter(data->prompt[*start]) == INPUT)
-		data->tokens[*ind]->type = 7;
-	else if (ft_isdelimiter(data->prompt[*start]) == TRUNC)
-		data->tokens[*ind]->type = 8;
+	if (ft_isdelimiter(data->prompt[*start]))
+	{
+		data->tokens[*ind]->type = ft_isdelimiter(data->prompt[*start]);
+		if (data->tokens[*ind]->type == INPUT)
+			data->tokens[*ind]->type = HEREDOC;
+		else if (data->tokens[*ind]->type == TRUNC)
+			data->tokens[*ind]->type = APPEND;
+	}
 	else
 		data->tokens[*ind]->type = ARG;
 	(*ind)++;
 	*start = *end;
-	return (str);
 }
 
+/*Funcion que establece que tipo de delimitador ha encontrado y separa por tipos
+1- Los que van entre comillas dobles o simples, 
+deberemos encontrar su correspondiente comilla de cierre.
+2- Si encuentra un << que lo distinga de < 
+3- Si encuentra un >> que lo distinga de > 
+4- Si encuentra un espacios seguidos simplemente que los omita
+5- Si encuentra $ debe guardarse como tipo VAR hasta el siguiente espacio
+5- De lo contrario sera un delimitador simple de tipo | < > */
 void	define_delimiter(t_data *data, int *start, int *end, int *index)
 {
 	if (ft_isdelimiter(data->prompt[*start]) == SQUOTE
@@ -67,16 +88,17 @@ void	define_delimiter(t_data *data, int *start, int *end, int *index)
 		*end = end_quote(data->prompt, data->prompt[*start], *start + 1) + 1;
 		tok_nodelimiter(data, index, start, end);
 	}
-	else if (ft_isdelimiter(data->prompt[*start]) == INPUT
-		&& ft_isdelimiter(data->prompt[*start + 1]) == INPUT)
+	else if ((ft_isdelimiter(data->prompt[*start]) == INPUT
+			&& ft_isdelimiter(data->prompt[*start + 1]) == INPUT)
+		|| (ft_isdelimiter(data->prompt[*start]) == TRUNC
+			&& ft_isdelimiter(data->prompt[*start + 1]) == TRUNC))
 	{
 		*end = end_quote(data->prompt, data->prompt[*start], *start + 1) + 1;
 		tok_nodelimiter(data, index, start, end);
 	}
-	else if (ft_isdelimiter(data->prompt[*start]) == TRUNC
-		&& ft_isdelimiter(data->prompt[*start + 1]) == TRUNC)
+	else if (ft_isdelimiter(data->prompt[*start]) == VAR)
 	{
-		*end = end_quote(data->prompt, data->prompt[*start], *start + 1) + 1;
+		*end = end_variable(data->prompt, *start + 1) + 1;
 		tok_nodelimiter(data, index, start, end);
 	}
 	else if (ft_isdelimiter(data->prompt[*start]) == SPACES
@@ -109,6 +131,8 @@ void	ft_tokenizer(t_data *d, int len, int start, int index)
 	}
 	d->tokens[index] = NULL;
 	d->tokens_qt = index;
-	join_tokens(d, 0, 0);
-	//clean_tokens(d);
+	clean_quotes(d);
+	//clean_tokens_end(d);
+	//print_env(d);
+	//join_tokens(d, 0, 0);
 }
