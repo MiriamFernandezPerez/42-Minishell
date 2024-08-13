@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:14:34 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/25 23:58:48 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/07/28 19:45:22 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,12 @@ int	exp_new(char *str, t_env *new_node)
 	if (create_value(new_node, i, j, str) == 1)
 		return (1);
 	if (j < 2)
-		new_node->value = NULL;
+		new_node->value = '\0';
 	new_node->flag = 'v';
 	if (j == 1)
 		new_node->flag = 'V';
+	if (j == 0)
+		new_node->flag = 'W';
 	new_node->print = 0;
 	return (0);
 }
