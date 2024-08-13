@@ -6,7 +6,7 @@
 /*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 21:48:18 by mirifern          #+#    #+#             */
-/*   Updated: 2024/08/07 20:09:51 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/08/13 21:33:57 by mirifern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,6 @@ void	remove_quotes(char *str)
 		src++;
 	}
 	*dst = '\0';
-}
-
-/*Funcion que elimina arrays vacios de tipo END*/
-void	clean_tokens_end(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->tokens_qt)
-	{
-		if (data->tokens[i]->type == END)
-		{
-			free(data->tokens[i]->value);
-			free(data->tokens[i]);
-			data->tokens_qt--;
-		}
-		i++;
-	}
 }
 
 /*Funcion que elimina las comillas de los tokens tipo SQUOTE y DQUOTE.
@@ -87,13 +69,39 @@ void	ft_move_tokens(t_data *data, int *i, int *j)
 	(*i)--;
 }
 
+void	delete_token_type(t_data *d, int type)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (d->tokens[i])
+	{
+		if (d->tokens[i]->type != type)
+		{
+			if (i != j)
+				d->tokens[j] = d->tokens[i];
+			j++;
+		}
+		else
+		{
+			free(d->tokens[i]->value);
+			free(d->tokens[i]);
+			d->tokens_qt--;
+		}
+		i++;
+	}
+	d->tokens[j] = '\0';
+}
+
 void	join_tokens(t_data *d, int i, int j)
 {
 	char	*new_value;
 
 	while (i < d->tokens_qt - 1)
 	{
-		if (d->tokens[i]->type == ARG || d->tokens[i + 1]->type == ARG)
+		if (d->tokens[i]->type == ARG && d->tokens[i + 1]->type == ARG)
 		{
 			new_value = malloc(ft_strlen(d->tokens[i]->value)
 					+ ft_strlen(d->tokens[i + 1]->value) + 1);

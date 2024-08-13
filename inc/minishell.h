@@ -92,6 +92,7 @@ int		main(int ac, char **av, char **env);
 
 //read_prompt.c
 int		only_spaces(char *s);
+void	token_expand_clean(t_data *data);
 int		ft_read_prompt(t_data *data);
 
 //parse.c
@@ -110,10 +111,10 @@ void	ft_tokenizer(t_data *d, int len, int start, int index);
 
 //tokenize_utils.c
 void	remove_quotes(char *str);
-void	clean_tokens_end(t_data *data);
 void	clean_quotes(t_data *d);
 void	ft_move_tokens(t_data *data, int *i, int *j);
 void	join_tokens(t_data *d, int i, int j);
+void	delete_token_type(t_data *d, int type);
 
 //utils.c
 int		ft_strcmp(char *s1, char *s2);
@@ -134,14 +135,13 @@ int		create_value(t_env *new_node, int i, int j, char *str);
 int		exp_new(char *str, t_env *new_node);
 
 //expander.c
+char	*find_var_name(char *value, int *i);
 int		find_dollar(char *str);
 char	*quit_dollar(char *value, int *i);
 char	*expand_var(t_data *data, char *value);
-char	*find_var_name(char *value, int *i);
 void	ft_expander(t_data *d);
 
 //expander_utils.c
-char	*find_var_name(char *value, int *i);
 char	*allocate_result_buffer(void);
 void	handle_rt_value(t_data *data, char **temp, char **res);
 void	handle_digit_variable(char **temp, char **res);

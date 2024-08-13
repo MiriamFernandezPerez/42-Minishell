@@ -6,7 +6,7 @@
 /*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 18:44:22 by mirifern          #+#    #+#             */
-/*   Updated: 2024/08/07 21:13:19 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/08/13 21:34:24 by mirifern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,17 @@ int	only_spaces(char *s)
 	if (i == check)
 		return (1);
 	return (0);
+}
+
+void	token_expand_clean(t_data *data)
+{
+	ft_tokenizer(data, ft_strlen(data->prompt), 0, 0);
+	ft_expander(data);
+	print_tokens(data);
+	delete_token_type(data, END);
+	join_tokens(data, 0, 0);
+	delete_token_type(data, SPACES);
+	print_tokens(data);
 }
 
 /*1 - lee el input del prompt
@@ -57,12 +68,7 @@ int	ft_read_prompt(t_data *data)
 		data->prompt = NULL;
 		return (0);
 	}
-	ft_tokenizer(data, ft_strlen(data->prompt), 0, 0);
-	ft_expander(data);
-	print_tokens(data);
-	//join_tokens(data,  0, 0);
-	//print_tokens(data);
-	//clean_tokens_end(data);
+	token_expand_clean(data);
 	free(data->prompt);
 	data->prompt = NULL;
 	ft_free(data->tokens);

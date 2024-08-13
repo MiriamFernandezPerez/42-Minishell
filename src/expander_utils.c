@@ -39,6 +39,13 @@ void	handle_rt_value(t_data *data, char **temp, char **res)
 
 void	handle_digit_variable(char **temp, char **res)
 {
+	if (**temp == '0')
+	{
+		*(*res)++ = 'b';
+		*(*res)++ = 'a';
+		*(*res)++ = 's';
+		*(*res)++ = 'h';
+	}
 	(*temp)++;
 	while (ft_isdigit(**temp))
 		*(*res)++ = *(*temp)++;

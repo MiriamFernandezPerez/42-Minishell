@@ -6,7 +6,7 @@
 /*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 19:00:48 by mirifern          #+#    #+#             */
-/*   Updated: 2024/08/07 20:08:41 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/08/13 21:33:13 by mirifern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ char	*expand_var(t_data *data, char *value)
 		}
 		current = current->next;
 	}
-	//free (new_value);
 	return (NULL);
 }
 
