@@ -28,18 +28,21 @@ int	ft_strcmp(char *s1, char *s2)
 	return (0);
 }
 
-void	env_free(t_data *data)
+void	final_free(t_data *data)
 {
 	t_env	*current;
 	t_env	*previous;
 
+	//parser
+	//prompt
 	if (data->env_lst)
 	{
 		previous = data->env_lst;
 		current = data->env_lst;
 		while (current)
 		{
-			free(current->name);
+			if (current->name)
+				free(current->name);
 			if (current->value)
 				free(current->value);
 			current = current->next;
@@ -47,6 +50,7 @@ void	env_free(t_data *data)
 			previous = current;
 		}
 	}
+	free(data);
 }
 
 t_env	*search_str(char *str, t_data *data)
@@ -61,6 +65,23 @@ t_env	*search_str(char *str, t_data *data)
 		current = current->next;
 	}
 	return (NULL);
+}
+
+int	print_errors(char **str, t_data *data, int i)
+{
+	if (i == 0)
+		printf("👯 minishell> : %s: too many arguments\n", str[0]);
+	if (i == 1)
+		printf("👯 minishell> : %s: %s: No such file or directory\n",
+			str[0], str[1]);
+	if (i == 2)
+		printf("cannot find 'home' directory\n");
+	if (i == 3)
+		printf("cannot find parent directory\n");
+	if (i == 4)
+		printf("cannot find current directory\n");
+	return (data->rt_value = 1, 1);
+	return (1);
 }
 
 //----->faire fonction si malloc fail, avec un 

@@ -26,6 +26,12 @@ SRC = minishell.c \
 		src/env_manage.c\
 		src/expander.c\
 		src/expander_utils.c\
+		src/maths.c\
+		src/executer.c\
+		builtins/builtins.c\
+		builtins/builtins_cd.c\
+		builtins/builtins_env.c\
+		builtins/builtins_export.c\
 
 OBJS = src/$(SRC:.c=.o)
 

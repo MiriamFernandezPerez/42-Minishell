@@ -126,12 +126,17 @@ int	ft_parser(t_data *data)
 	free(trim_input);
 	if (find_quotes(data->prompt, 0, 0) == 1)
 	{
-		data->rt_value = 1;
+		data->rt_value = 2;
 		return (1);
 	}
 	if (find_pipes(data->prompt) < 0)
 	{
-		data->rt_value = 1;
+		data->rt_value = 2;
+		return (1);
+	}
+	if (find_other_chars(data->prompt) == 1)
+	{
+		data->rt_value = 2;
 		return (1);
 	}
 	return (0);

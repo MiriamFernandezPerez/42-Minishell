@@ -12,6 +12,23 @@
 
 #include "minishell.h"
 
+int	find_other_chars(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i] != '\0')
+	{
+		if (input[i] == '\\' || input[i] == ';')
+		{
+			ft_msn(ERR_OTHER, 2);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 /*Funcion que verifica si el string esta compuesto
 solo por espacios y/o tabulaciones*/
 int	only_spaces(char *s)
@@ -40,7 +57,6 @@ void	token_expand_clean(t_data *data)
 	delete_token_type(data, END);
 	join_tokens(data, 0, 0);
 	delete_token_type(data, SPACES);
-	print_tokens(data);
 }
 
 /*1 - lee el input del prompt
@@ -69,6 +85,7 @@ int	ft_read_prompt(t_data *data)
 		return (0);
 	}
 	token_expand_clean(data);
+	ft_execute(data);
 	free(data->prompt);
 	data->prompt = NULL;
 	ft_free(data->tokens);

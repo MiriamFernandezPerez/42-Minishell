@@ -60,8 +60,6 @@ int	main(int ac, char **av, char **env)
 	{
 		if (ft_read_prompt(data) == -1)
 			break ;
-		//make_builtins
-		//execve
 	}
 	if (data)
 		ft_free_data(data);

@@ -43,8 +43,8 @@ void	ft_free_data(t_data *data)
 			ft_free(data->tokens);
 			data->tokens = NULL;
 		}
-		env_free(data);
-		free(data);
+		final_free(data);
+		//free(data);
 	}
 }
 
