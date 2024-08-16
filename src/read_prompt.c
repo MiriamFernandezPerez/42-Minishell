@@ -12,19 +12,16 @@
 
 #include "minishell.h"
 
-int	find_other_chars(char *input)
+/*Funcion que busca si hay > >> < o << al principio o al final del prompt*/
+int	find_others(char *input)
 {
-	int	i;
+	int	len;
 
-	i = 0;
-	while (input[i] != '\0')
+	len = ft_strlen(input) - 1;
+	if (input[len] == '<' || input[len] == '>')
 	{
-		if (input[i] == '\\' || input[i] == ';')
-		{
-			ft_msn(ERR_OTHER, 2);
-			return (1);
-		}
-		i++;
+		ft_msn(ERR_DELIM, 2);
+		return (1);
 	}
 	return (0);
 }
@@ -49,14 +46,19 @@ int	only_spaces(char *s)
 	return (0);
 }
 
-void	token_expand_clean(t_data *data)
+/*Funcion que llama a las funciones tokenizer, expander, del_tokens_END
+join_tokens del_tokens_SPACES y verify_tokens*/
+int	token_expand_clean(t_data *data)
 {
 	ft_tokenizer(data, ft_strlen(data->prompt), 0, 0);
 	ft_expander(data);
-	print_tokens(data);
 	delete_token_type(data, END);
 	join_tokens(data, 0, 0);
 	delete_token_type(data, SPACES);
+	if (verify_types(data) == 1)
+		return (1);
+	print_tokens(data);
+	return (0);
 }
 
 /*1 - lee el input del prompt
@@ -65,7 +67,7 @@ se salga del bucle while(1) del main y cerrar el shell liberando
 el input
 3 - Anade el input al history
 4 - Paso el input para depurarlo a la funcion ft_parser
-5 - Tokeniza el input
+5 - Tokeniza el input, lo expande y comprueba los types de cada token
 ...
 */
 int	ft_read_prompt(t_data *data)
@@ -78,14 +80,16 @@ int	ft_read_prompt(t_data *data)
 	}
 	if (*data->prompt)
 		add_history(data->prompt);
-	if (ft_parser(data) == 1)
+	if (ft_parser(data) == 1 || token_expand_clean(data) == 1)
 	{
 		free(data->prompt);
 		data->prompt = NULL;
+		ft_free(data->tokens);
+		data->tokens = NULL;
 		return (0);
 	}
-	token_expand_clean(data);
-	ft_execute(data);
+	/*else
+		ft_execute(data);*/
 	free(data->prompt);
 	data->prompt = NULL;
 	ft_free(data->tokens);

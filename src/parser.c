@@ -134,7 +134,7 @@ int	ft_parser(t_data *data)
 		data->rt_value = 2;
 		return (1);
 	}
-	if (find_other_chars(data->prompt) == 1)
+	if (find_others(data->prompt) == 1)
 	{
 		data->rt_value = 2;
 		return (1);

@@ -44,7 +44,6 @@ void	ft_free_data(t_data *data)
 			data->tokens = NULL;
 		}
 		final_free(data);
-		//free(data);
 	}
 }
 

@@ -23,7 +23,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
-
 # include <string.h>
 
 # define NO_ARGS "Error. Execution don't allow arguments\n"
@@ -32,7 +31,13 @@
 # define ERR_SQUOTE ">\nError while looking for matching `''\n"
 # define ERR_DQUOTE ">\nError while looking for matching `\"\'\n"
 # define ERR_PIPE "bash: syntax error near unexpected token `|'\n"
-# define ERR_OTHER ">\nError '\\' and ';' are not allowed\n"
+# define ERR_SEMICOL "bash: syntax error near unexpected token `;'\n"
+# define ERR_BACKSLASH "bash: syntax error near unexpected token `\\'\n"
+# define ERR_DELIM "bash: syntax error near unexpected token `newline'\n"
+# define ERR_INPUT "bash: syntax error near unexpected token `<'\n"
+# define ERR_TRUNC "bash: syntax error near unexpected token `>'\n"
+# define ERR_HEREDOC "bash: syntax error near unexpected token `<<'\n"
+# define ERR_APPEND "bash: syntax error near unexpected token `>>'\n"
 
 # define MAX_TOKENS 100
 # define TOKEN_SIZE 64
@@ -51,16 +56,16 @@
 # define ARG 10 // string or argument
 # define VAR 11//Variable $
 
-/*
-typedef struct s_??????
+typedef struct s_tok
 {
-	char	**cmd;
-	char	*infile;
-	char	*outfile;
-	char	
-	t_tokens	*previous;
-	t_tokens	*next;
-}			t_??????;*/
+	char			**cmd;
+	char			**infile;
+	char			**outfile;
+	char			**heredoc;
+	char			**append;
+	struct s_tok	*previous;
+	struct s_tok	*next;
+}			t_tok;
 
 typedef struct s_env
 {
@@ -92,9 +97,9 @@ int		ft_initialize(t_data **data, char **env);
 int		main(int ac, char **av, char **env);
 
 //read_prompt.c
-int		find_other_chars(char *input);
+int		find_others(char *input);
 int		only_spaces(char *s);
-void	token_expand_clean(t_data *data);
+int		token_expand_clean(t_data *data);
 int		ft_read_prompt(t_data *data);
 
 //parse.c
@@ -151,6 +156,9 @@ void	handle_digit_variable(char **temp, char **res);
 void	handle_normal_variable(t_data *data, char **temp, char **res);
 char	*expand_env_variables(t_data *data, char *input, char *temp, char *res);
 
+//verify_tokens.c
+int		verify_types(t_data *d);
+
 //builtins
 void	make_builtins(char **str, t_data *data);
 int		exit_number(char **str, t_data *data);
@@ -192,6 +200,6 @@ int		create_value(t_env *new_node, int i, int j, char *str);
 //t_env **create_exp(char **str);
 
 //executer.c
-void ft_execute(t_data *data);
+void	ft_execute(t_data *data);
 
 #endif
