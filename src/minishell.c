@@ -6,11 +6,33 @@
 /*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:07:08 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/24 23:40:15 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/08/17 19:04:39 by mirifern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// Función de prueba para imprimir las secciones
+void	print_sections(t_data *data)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < data->sections_qt)
+	{
+		j = 0;
+		printf("SECCION %d:\n", i + 1);
+		while (j < data->sections[i]->tokens_qt)
+		{
+			printf("  Token %d: %s (Type: %d)\n", j,
+				data->sections[i]->tokens[j]->value,
+				data->sections[i]->tokens[j]->type);
+			j++;
+		}
+		i++;
+	}
+}
 
 //Write Tokens array
 void	print_tokens(t_data *data)

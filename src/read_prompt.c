@@ -61,6 +61,16 @@ int	token_expand_clean(t_data *data)
 	return (0);
 }
 
+void	free_for_new_prompt(t_data *data)
+{
+	free(data->prompt);
+	data->prompt = NULL;
+	ft_free(data->tokens);
+	data->tokens = NULL;
+	ft_free_sections(data->sections, data->sections_qt);
+	data->sections = NULL;
+}
+
 /*1 - lee el input del prompt
 2 - Si detecta un EOF (ctr+d) muestra un exit y devuelve -1 para que
 se salga del bucle while(1) del main y cerrar el shell liberando
@@ -88,11 +98,8 @@ int	ft_read_prompt(t_data *data)
 		data->tokens = NULL;
 		return (0);
 	}
-	/*else
-		ft_sections(data);*/
-	free(data->prompt);
-	data->prompt = NULL;
-	ft_free(data->tokens);
-	data->tokens = NULL;
+	else
+		ft_sections(data);
+	free_for_new_prompt(data);
 	return (0);
 }

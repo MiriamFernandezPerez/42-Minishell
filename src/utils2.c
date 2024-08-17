@@ -43,6 +43,12 @@ void	ft_free_data(t_data *data)
 			ft_free(data->tokens);
 			data->tokens = NULL;
 		}
+		if (data->sections)
+		{
+			printf("num sections = %d\n", data->sections_qt);
+			ft_free_sections(data->sections, data->sections_qt);
+			data->sections = NULL;
+		}
 		final_free(data);
 	}
 }
