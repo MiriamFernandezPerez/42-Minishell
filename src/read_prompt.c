@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-/*Funcion que busca si hay > >> < o << al principio o al final del prompt*/
+/*Funcion que busca si hay > >> < o << al final del prompt*/
 int	find_others(char *input)
 {
 	int	len;
@@ -89,7 +89,7 @@ int	ft_read_prompt(t_data *data)
 		return (0);
 	}
 	/*else
-		ft_execute(data);*/
+		ft_sections(data);*/
 	free(data->prompt);
 	data->prompt = NULL;
 	ft_free(data->tokens);

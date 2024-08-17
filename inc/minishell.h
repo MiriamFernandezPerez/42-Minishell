@@ -56,17 +56,6 @@
 # define ARG 10 // string or argument
 # define VAR 11//Variable $
 
-typedef struct s_tok
-{
-	char			**cmd;
-	char			**infile;
-	char			**outfile;
-	char			**heredoc;
-	char			**append;
-	struct s_tok	*previous;
-	struct s_tok	*next;
-}			t_tok;
-
 typedef struct s_env
 {
 	char			*name;
@@ -82,11 +71,19 @@ typedef struct s_tokens
 	int		type;
 }			t_tokens;
 
+typedef struct s_section
+{
+	t_tokens 	**tokens;
+	int 		tokens_qt;
+}				t_section;
+
 typedef struct s_data
 {
 	char		*prompt;
 	t_tokens	**tokens;
+	t_section	**sections;
 	int			tokens_qt;
+	int			sections_qt;
 	int			rt_value;
 	t_env		*env_lst;
 }			t_data;
@@ -157,7 +154,12 @@ void	handle_normal_variable(t_data *data, char **temp, char **res);
 char	*expand_env_variables(t_data *data, char *input, char *temp, char *res);
 
 //verify_tokens.c
+void	print_err(int check);
+int		check_type(int type);
 int		verify_types(t_data *d);
+
+//sections.c
+void	ft_sections(t_data *data);
 
 //builtins
 void	make_builtins(char **str, t_data *data);

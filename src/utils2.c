@@ -75,5 +75,13 @@ int	ft_isdelimiter(char c)
 		return (END);
 	else if (c == '$')
 		return (VAR);
+	else if (c == '\\' || c == ';')
+	{
+		if (c == '\\')
+			ft_msn(ERR_BACKSLASH, 2);
+		else
+			ft_msn(ERR_SEMICOL, 2);
+		exit(EXIT_FAILURE);
+	}
 	return (0);
 }

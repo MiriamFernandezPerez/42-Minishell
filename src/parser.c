@@ -46,7 +46,7 @@ int	find_pipes(char *input)
 	if (input && input[0] == '|')
 	{
 		ft_msn(ERR_PIPE, 2);
-		return (-1);
+		return (1);
 	}
 	while (input[i] != '\0')
 	{
@@ -55,7 +55,7 @@ int	find_pipes(char *input)
 		if (input[i] == '|' && (input[i + 1] == '|' || input[i + 1] == '\0'))
 		{
 			ft_msn(ERR_PIPE, 2);
-			return (-1);
+			return (1);
 		}
 		i++;
 	}
@@ -124,17 +124,8 @@ int	ft_parser(t_data *data)
 	trim_input = ft_strtrim(data->prompt, " ");
 	ft_strlcpy(data->prompt, trim_input, ft_strlen(trim_input) + 1);
 	free(trim_input);
-	if (find_quotes(data->prompt, 0, 0) == 1)
-	{
-		data->rt_value = 2;
-		return (1);
-	}
-	if (find_pipes(data->prompt) < 0)
-	{
-		data->rt_value = 2;
-		return (1);
-	}
-	if (find_others(data->prompt) == 1)
+	if (find_quotes(data->prompt, 0, 0) == 1
+		|| find_pipes(data->prompt) == 1 || find_others(data->prompt) == 1)
 	{
 		data->rt_value = 2;
 		return (1);

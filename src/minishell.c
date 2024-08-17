@@ -41,7 +41,9 @@ int	ft_initialize(t_data **data, char **env)
 		exit(EXIT_FAILURE);
 	(*data)->prompt = NULL;
 	(*data)->tokens = NULL;
+	(*data)->sections = NULL;
 	(*data)->tokens_qt = 0;
+	(*data)->sections_qt = 0;
 	(*data)->rt_value = 0;
 	(*data)->env_lst = create_env(env);
 	return (0);

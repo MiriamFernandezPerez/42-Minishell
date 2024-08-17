@@ -27,8 +27,8 @@ SRC = minishell.c \
 		src/expander.c\
 		src/expander_utils.c\
 		src/maths.c\
-		src/executer.c\
 		src/verify_tokens.c\
+		src/sections.c\
 		builtins/builtins.c\
 		builtins/builtins_cd.c\
 		builtins/builtins_env.c\
