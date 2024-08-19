@@ -114,27 +114,34 @@ Si el primer caracter despues del $ es un numero, se eliminara el $ y el
 primer numero y se devolvera el resto de los caracteres como valor
 En el resto de los casos se evaluara el valor de la variable en el
 environment y se expandira al valor que devuelva o a NULL si no encuentra
-el nombre de la variable*/
-void	ft_expander(t_data *d)
+el nombre de la variable
+Si la variable no se puede expandir y por tanto se iguala a NULL y el token
+anterior es de tipo INPUT, TRUNC, o APPEND devuelvo un error, por eso creo una
+copia del value del token que siempre tengo que liberar*/
+int	ft_expander(t_data *d, int i, int j)
 {
 	char	*res;
-	int		i;
-	int		j;
+	char	*cpy;
 
-	i = 0;
-	j = 0;
 	while (i < d->tokens_qt)
 	{
 		if (d->tokens[i]->type == VAR)
 		{
+			cpy = ft_strdup(d->tokens[i]->value);
 			res = expand_env_variables(d, d->tokens[i]->value, NULL, NULL);
 			d->tokens[i]->value = res;
 			if (res[0] == '\0')
+			{
+				if (verify_previous_type(d, i, cpy) == 1)
+					return (1);
 				d->tokens[i]->type = END;
+			}
 			else
 				d->tokens[i]->type = ARG;
 			j++;
+			free(cpy);
 		}
 		i++;
 	}
+	return (0);
 }

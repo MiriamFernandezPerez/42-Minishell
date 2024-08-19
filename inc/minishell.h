@@ -146,7 +146,7 @@ char		*find_var_name(char *value, int *i);
 int			find_dollar(char *str);
 char		*quit_dollar(char *value, int *i);
 char		*expand_var(t_data *data, char *value);
-void		ft_expander(t_data *d);
+int			ft_expander(t_data *d, int i, int j);
 
 //expander_utils.c
 char		*allocate_result_buffer(void);
@@ -159,7 +159,9 @@ char		*expand_env_variables(t_data *data, char *input, char *temp,
 //verify_tokens.c
 void		print_err(int check);
 int			check_type(int type);
-int			verify_types(t_data *d);
+void		write_msn(t_data *data, char *value);
+int			verify_previous_type(t_data *d, int i, char *value);
+int			verify_next_type(t_data *d);
 
 //sections.c
 void		ft_free_sections(t_section **section, int len);

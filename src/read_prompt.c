@@ -51,11 +51,12 @@ join_tokens del_tokens_SPACES y verify_tokens*/
 int	token_expand_clean(t_data *data)
 {
 	ft_tokenizer(data, ft_strlen(data->prompt), 0, 0);
-	ft_expander(data);
+	if (ft_expander(data, 0, 0) == 1)
+		return (1);
 	delete_token_type(data, END);
 	join_tokens(data, 0, 0);
 	delete_token_type(data, SPACES);
-	if (verify_types(data) == 1)
+	if (verify_next_type(data) == 1)
 		return (1);
 	print_tokens(data);
 	return (0);
