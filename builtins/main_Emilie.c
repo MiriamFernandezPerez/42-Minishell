@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/28 19:47:31 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/02 19:44:49 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,21 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	
 	char	**str;
 	t_data	*data;
+	int		i;
+	//int		j;
 	//t_env	*current;
-	int i;
-	int	j;
-
+	(void) argc;
+	(void) argv;
 	i = 0;
-	j = 1;
+	//j = 1;
+	str = NULL;
 	data = NULL;
-	str = malloc((argc) * sizeof(char *));
+	/*str = malloc((argc) * sizeof(char *));
 	while (i < argc -1)
-	{
 		str[i++] = argv[j++];
-	}
-	str[i] = '\0';
+	str[i] = '\0';*/
 	/*i = 0;
 	while (str[i])
 	{
@@ -37,9 +36,16 @@ int	main(int argc, char **argv, char **env)
 		i++;
 	}*/
 	ft_initialize(&data, env);
-	make_export(str, data);
-	print_export(data->env_lst);
-	make_env(data, str);
+	//make_export(str, data);
+	//print_export(data->env_lst);
+	env_array(&data, str);
+	while (str[i])
+	{
+		printf ("%s\n", str[i]);
+		i++;
+	}
+	//make_cd(str, data);
+	//make_env(data, str);
 	/*current = data->env_lst;
 	while (current)
 	{

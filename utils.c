@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:25:15 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/24 14:55:06 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/02 18:54:53 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ t_env	*search_str(char *str, t_data *data)
 	}
 	return (NULL);
 }
+
 int	print_errors(char **str, t_data *data, int i)
 {
 	if (i == 0)
@@ -75,10 +76,6 @@ int	print_errors(char **str, t_data *data, int i)
 			str[0], str[1]);
 	if (i == 2)
 		printf("cannot find 'home' directory\n");
-	if (i == 3)
-		printf("cannot find parent directory\n");
-	if (i == 4)
-		printf("cannot find current directory\n");
 	return (data->rt_value = 1, 1);
 	return (1);
 }

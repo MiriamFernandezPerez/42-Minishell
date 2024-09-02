@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/26 21:38:40 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/02 19:41:30 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,8 @@ int		make_export(char **str, t_data *data);
 
 
 //builtins_cd
-int		cd_errors(char **str, t_data *data);
 int		change_pwd(t_data *data, char *str);
 int		cd_home(char **str, t_data *data);
-int		cd_point(char **str, t_data *data);
 int		make_cd(char **str, t_data *data);
 //maths
 int		modulo_negativ(int a);
@@ -119,6 +117,7 @@ t_env	*env_new(char *str, t_env *new_node);
 t_env	*create_env(char **env);
 int		exp_new(char *str, t_env *new_node);
 int		create_value(t_env *new_node, int i, int j, char *str);
+int		env_array(t_data **data, char **array);
 //t_env **create_exp(char **str);
 
 //utils

@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:14:34 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/28 19:45:22 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/02 19:47:17 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,57 @@ int	exp_new(char *str, t_env *new_node)
 		printf("VALUE= %s\n", new_node->value);
 	printf("FLAG= %d\n", new_node->flag);*/
 
-	
-	
-	
-	//------> faire la fonction qui transforme la liste d'env en array
+void	ft_free(char **array)
+{
+	size_t	i;
+
+	i = 0;
+	while (array[i] != NULL)
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}
+
+int	env_array(t_data **data, char **array)
+{
+	t_env	*env;
+	int		i;
+
+	i = 0;
+	array = (char **)malloc(sizeof (char));
+	if (!array)
+		return (1);
+	env = (*data)->env_lst;
+	while (env)
+	{
+		array[i] = malloc(ft_strlen(env->name) + ft_strlen(env->value)
+				+ 2 * sizeof(char));
+		if (!array[i])
+			return (ft_free(array), 1);
+		//ft_envjoin(env->name, env->value, array[i]);
+		if (env->name)
+		{
+			ft_strlcpy(array[i], env->name, ft_strlen(env->name) + 1);
+			ft_strlcat(array[i], "=", ft_strlen(env->name) + 1);
+			if (env->value)
+				ft_strlcat(array[i], env->value, ft_strlen(env->name) + 2);
+		}
+		i++;
+	}
+	array[i] = '\0';
+	return (0);
+}
+
+/*char	*ft_envjoin(char *s1, char *s2, char *dst)
+{
+	if (s1)
+	{
+		ft_strlcpy(dst, s1, ft(strlen(s1)) + 1);
+		ft_strlcat(dst, "=", ft(strlen(s1)) + 1);
+		if (s2)
+			ft_strlcat(dst, s2, ft(strlen(s1) + 2));
+	}
+	return (0);
+}*/
