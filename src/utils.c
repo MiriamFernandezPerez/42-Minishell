@@ -50,7 +50,7 @@ void	final_free(t_data *data)
 			previous = current;
 		}
 	}
-	free(data);
+	//ft_free_free(data);
 }
 
 t_env	*search_str(char *str, t_data *data)

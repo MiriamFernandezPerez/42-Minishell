@@ -108,6 +108,9 @@ void	define_delimiter(t_data *data, int *start, int *end, int *index)
 		tok_delimiter(data, data->prompt, index, start);
 }
 
+/*Funcion que recorre el prompt en busca de delitadores tipo o 
+grupos de palabras entre comillas para separar las palabras
+en tokens cada uno con su tipo correspondiente*/
 void	ft_tokenizer(t_data *d, int len, int start, int index)
 {
 	int	end;

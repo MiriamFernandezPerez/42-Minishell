@@ -39,7 +39,11 @@ t_section	*create_section(int tokens_qt)
 	t_section	*section;
 
 	section = malloc(sizeof(t_section));
+	if (!section)
+		exit (EXIT_FAILURE);
 	section->tokens = malloc(sizeof(t_tokens *) * tokens_qt);
+	if (!section->tokens)
+		exit (EXIT_FAILURE);
 	section->tokens_qt = 0;
 	return (section);
 }
@@ -51,9 +55,10 @@ t_section	**split_into_sections(t_data *data, int i)
 	t_section	*current_section;
 
 	sections = malloc(sizeof(t_section *) * data->tokens_qt);
-	data->sections_qt = 0;
+	if (!sections)
+		exit(EXIT_FAILURE);
 	current_section = create_section(data->tokens_qt);
-	while (i < data->tokens_qt)
+	while (++i < data->tokens_qt)
 	{
 		if (data->tokens[i]->type == PIPE)
 		{
@@ -62,7 +67,6 @@ t_section	**split_into_sections(t_data *data, int i)
 		}
 		else
 			add_token_to_section(current_section, data->tokens[i]);
-		i++;
 	}
 	if (current_section->tokens_qt > 0)
 		sections[data->sections_qt++] = current_section;

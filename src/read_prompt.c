@@ -62,6 +62,7 @@ int	token_expand_clean(t_data *data)
 	return (0);
 }
 
+/*Funion que libera toda la estructura para el siguiente prompt*/
 void	free_for_new_prompt(t_data *data)
 {
 	free(data->prompt);
@@ -99,8 +100,9 @@ int	ft_read_prompt(t_data *data)
 		data->tokens = NULL;
 		return (0);
 	}
-	else
-		ft_sections(data);
+	//Funcion para Emilie para separar los tokens en secciones cuando hay Pipes
+	//ft_sections(data);
+	//printf("TOTAL DE SECCIONES FINAL = %d\n", data->sections_qt);
 	free_for_new_prompt(data);
 	return (0);
 }

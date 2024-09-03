@@ -42,8 +42,9 @@
 int	exit_number(char **str, t_data *data)
 {
 	long long	num;
-
+	
 	num = ft_atoi(str[1]);
+	printf("salida atoi number %lld\n", num);
 	if (!str[2])
 	{
 		if (num < 0)
@@ -53,11 +54,12 @@ int	exit_number(char **str, t_data *data)
 		write(2, "exit\n", 5);
 		//data->rt_value = num; // pas necessaire si on free derriere ?
 		final_free(data);
+		printf("exit number %lld\n", num);
 		exit (num);
 	}
 	else
 	{
-		write(2, "exit\n👯 minishell> : exit: too many arguments", 47);
+		write(2, "exit\n👯 minishell> : exit: too many arguments\n", 48);
 		// a valider avec le prompt car ne doit pas sortir du programme
 		return (data->rt_value = 1, 1);
 	}
@@ -66,17 +68,18 @@ int	exit_number(char **str, t_data *data)
 
 int	make_exit(t_tokens **str, t_data *data)
 {
-	if (!str[1] || (ft_strncmp(str[1]->value, "0", 1) == 0 && !str[2]->value))//1 arg
+	if (!str[1] || (ft_strncmp(str[1]->value, "0", 1) == 0 && !str[2]))//1 arg
 	{
 		write(2, "exit\n", 5);
-		final_free(data);
+		ft_free_data(data);
 		exit (0);
 	}
 	if (str[1]->value) // si 2 args et plus
 	{
 		if (check_minmax(str[1]->value) == 0) // est un nombre
 		{
-			//if (exit_number(str->value, data) == 1)
+			//if (exit_number((char **)data->tokens, data) == 1)
+			if (exit_number((char **)str, data) == 1)
 			return (1);
 		}
 		else
