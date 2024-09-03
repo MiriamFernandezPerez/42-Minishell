@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/26 20:40:59 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:10:37 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 	if (ft_strcmp("cd", str[0], 2) == 1)// with only relative or absolute path
 		make_cd(str, t_data *data);
 	if (ft_strcmp("pwd", str[0], 3) == 1)
-		make_pwd(void);
+		make_pwd(data);
 	if (ft_strcmp("export", str[0], 6) == 1)
 		make_export(str);
 	if (ft_strcmp("unset", str[0], 5) == 1)
@@ -137,13 +137,13 @@ void	make_echo(char **str) // avec char null a la fin
 	return ;
 }*/
 
-int	make_pwd(void)
+int	make_pwd(t_data *data)
 {
 	char	*buf;
 
 	buf = ft_calloc(1, 256 * sizeof(char));
 	if (!buf)
-		return (1);
+		ft_malloc(data, NULL);
 	if (getcwd(buf, 256) == 0)
 	{
 		printf("cannot find current directory\n");

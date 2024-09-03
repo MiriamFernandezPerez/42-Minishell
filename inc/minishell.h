@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/09/02 19:41:30 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:38:35 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int		exit_number(char **str, t_data *data);
 int		make_exit(char **str, t_data *data);
 void	make_echo(char **str);
 //void	make_rtvalue(char **str, t_data *data);
-int		make_pwd(void);
+int		make_pwd(t_data *data);
 
 //builtins_env
 t_env	*adjust_env(t_data *data, t_env *to_del);
@@ -98,7 +98,7 @@ int		make_env(t_data *data, char **str);
 //builtins_export
 void	p_exp_loop(t_env *to_print, t_env *old, t_env *current, t_env *env_lst);
 void	print_export(t_env *env_lst);
-int		check_name(char *str, int i, t_env *current);
+int		check_name(char *str, int i, t_env *current, t_data *data);
 int		check_args(char *str);
 int		make_export(char **str, t_data *data);
 
@@ -114,16 +114,21 @@ int		strncmp_long(const char *s1, const char *s2);
 
 //env
 t_env	*env_new(char *str, t_env *new_node);
-t_env	*create_env(char **env);
+t_env	*create_env(char **env, t_data *data);
 int		exp_new(char *str, t_env *new_node);
 int		create_value(t_env *new_node, int i, int j, char *str);
-int		env_array(t_data **data, char **array);
-//t_env **create_exp(char **str);
+t_env	*search_str(char *str, t_data *data);
+
+//env_array
+char	**copy_env(t_data *data, char **array, t_env *env);
+char	**env_array(t_data *data, char **array);
 
 //utils
 int		ft_strcmp(char *s1, char *s2);
 void	final_free(t_data *data);
-t_env	*search_str(char *str, t_data *data);
 int		print_errors(char **str, t_data *data, int i);
+void	ft_malloc(t_data *data, char **array, t_env *lst);
+void	free_array(char **arr);
+void	erase_lst(t_env *lst);
 
 #endif

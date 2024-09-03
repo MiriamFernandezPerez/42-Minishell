@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:25:15 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/02 18:54:53 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/03 20:19:42 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,45 +28,6 @@ int	ft_strcmp(char *s1, char *s2)
 	return (0);
 }
 
-void	final_free(t_data *data)
-{
-	t_env	*current;
-	t_env	*previous;
-
-	//parser
-	//prompt
-	if (data->env_lst)
-	{
-		previous = data->env_lst;
-		current = data->env_lst;
-		while (current)
-		{
-			if (current->name)
-				free(current->name);
-			if (current->value)
-				free(current->value);
-			current = current->next;
-			free(previous);
-			previous = current;
-		}
-	}
-	free(data);
-}
-
-t_env	*search_str(char *str, t_data *data)
-{
-	t_env	*current;
-
-	current = data->env_lst;
-	while (current)
-	{
-		if (ft_strcmp(str, current->name) == 0)
-			return (current);
-		current = current->next;
-	}
-	return (NULL);
-}
-
 int	print_errors(char **str, t_data *data, int i)
 {
 	if (i == 0)
@@ -79,6 +40,71 @@ int	print_errors(char **str, t_data *data, int i)
 	return (data->rt_value = 1, 1);
 	return (1);
 }
-//----->faire fonction si malloc fail, avec un 
-//"cannot allocate memory" et retour au prompt snas continuer l'exe, free de tout ce qui q ete fait avant
-//mais pas la structure ou l'env
+
+void	ft_malloc(t_data *data, char **array, t_env *lst)
+{
+	if (array)
+		free_array(array);
+	if (lst)
+		erase_lst(lst);
+	printf("malloc error, please check your computer's memory");
+	final_free(data);
+	exit(1);
+}
+
+void	free_array(char **array)
+{
+	size_t	i;
+
+	i = 0;
+	while (array[i] != NULL)
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}
+void	erase_lst(t_env *lst)
+{
+	t_env	*current;
+	t_env	*previous;
+
+	if (lst)
+	{
+		previous = lst;
+		current = lst;
+		while (current)
+		{
+			if (current->name)
+				free(current->name);
+			if (current->value)
+				free(current->value);
+			current = current->next;
+			free(previous);
+			previous = current;
+		}
+	}
+}
+
+void	final_free(t_data *data)
+{
+	//parser
+	//prompt
+	if (data->env_lst)
+		erase_lst(data->env_lst);
+	/*{
+		previous = data->env_lst;
+		current = data->env_lst;
+		while (current)
+		{
+			if (current->name)
+				free(current->name);
+			if (current->value)
+				free(current->value);
+			current = current->next;
+			free(previous);
+			previous = current;
+		}
+	}*/
+	free(data);
+}

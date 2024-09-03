@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:07:08 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/25 17:38:45 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:35:29 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ int	ft_initialize(t_data **data, char **env)
 	}
 	*data = malloc(sizeof(t_data));
 	if (!data)
-		return(EXIT_FAILURE); // exit?
+		return(EXIT_FAILURE);
 	(*data)->prompt = NULL;
 	(*data)->parser = NULL;
 	(*data)->rt_value = 0;
-	(*data)->env_lst = create_env(env);
+	(*data)->env_lst = create_env(env, data);
 	return(0);
 }
 

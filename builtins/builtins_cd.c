@@ -51,9 +51,12 @@ int	cd_home(char **str, t_data *data)
 	{
 		tmp = ft_calloc(1, 256);
 		if (!tmp)
-			return (1);
+			ft_malloc(data, NULL);
 		if (change_pwd(data, getcwd(tmp, 256)) == 1) // a checker si fonctionne
-			return (free (tmp), 1);
+		{
+			free (tmp);
+			ft_malloc(data, NULL);
+		}
 		return (free (tmp), 0);
 	}
 	return (print_errors(str, data, 2), 1);
@@ -76,7 +79,7 @@ int	make_cd(char **str, t_data *data)
 		if (chdir(str[1]) != 0)
 			return (print_errors(str, data, 1), 1);
 		if (change_pwd(data, str[1]) == 1)
-			return (printf("cannot change PWD and OLDPWD\n"), 1);
+			ft_malloc(data, NULL);
 	}
 	return (0);
 }

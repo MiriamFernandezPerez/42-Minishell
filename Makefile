@@ -18,6 +18,7 @@ LIB_READ = -lreadline
 
 SRC = 	minishell.c \
 		env_manage.c \
+		env_array.c \
 		maths.c \
 		builtins/builtins.c \
 		builtins/builtins_env.c \

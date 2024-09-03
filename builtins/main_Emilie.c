@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/02 19:44:49 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:46:24 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	main(int argc, char **argv, char **env)
 	(void) argv;
 	i = 0;
 	//j = 1;
-	str = NULL;
 	data = NULL;
+	str = NULL;
 	/*str = malloc((argc) * sizeof(char *));
 	while (i < argc -1)
 		str[i++] = argv[j++];
@@ -38,7 +38,7 @@ int	main(int argc, char **argv, char **env)
 	ft_initialize(&data, env);
 	//make_export(str, data);
 	//print_export(data->env_lst);
-	env_array(&data, str);
+	str = env_array(data, str);
 	while (str[i])
 	{
 		printf ("%s\n", str[i]);
@@ -52,8 +52,8 @@ int	main(int argc, char **argv, char **env)
 		printf("%s=%s FLAG=%d\n", current->name, current->value, current->flag);
 		current = current->next;
 	}*/
-	free (str);
 	final_free(data);
+	free_array(str);
 	return (0);
 }
 //verifier avec un nom _test si dans l'export et l'env

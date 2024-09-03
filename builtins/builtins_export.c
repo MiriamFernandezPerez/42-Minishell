@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/28 19:47:09 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/03 18:16:35 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	print_export(t_env *env_lst)
 	return ;
 }
 
-int	check_name(char *str, int i, t_env *current)
+int	check_name(char *str, int i, t_env *current, t_data *data)
 {
 	char	*name;
 	char	*value;
@@ -84,6 +84,8 @@ int	check_name(char *str, int i, t_env *current)
 	if (str[i] != '=')
 		return (0);
 	name = malloc((i + 1) * sizeof(char));
+	if (!name)
+		ft_malloc(data, NULL);
 	ft_strlcpy(name, str, i + 1);
 	while (current && ft_strcmp(name, current->name) != 0)
 		current = current->next;
@@ -93,6 +95,11 @@ int	check_name(char *str, int i, t_env *current)
 		while (str[i++])
 			j++;
 		value = malloc((j + 1) * sizeof(char));
+		if (!value)
+		{
+			free(name);
+			ft_malloc(data, NULL);
+		}
 		ft_strlcpy(value, &str[i - j], j + 1);
 		free(current->value);
 		current->value = value;
@@ -137,11 +144,11 @@ int	make_export(char **str, t_data *data)
 		while (str[i])
 		{
 			if ((check_args(str[i]) == 0)
-				&& (check_name(str[i], i, data->env_lst) == 0))
+				&& (check_name(str[i], i, data->env_lst, data) == 0))
 			{
 				current->next = malloc(sizeof(t_env));
 				if (!current->next)
-					return (1);
+					ft_malloc(data, NULL);
 				if (exp_new(str[i], current->next) == 1)
 					return (1);
 				current = current->next;
