@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:25:15 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/03 20:19:42 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/04 16:22:35 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	free_array(char **array)
 	}
 	free(array);
 }
+
 void	erase_lst(t_env *lst)
 {
 	t_env	*current;

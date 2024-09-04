@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:14:34 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/03 19:38:10 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/04 16:17:49 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ t_env	*env_new(char *str, t_env *new_node)
 		j++;
 	new_node->value = malloc((j + 1) * sizeof(char));
 	if (!new_node->value)
+	{
+		free (new_node->name);
 		return (free(new_node), NULL);
+	}
 	ft_strlcpy(new_node->value, &str[i - j], j);
 	new_node->value[j] = '\0';
 	if (ft_strcmp(new_node->name, "_") == 0)
@@ -51,7 +54,7 @@ t_env	*create_env(char **env, t_data *data)
 	i = 0;
 	new_node = malloc(sizeof(t_env));
 	if (!new_node)
-		ft_malloc(data, NULL);
+		ft_malloc(data, NULL, NULL);
 	env_lst = env_new(env[i], new_node);
 	temp = env_lst;
 	i++;
@@ -61,12 +64,13 @@ t_env	*create_env(char **env, t_data *data)
 		if (!new_node)
 			ft_malloc(data, NULL, env_lst);
 		env_lst->next = env_new(env[i], new_node);
+		if (!env_lst->next)
+			ft_malloc(data, NULL, env_lst);
 		env_lst = env_lst->next;
 		i++;
 	}
 	env_lst->next = '\0';
-	env_lst = temp;
-	return (env_lst);
+	return (temp);
 }
 
 /*int main(int argc, char **argv, char **env)

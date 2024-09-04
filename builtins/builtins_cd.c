@@ -51,11 +51,11 @@ int	cd_home(char **str, t_data *data)
 	{
 		tmp = ft_calloc(1, 256);
 		if (!tmp)
-			ft_malloc(data, NULL);
+			ft_malloc(data, NULL, NULL);
 		if (change_pwd(data, getcwd(tmp, 256)) == 1) // a checker si fonctionne
 		{
 			free (tmp);
-			ft_malloc(data, NULL);
+			ft_malloc(data, NULL, NULL);
 		}
 		return (free (tmp), 0);
 	}
@@ -64,10 +64,10 @@ int	cd_home(char **str, t_data *data)
 
 int	make_cd(char **str, t_data *data)
 {
-	if (str[0][2]) // normalement gerer par miriam avant, a verifier (cd plus quelque chose colle derriere)
-		return (printf("%s: command not found\n", str[0]), 1);
+	//if (str[0][2]) // a l'exe)
+	//	return (printf("%s: command not found\n", str[0]), 1);
 	if (str[1] && str[2])
-		return (print_errors(str, data,0), 1);
+		return (print_errors(str, data, 0), 1);
 	if (!str[1] || str[1][0] == '~')
 	{
 		if (cd_home(str, data) == 1)
@@ -79,7 +79,7 @@ int	make_cd(char **str, t_data *data)
 		if (chdir(str[1]) != 0)
 			return (print_errors(str, data, 1), 1);
 		if (change_pwd(data, str[1]) == 1)
-			ft_malloc(data, NULL);
+			ft_malloc(data, NULL, NULL);
 	}
 	return (0);
 }

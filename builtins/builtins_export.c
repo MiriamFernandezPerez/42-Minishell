@@ -6,30 +6,29 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/03 18:16:35 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/04 16:38:01 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	p_exp_loop(t_env *to_print, t_env *old, t_env *current, t_env *env_lst)
+void	p_exp_loop(t_env *to_print, t_env *old, t_env *cur, t_env *env_lst)
 {
 	while (to_print == old)
 	{
-		current = env_lst;
-		while (current && (current->print == 1 || current->flag == 'X'))
-			current = current->next;
-		if (!current)
+		cur = env_lst;
+		while (cur && (cur->print == 1 || cur->flag == 'X'))
+			cur = cur->next;
+		if (!cur)
 			return ;
-		to_print = current;
-		while (current)
+		to_print = cur;
+		while (cur)
 		{
-			if (current->print == 0 && (current->flag == 'v'
-					|| current->flag == 'V' || current->flag == 'W')
-				&& ft_strcmp(current->name, to_print->name) == -1
-				&& ft_strcmp(old->name, current->name) == -1)
-				to_print = current;
-			current = current->next;
+			if (cur->print == 0 && (cur->flag == 'v' || cur->flag == 'V'
+					|| cur->flag == 'W') && ft_strcmp(cur->name, to_print->name)
+				== -1 && ft_strcmp(old->name, cur->name) == -1)
+				to_print = cur;
+			cur = cur->next;
 		}
 		if (to_print->flag == 'W')
 			printf("declare -x %s\n", to_print->name);
@@ -40,7 +39,6 @@ void	p_exp_loop(t_env *to_print, t_env *old, t_env *current, t_env *env_lst)
 		old = to_print;
 		to_print->print = 1;
 	}
-	return ;
 }
 
 void	print_export(t_env *env_lst)
@@ -85,7 +83,7 @@ int	check_name(char *str, int i, t_env *current, t_data *data)
 		return (0);
 	name = malloc((i + 1) * sizeof(char));
 	if (!name)
-		ft_malloc(data, NULL);
+		ft_malloc(data, NULL, NULL);
 	ft_strlcpy(name, str, i + 1);
 	while (current && ft_strcmp(name, current->name) != 0)
 		current = current->next;
@@ -98,7 +96,7 @@ int	check_name(char *str, int i, t_env *current, t_data *data)
 		if (!value)
 		{
 			free(name);
-			ft_malloc(data, NULL);
+			ft_malloc(data, NULL, NULL);
 		}
 		ft_strlcpy(value, &str[i - j], j + 1);
 		free(current->value);
@@ -119,9 +117,10 @@ int	check_args(char *str)
 	else
 		return (printf("👯 minishell> : export: '%s': not a valid identifier\n",
 				str), 1);
-	while (str[i] && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z')
-		|| str[i] == '_' || str[i] == '=' || (str[i] >= '0' && str[i] <= '9')))
-			i++;
+	while (str[i] && ((str[i] >= 'a' && str[i] <= 'z')
+			|| (str[i] >= 'A' && str[i] <= 'Z') || str[i] == '_'
+			|| str[i] == '=' || (str[i] >= '0' && str[i] <= '9')))
+		i++;
 	if (str[i])
 		return (printf("👯 minishell> : export: '%s': not a valid identifier\n",
 				str), 1);
@@ -148,9 +147,9 @@ int	make_export(char **str, t_data *data)
 			{
 				current->next = malloc(sizeof(t_env));
 				if (!current->next)
-					ft_malloc(data, NULL);
+					ft_malloc(data, NULL, NULL);
 				if (exp_new(str[i], current->next) == 1)
-					return (1);
+					ft_malloc(data, NULL, NULL);
 				current = current->next;
 				current->next = NULL;
 			}

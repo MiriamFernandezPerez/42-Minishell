@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/03 19:10:37 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/04 16:21:08 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	exit_number(char **str, t_data *data)
 		if (num > 255)
 			num = num % 256;
 		write(2, "exit\n", 5);
-		//data->rt_value = num; // pas necessaire si on free derriere ?
 		final_free(data);
 		exit (num);
 	}
@@ -66,7 +65,7 @@ int	exit_number(char **str, t_data *data)
 
 int	make_exit(char **str, t_data *data)
 {
-	if (!str[1] || (ft_strncmp(str[1], "0", 1) == 0 && !str[2]))//1 arg
+	if (!str[1] || (ft_strncmp(str[1], "0", 1) == 0 && !str[2])) //1 arg
 	{
 		write(2, "exit\n", 5);
 		final_free(data);
@@ -143,7 +142,7 @@ int	make_pwd(t_data *data)
 
 	buf = ft_calloc(1, 256 * sizeof(char));
 	if (!buf)
-		ft_malloc(data, NULL);
+		ft_malloc(data, NULL, NULL);
 	if (getcwd(buf, 256) == 0)
 	{
 		printf("cannot find current directory\n");

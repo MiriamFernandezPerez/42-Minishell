@@ -23,7 +23,7 @@ char	**copy_env(t_data *data, char **array, t_env *env)
 		len = ft_strlen(env->name) + ft_strlen(env->value) + 2;
 		array[i] = (char *)malloc(len * sizeof(char));
 		if (!array[i])
-			ft_malloc(data, array);
+			ft_malloc(data, array, NULL);
 		if (env->name)
 		{
 			ft_strlcpy(array[i], env->name, len - ft_strlen(env->value) - 1);
@@ -37,7 +37,6 @@ char	**copy_env(t_data *data, char **array, t_env *env)
 	array[i] = '\0';
 	return (array);
 }
-
 
 char	**env_array(t_data *data, char **array)
 {
@@ -53,7 +52,7 @@ char	**env_array(t_data *data, char **array)
 	}
 	array = (char **)malloc((i + 1) * sizeof (char *));
 	if (!array)
-		ft_malloc(data, NULL);
+		ft_malloc(data, NULL, NULL);
 	env = data->env_lst;
 	array = copy_env(data, array, env);
 	return (array);
