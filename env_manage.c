@@ -6,11 +6,21 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:14:34 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/04 16:17:49 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/05 17:17:09 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+t_env	*create_flag(t_env *new_node)
+{
+	if (ft_strcmp(new_node->name, "_") == 0)
+		new_node->flag = 'X';
+	else
+		new_node->flag = 'v';
+	new_node->print = 0;
+	return (new_node);
+}
 
 t_env	*env_new(char *str, t_env *new_node)
 {
@@ -36,11 +46,7 @@ t_env	*env_new(char *str, t_env *new_node)
 	}
 	ft_strlcpy(new_node->value, &str[i - j], j);
 	new_node->value[j] = '\0';
-	if (ft_strcmp(new_node->name, "_") == 0)
-		new_node->flag = 'X';
-	else
-		new_node->flag = 'v';
-	new_node->print = 0;
+	new_node = create_flag(new_node);
 	return (new_node);
 }
 
@@ -73,18 +79,22 @@ t_env	*create_env(char **env, t_data *data)
 	return (temp);
 }
 
-/*int main(int argc, char **argv, char **env)
+/*
+int main(int argc, char **argv, char **env)
 {
+	t_data	*data;
 	t_env	*envi;
 	(void)argc;
 	(void)argv;
 	t_env	*tmp;
-	
-	envi = create_env(env);
+
+	data = NULL;
+	ft_initialize(&data, env);
+	envi = create_env(env, data);
 	tmp = envi;
 	while (envi)
 	{
-        printf("%s", envi->name);
+        printf("%s=", envi->name);
         printf("%s\n", envi->value);
 		envi = envi->next;
 	}
@@ -97,8 +107,8 @@ t_env	*create_env(char **env, t_data *data)
 		envi = envi->next;
 		free (tmp);
 	}
-	return(0);
 }*/
+
 int	create_value(t_env *new_node, int i, int j, char *str)
 {
 	if (j > 1)
@@ -149,17 +159,3 @@ int	exp_new(char *str, t_env *new_node)
 	if (new_node->value)
 		printf("VALUE= %s\n", new_node->value);
 	printf("FLAG= %d\n", new_node->flag);*/
-
-t_env	*search_str(char *str, t_data *data)
-{
-	t_env	*current;
-
-	current = data->env_lst;
-	while (current)
-	{
-		if (ft_strcmp(str, current->name) == 0)
-			return (current);
-		current = current->next;
-	}
-	return (NULL);
-}

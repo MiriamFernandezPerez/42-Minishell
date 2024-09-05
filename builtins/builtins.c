@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/04 16:21:08 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/05 20:13:14 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ int	make_pwd(t_data *data)
 		ft_malloc(data, NULL, NULL);
 	if (getcwd(buf, 256) == 0)
 	{
-		printf("cannot find current directory\n");
+		write(2, "cannot find current directory\n", 30);
 		return (free(buf), 1);
 	}
 	else

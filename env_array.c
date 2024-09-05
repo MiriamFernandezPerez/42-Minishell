@@ -57,3 +57,17 @@ char	**env_array(t_data *data, char **array)
 	array = copy_env(data, array, env);
 	return (array);
 }
+
+t_env	*search_str(char *str, t_data *data)
+{
+	t_env	*current;
+
+	current = data->env_lst;
+	while (current)
+	{
+		if (ft_strcmp(str, current->name) == 0)
+			return (current);
+		current = current->next;
+	}
+	return (NULL);
+}

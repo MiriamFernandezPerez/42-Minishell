@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/28 20:36:24 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/05 19:57:10 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,12 +107,19 @@ void	make_unset(char **str, t_data *data)
 int	make_env(t_data *data, char **str)
 {
 	t_env	*current;
-	//(void)str; // pour test impression
+
 	if (str[1])
-		return (printf(" env: '%s': No such file or directory\n", str[1]), 1);
+	{
+		write(2, "env: ", 5);
+		write(2, str[1], ft_strlen(str[1]));
+		return (write(2, ": No such file or directory\n", 28), 1);
+	}
 	current = data->env_lst;
 	if (!current)
-		return (printf("👯 minishell> : env: No such file or directory\n"), 1);
+	{
+		write(2, "👯 minishell> : env: No such file or directory\n", 49);
+		return (1);
+	}
 	while (current)
 	{
 		if (current->value)
@@ -123,7 +130,6 @@ int	make_env(t_data *data, char **str)
 	}
 	return (0);
 }
-//voir avec Miriam comment gerer si pas d.environnement pour la suite des commandes? On sort, on fait rien?
 
 /*int main(int argc, char **argv, char **env) //env
 {

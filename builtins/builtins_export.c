@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/04 16:38:01 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/05 17:59:05 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,61 +70,12 @@ void	print_export(t_env *env_lst)
 	return ;
 }
 
-int	check_name(char *str, int i, t_env *current, t_data *data)
+void	export_malloc(char **str, int i, t_env *current, t_data *data)
 {
-	char	*name;
-	char	*value;
-	int		j;
-
-	i = 0;
-	while (str[i] && str[i] != '=')
-		i++;
-	if (str[i] != '=')
-		return (0);
-	name = malloc((i + 1) * sizeof(char));
-	if (!name)
+	if (!current->next)
 		ft_malloc(data, NULL, NULL);
-	ft_strlcpy(name, str, i + 1);
-	while (current && ft_strcmp(name, current->name) != 0)
-		current = current->next;
-	if (current && ft_strcmp(name, current->name) == 0 && current->value)
-	{
-		j = 0;
-		while (str[i++])
-			j++;
-		value = malloc((j + 1) * sizeof(char));
-		if (!value)
-		{
-			free(name);
-			ft_malloc(data, NULL, NULL);
-		}
-		ft_strlcpy(value, &str[i - j], j + 1);
-		free(current->value);
-		current->value = value;
-		return (free(name), 1);
-	}
-	return (free(name), 0);
-}
-
-int	check_args(char *str)
-{
-	int	i;
-
-	i = 0;
-	if ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z')
-		|| str[i] == '_')
-		i++;
-	else
-		return (printf("👯 minishell> : export: '%s': not a valid identifier\n",
-				str), 1);
-	while (str[i] && ((str[i] >= 'a' && str[i] <= 'z')
-			|| (str[i] >= 'A' && str[i] <= 'Z') || str[i] == '_'
-			|| str[i] == '=' || (str[i] >= '0' && str[i] <= '9')))
-		i++;
-	if (str[i])
-		return (printf("👯 minishell> : export: '%s': not a valid identifier\n",
-				str), 1);
-	return (0);
+	if (exp_new(str[i], current->next) == 1)
+		ft_malloc(data, NULL, NULL);
 }
 
 int	make_export(char **str, t_data *data)
@@ -146,10 +97,7 @@ int	make_export(char **str, t_data *data)
 				&& (check_name(str[i], i, data->env_lst, data) == 0))
 			{
 				current->next = malloc(sizeof(t_env));
-				if (!current->next)
-					ft_malloc(data, NULL, NULL);
-				if (exp_new(str[i], current->next) == 1)
-					ft_malloc(data, NULL, NULL);
+				export_malloc(str, i, current, data);
 				current = current->next;
 				current->next = NULL;
 			}
@@ -158,7 +106,6 @@ int	make_export(char **str, t_data *data)
 	}
 	return (0);
 }
-//checkname= check si la variable existe ou non,
-//si exite pas, cree le node, sinon modifie la value de celui-ci
+
 //p_exp_loop = loops du print_export pour imprimer tous les nodes
 //sauf le premier

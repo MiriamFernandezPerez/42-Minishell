@@ -85,3 +85,4 @@ int	make_cd(char **str, t_data *data)
 }
 
 // cd . (on update OLDPWD qui devient = PWD ou vide si pas de PWD (unset))
+// faire cd -

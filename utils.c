@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:25:15 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/04 16:22:35 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/05 20:05:04 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,21 @@ int	ft_strcmp(char *s1, char *s2)
 int	print_errors(char **str, t_data *data, int i)
 {
 	if (i == 0)
-		printf("👯 minishell> : %s: too many arguments\n", str[0]);
+	{
+		write(2, "👯 minishell> : ", 18);
+		write(2, str[0], ft_strlen(str[0]));
+		write(2, ": too many arguments\n", 21);
+	}
 	if (i == 1)
-		printf("👯 minishell> : %s: %s: No such file or directory\n",
-			str[0], str[1]);
+	{
+		write(2, "👯 minishell> : ", 18);
+		write(2, str[0], ft_strlen(str[0]));
+		write(2, ": ", 2);
+		write(2, str[1], ft_strlen(str[1]));
+		write(2, ": No such file or directory\n", 28);
+	}
 	if (i == 2)
-		printf("cannot find 'home' directory\n");
+		write(2, "cannot find 'home' directory\n", 29);
 	return (data->rt_value = 1, 1);
 	return (1);
 }
@@ -47,7 +56,7 @@ void	ft_malloc(t_data *data, char **array, t_env *lst)
 		free_array(array);
 	if (lst)
 		erase_lst(lst);
-	printf("malloc error, please check your computer's memory");
+	write(2, "malloc error, please check your computer's memory\n", 50);
 	final_free(data);
 	exit(1);
 }
