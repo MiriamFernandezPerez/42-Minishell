@@ -16,10 +16,26 @@ INCLUDES = -I $(HEADER_DIR)
 
 LIB_READ = -lreadline
 
-SRC = minishell.c \
+SRC = 	minishell.c \
 		src/read_prompt.c\
-		src/utils.c\
-		src/tokenizer.c\
+		src/utils2.c\
+		src/parser.c\
+		src/tokenize.c\
+		src/tokenize_utils.c\
+		src/expander.c\
+		src/expander_utils.c\
+		src/verify_tokens.c\
+		src/sections.c\
+		builtins/maths.c \
+		builtins/utils.c \
+		builtins/builtins.c \
+		builtins/env_manage.c \
+		builtins/env_array.c \
+		builtins/builtins_cd.c \
+		builtins/builtins_env.c \
+		builtins/builtins_export.c \
+		builtins/builtins_export_utils.c
+		#builtins/main_Emilie.c
 
 OBJS = src/$(SRC:.c=.o)
 
@@ -30,7 +46,7 @@ all:
 	$(MAKE) $(NAME)
 	
 $(NAME): $(OBJS) libft/$(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LIB_READ) libft/$(LIBFT) -o $@ 
+	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LIB_READ) libft/$(LIBFT) -o $@
 
 %.o: %.c Makefile libft/$(LIBFT)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
