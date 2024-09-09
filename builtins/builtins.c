@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/05 20:13:14 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/09 15:20:23 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,27 @@ int	make_exit(char **str, t_data *data)
 	return(0);
 }*/
 
-void	make_echo(char **str) // avec char null a la fin
+void	make_echo(char **str)
 {
-	if (str[1])
-		write (1, str[1], ft_strlen(str[1]));
-	if (ft_strncmp(str[0], "echo -n", 7) != 0)
+	int	i;
+	int	flag;
+
+	flag = 0;
+	i = 1;
+	while (str[i])
+	{
+		if (ft_strncmp(str[i], "-n", ft_strlen(str[i])) == 0)
+			flag = 1;
+		else
+			break ;
+		i++;
+	}
+	while (str[i])
+	{
+		write (1, str[i], ft_strlen(str[i]));
+		i++;
+	}
+	if (flag == 0)
 		write(1, "\n", 1);
 	return ;
 }
