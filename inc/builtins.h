@@ -5,49 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/09/10 20:56:00 by esellier         ###   ########.fr       */
+/*   Created: 2024/07/05 22:05:00 by esellier         #+#    #+#             */
+/*   Updated: 2024/09/12 16:20:15 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-/*typedef	struct s_exe
-{
-	char	**cmd;
-	->array or lst de infile (with heredoc)
-	array or lst de outfile (ou une pour les deux)
-	->redirection lst avec les files ou a part?
-	char 	**path_array;	
-	char	*path
-	int		*fd;
-	int		flag;
-	int		*pid
-	struct t_exe	*prev;
-	struct t_exe	*next;
-}				t_exe;*/
-
-
-/*typedef struct s_cmd
-{
-	char			**arg;
-	char			***infile;
-	char			***outfile;
-	int				ar;
-	int				in;
-	int				out;
-	int				lexer_indx;
-	struct s_cmd	*prev;
-	struct s_cmd	*next;
-}	t_cmd;*/
-
 //builtins
 int		make_builtins(char **str, t_data *data);
 int		exit_number(char **str, t_data *data);
 int		make_exit(char **str, t_data *data);
+int		check_echo(char **str, int i);
 void	make_echo(char **str);
-int		make_pwd(t_data *data);
 
 //builtins_env
 t_env	*adjust_env(t_data *data, t_env *to_del);
@@ -70,6 +41,7 @@ int		make_export(char **str, t_data *data);
 int		change_pwd(t_data *data, char *str);
 int		cd_home(char **str, t_data *data);
 int		make_cd(char **str, t_data *data);
+int		make_pwd(t_data *data);
 //maths
 int		modulo_negativ(int a);
 int		check_minmax(char *str);

@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/10 18:55:17 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/12 16:02:45 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,23 @@ int	make_exit(char **str, t_data *data)
 	return (0);
 }
 
+int	check_echo(char **str, int i)
+{
+	int	j;
+
+	if (ft_strncmp(str[i], "-n", 2) == 0)
+	{
+		j = 2;
+		while (str[i][j] == 'n')
+			j++;
+		if (str[i][j] == '\0')
+			return (0);
+		else
+			return (1);
+	}
+	return (1);
+}
+
 void	make_echo(char **str)
 {
 	int	i;
@@ -100,36 +117,20 @@ void	make_echo(char **str)
 	i = 1;
 	while (str[i])
 	{
-		if (ft_strncmp(str[i], "-n", ft_strlen(str[i])) == 0)
-			flag = 1;
-		else
+		if (check_echo(str, i) == 1)
 			break ;
+		else
+			flag = 1;
 		i++;
 	}
 	while (str[i])
 	{
 		write (1, str[i], ft_strlen(str[i]));
+		if (str[i + 1])
+			write(1, " ", 1);
 		i++;
 	}
 	if (flag == 0)
 		write(1, "\n", 1);
 	return ;
 }
-
-int	make_pwd(t_data *data)
-{
-	char	*buf;
-
-	buf = ft_calloc(1, 256 * sizeof(char));
-	if (!buf)
-		ft_malloc(data, NULL, NULL);
-	if (getcwd(buf, 256) == 0)
-	{
-		write(2, "cannot find current directory\n", 30);
-		return (free(buf), 1);
-	}
-	else
-		printf("%s\n", buf);
-	return (free(buf), 0);
-}
-//getcwd = fonction qui recupere l'adresse actuelle (fonctionne si unset PWD)

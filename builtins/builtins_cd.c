@@ -86,3 +86,21 @@ int	make_cd(char **str, t_data *data)
 
 // cd . (on update OLDPWD qui devient = PWD ou vide si pas de PWD (unset))
 // faire cd -
+
+int	make_pwd(t_data *data)
+{
+	char	*buf;
+
+	buf = ft_calloc(1, 256 * sizeof(char));
+	if (!buf)
+		ft_malloc(data, NULL, NULL);
+	if (getcwd(buf, 256) == 0)
+	{
+		write(2, "cannot find current directory\n", 30);
+		return (free(buf), 1);
+	}
+	else
+		printf("%s\n", buf);
+	return (free(buf), 0);
+}
+//getcwd = fonction qui recupere l'adresse actuelle (fonctionne si unset PWD)

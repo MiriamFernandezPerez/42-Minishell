@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:07:08 by mirifern          #+#    #+#             */
-/*   Updated: 2024/09/10 20:59:58 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/12 16:01:46 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ int	main(int ac, char **av, char **env)
 		//make_builtins(arraycmd, data);
 		if (ft_read_prompt(data) == -1)
 			break ;
-		make_exit(data->tokens, data);
 	}
 	if (data)
 		ft_free_data(data);
