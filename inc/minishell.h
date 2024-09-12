@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/09/06 19:44:12 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/10 14:27:44 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # include <readline/history.h>
 # include "../libft/libft.h"
 # include <string.h>
-# include "builtins.h"
 
 # define NO_ARGS "Error. Execution don't allow arguments\n"
 # define NO_GETCWD "getcwd() error, can't read current path directory\n"
@@ -87,7 +86,10 @@ typedef struct s_data
 	int			sections_qt;
 	int			rt_value;
 	t_env		*env_lst;
-}			t_data;
+}				t_data;
+
+# include "builtins.h"
+# include "execution.h"
 
 //Main minishell.c
 void		print_sections(t_data *data);

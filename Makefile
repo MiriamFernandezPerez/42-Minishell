@@ -2,7 +2,7 @@ CC = gcc
 
 NAME = minishell
 
-HEADER_NAME = minishell.h
+HEADER_NAME = inc/minishell.h inc/builtins.h
 
 LIB_DIR = libft
 

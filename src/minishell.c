@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:07:08 by mirifern          #+#    #+#             */
-/*   Updated: 2024/09/06 19:59:14 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/10 20:59:58 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ int	ft_initialize(t_data **data, char **env)
 {
 	if (!*env)
 	{
-		write(2, "⚠️⚠️⚠️\nDear evaluator,\nplease use our program with a full 
-		set environnement 😉\n", ??);
+		write(2, "⚠️⚠️⚠️\nDear evaluator,\nplease use our ", 50);
+		write(2, "program with a full set environnement 😉\n", 43);
 		exit (EXIT_FAILURE);
 	}
 	*data = malloc(sizeof(t_data));
@@ -88,10 +88,23 @@ int	main(int ac, char **av, char **env)
 	ft_initialize(&data, env);
 	while (1)
 	{
+		//if(data->tokens->type == 0)
+		//make_builtins(arraycmd, data);
 		if (ft_read_prompt(data) == -1)
 			break ;
+		make_exit(data->tokens, data);
 	}
 	if (data)
 		ft_free_data(data);
 	return (0);
 }
+
+/*char	**create_cmd(t_section sec)
+{
+	char	**array;
+
+	array = malloc(sizeof (char *));
+	array = NULL;
+	
+	while ()
+}*/

@@ -3,65 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/09/06 20:09:03 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/10 20:56:00 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-/*# include <limits.h>
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <fcntl.h>
-# include <signal.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../libft/libft.h"
-*/
-
-/*
-typedef struct s_tokens
-{
-	char	*value;
-	char	*expander;
-	char	*TYPE (Command/file/delimiters);
-	t_tokens	*previous;
-	t_tokens	*next;
-}			t_tokens;*/
-
-typedef struct s_env
-{
-	char			*name;
-	char			*value;
-	struct s_env	*next;
-	char			flag;
-	int				print;
-}				t_env;
-
-typedef struct s_data
-{
-	char		*prompt;
-	t_parser	*parser;
-	int			rt_value;
-	t_env		*env_lst;
-
-}			t_data;
-
 /*typedef	struct s_exe
 {
 	char	**cmd;
-	array or lst de infile (with heredoc)
-	array or lst de outfile
-	redirection
+	->array or lst de infile (with heredoc)
+	array or lst de outfile (ou une pour les deux)
+	->redirection lst avec les files ou a part?
+	char 	**path_array;	
+	char	*path
+	int		*fd;
+	int		flag;
+	int		*pid
 	struct t_exe	*prev;
 	struct t_exe	*next;
-}				t_exe;
-*/
+}				t_exe;*/
+
 
 /*typedef struct s_cmd
 {
@@ -76,16 +42,8 @@ typedef struct s_data
 	struct s_cmd	*next;
 }	t_cmd;*/
 
-
-//utils.c
-void	ft_free(char **arr);
-void	ft_free_data(t_data *data);
-int		ft_msn(char *s, int fd);
-int		ft_isdelimiter(char c);
-void	print_tokens(char **arr);
-
 //builtins
-void	make_builtins(char **str, t_data *data);
+int		make_builtins(char **str, t_data *data);
 int		exit_number(char **str, t_data *data);
 int		make_exit(char **str, t_data *data);
 void	make_echo(char **str);
