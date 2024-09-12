@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/09/05 18:45:34 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/12 15:47:55 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int		make_exit(char **str, t_data *data);
 void	make_echo(char **str);
 //void	make_rtvalue(char **str, t_data *data);
 int		make_pwd(t_data *data);
+int		check_echo(char **str, int i);
 
 //builtins_env
 t_env	*adjust_env(t_data *data, t_env *to_del);
