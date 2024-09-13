@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:07:08 by mirifern          #+#    #+#             */
-/*   Updated: 2024/09/12 16:01:46 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/13 13:40:20 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ int	ft_initialize(t_data **data, char **env)
 int	main(int ac, char **av, char **env)
 {
 	t_data	*data;
+	char	**array;
+	int		i;
 
 	(void)av;
 	data = NULL;
@@ -88,22 +90,39 @@ int	main(int ac, char **av, char **env)
 	ft_initialize(&data, env);
 	while (1)
 	{
-		//if(data->tokens->type == 0)
-		//make_builtins(arraycmd, data);
+		i = 0;
 		if (ft_read_prompt(data) == -1)
 			break ;
+		array = lst_to_array(data->env_lst, data);
+		while (array[i])
+		{
+			printf("%s\n", array[i]);
+			i++;
+		}
 	}
 	if (data)
 		ft_free_data(data);
 	return (0);
 }
 
-/*char	**create_cmd(t_section sec)
+/*int	main(int ac, char **av, char **env)
 {
+	t_data	*data;
 	char	**array;
+	int i = 0;
 
-	array = malloc(sizeof (char *));
-	array = NULL;
-	
-	while ()
+	(void)ac;
+	(void)av;
+	data = NULL;
+	ft_initialize(&data, env);
+	array = lst_to_array(data->env_lst, data);
+	while (array[i])
+	{
+		printf("%s\n", array[i]);
+		i++;
+	}
+	free_array(array);
+	if (data)
+		ft_free_data(data);
+	return (0);
 }*/

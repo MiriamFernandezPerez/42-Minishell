@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:59:43 by esellier          #+#    #+#             */
-/*   Updated: 2024/07/22 18:13:42 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/13 12:23:18 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,17 @@ int	check_minmax(char *str)
 		}
 	}
 	return (1);
+}
+
+int	count_lst(t_env *lst)
+{
+	int	i;
+
+	i = 0;
+	while (lst)
+	{
+		i++;
+		lst = lst->next;
+	}
+	return (i);
 }

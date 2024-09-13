@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:25:15 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/06 19:50:27 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/13 16:36:59 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	print_errors(char **str, t_data *data, int i)
 	if (i == 2)
 		write(2, "cannot find 'home' directory\n", 29);
 	return (data->rt_value = 1, 1);
-	return (1);
 }
 
 void	ft_malloc(t_data *data, char **array, t_env *lst)

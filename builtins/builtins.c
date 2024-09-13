@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/12 16:02:45 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/13 12:55:05 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	make_builtins(char **str, t_data *data) //checker avec un pipe et autres arg
 		make_env(data, str);
 	if (ft_strcmp("exit", str[0]) == 0)
 		make_exit(str, data);
-	else // peut etre pas necessaire si type dans la structure, on vient aue si builtins
+	else
 		return(2); //pour pas confondre avec un erreur de malloc
 	//if (make_cd == 1 || make_export == 1 || make_pwd == 1 || make_env == 1
 	//	|| make_exit == 1)

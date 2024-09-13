@@ -6,29 +6,11 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:22:00 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/12 19:18:20 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/13 17:57:57 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-t_args	*structure(void)
-{
-	t_args	*args;
-
-	args = (t_args *)malloc(sizeof(t_args));
-	if (!args)
-	{
-		write(2, "Structure error\n", 16);
-		exit(1);
-	}
-	args->path = NULL;
-	args->cmd = NULL;
-	args->array = NULL;
-	args->flag = 0;
-	args->pid1 = 5;
-	args->pid2 = 5;
-	return (args);
-}
 
 void	execution(t_data *data, t_section *exe)
 {
@@ -37,16 +19,29 @@ void	execution(t_data *data, t_section *exe)
 		//revenir au prompt
 	else //plus de une section ou une non builtins
 	{
-		//creer la structure section
 		//faire la boucle
+		{
 			//creer l'enfant avec fork
-			//checker si c'est un builtins
-			//chercher le chemin d'acces du path si besoin (/bin pas besoin) + messages erreurs
-			//checker si on a les droits des fichiers et les creer et creer les fd pour chaques + messages erreurs
-			//fermer l'entree du pipe dupliquee avant l'exe et l'entree et sortie standard
-			//exe->path_array = //transfo la lst env en array au dernier moment!
-			//execve cmd + path + message erreurs
-		//suprimer les struct d'exe (pas data!)
+			while(exe->files)//checker permission des fichiers
+			{
+				exe->files->fd = create_file(exe->files->file, exe->files->red, data);
+				if (exe->files->fd == -1)
+					return (data->rt_value, retourner au prompt + free tout sauf data);
+				exe->files = exe->files->next;
+			}
+			exe->fd = exe->files->fd; //garder le dernier fd pour executer
+			if (make_builtins(char **str, data) == 2) //n 'est pas un builtins 
+			{
+				//chercher le chemin d'acces du path si besoin (/bin pas besoin) + messages erreurs
+				//fermer l'entree du pipe dupliquee avant l'exe et l'entree et sortie standard
+				if (!data->env_lst)
+					//si pas d'env retourner au prompt avec un message d'erreur
+				exe->path_array = lst_to_array(data->env_lst);
+				//execve cmd + path + message erreurs
+			}
+			//passer a la boucle suivante
+		}
+		//supprimer les struct d'exe (pas data!)
 		//revenir au prompt
 	}
 	return ;

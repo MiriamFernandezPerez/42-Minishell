@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/09/10 14:27:44 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/13 17:08:17 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <readline/history.h>
 # include "../libft/libft.h"
 # include <string.h>
+# include <errno.h>
 
 # define NO_ARGS "Error. Execution don't allow arguments\n"
 # define NO_GETCWD "getcwd() error, can't read current path directory\n"

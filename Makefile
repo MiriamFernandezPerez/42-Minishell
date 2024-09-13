@@ -2,7 +2,7 @@ CC = gcc
 
 NAME = minishell
 
-HEADER_NAME = inc/minishell.h inc/builtins.h
+HEADER_NAME = inc/minishell.h inc/builtins.h inc/execution.h
 
 LIB_DIR = libft
 
@@ -34,8 +34,10 @@ SRC = 	minishell.c \
 		builtins/builtins_cd.c \
 		builtins/builtins_env.c \
 		builtins/builtins_export.c \
-		builtins/builtins_export_utils.c
-		#builtins/main_Emilie.c
+		builtins/builtins_export_utils.c \
+		execution/exe_utils.c \
+		execution/exe_files.c \
+		execution/execution.c
 
 OBJS = src/$(SRC:.c=.o)
 

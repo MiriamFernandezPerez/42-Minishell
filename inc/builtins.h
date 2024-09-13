@@ -46,6 +46,7 @@ int		make_pwd(t_data *data);
 int		modulo_negativ(int a);
 int		check_minmax(char *str);
 int		strncmp_long(const char *s1, const char *s2);
+int     count_lst(t_env *lst);
 
 //env
 t_env	*create_flag(t_env *new_node);

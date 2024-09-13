@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 18:44:22 by mirifern          #+#    #+#             */
-/*   Updated: 2024/09/09 12:49:10 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/13 13:41:34 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int	ft_read_prompt(t_data *data)
 	//Funcion para Emilie para separar los tokens en secciones cuando hay Pipes
 	//ft_sections(data);
 	//printf("TOTAL DE SECCIONES FINAL = %d\n", data->sections_qt);
+	//crear la structura seccion por execucion
 	free_for_new_prompt(data);
 	return (0);
 }

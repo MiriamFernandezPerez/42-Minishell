@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esellier <esellier@student.42barcel>       +#+  +:+       +#+        */
+/*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:29:45 by esellier          #+#    #+#             */
-/*   Updated: 2024/05/31 18:42:46 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/13 16:16:31 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
-#include "libft/libft.h"
+#include "minishell.c"
 
 int	create_file(char *file, int i)
 {
