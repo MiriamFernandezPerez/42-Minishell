@@ -38,6 +38,7 @@ SRC = 	minishell.c \
 		execution/exe_utils.c \
 		execution/exe_files.c \
 		execution/execution.c
+		#exe_section_utils.c
 
 OBJS = src/$(SRC:.c=.o)
 

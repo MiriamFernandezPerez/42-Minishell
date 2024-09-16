@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:03:19 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/13 17:41:37 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:34:10 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,14 @@ char	*ft_strjoin_three(char const *s1, char const *s2, char const *s3)
 	return (NULL);
 }
 
-char	**lst_to_array(t_env *lst, t_data *data)
+char	**lst_to_array(t_env *lst, t_data *data, char **array)
 {
 	int		i;
-	char	**array;
 
 	i = 0;
 	array = (char **)malloc((count_lst(lst) + 1) * sizeof (char *));
+	if (!array)
+		ft_malloc(data, NULL, NULL);
 	while(lst) //+ check si les flags qui vont dans l'env sont necessaires
 	{
 		if (lst->name && lst->value)
@@ -62,6 +63,7 @@ char	**lst_to_array(t_env *lst, t_data *data)
 	array[i] = '\0';
 	return (array);
 }
+
 int	error_exe(t_data *data, char *arg, int i)
 {
 	if (i == 0)
@@ -71,14 +73,21 @@ int	error_exe(t_data *data, char *arg, int i)
 		write(2, ": ", 2);
 		write(2, strerror(errno), ft_strlen(strerror(errno)));
 		write(2, "\n", 1);
+		//et le return value?
 	}
-	/*else if (i == 1)
+	else if (i == 1)
+	{
+		write(2, arg, ft_strlen(arg));
+		write(2, ": command not found\n", 20);
+		return (data->rt_value = 127, 127);
+	}
+	/*else if (i == )
 	{
 		write(2, "👯 minishell> : ", 18);
 		write(2, arg, ft_strlen(arg));
 		write(2, ": No such file or directory\n", 28);
 	}
-	else if (i == 2)
+	else if (i == )
 	{
 		write(2, "👯 minishell> : ", 18);
 		write(2, arg, ft_strlen(arg));
@@ -87,3 +96,5 @@ int	error_exe(t_data *data, char *arg, int i)
 	*/
 	return (data->rt_value = 1, 1);
 }
+//a tester le strerror
+

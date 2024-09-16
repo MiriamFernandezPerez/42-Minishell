@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esellier <esellier@student.42barcel>       +#+  +:+       +#+        */
+/*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 16:24:56 by esellier          #+#    #+#             */
-/*   Updated: 2024/05/31 17:51:16 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/16 16:50:24 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 #include "libft/libft.h"
 
-char	**space_args(char *arg, t_args *args)
+/*char	**space_args(char *arg, t_args *args)
 {
 	int	j;
 
@@ -30,9 +30,9 @@ char	**space_args(char *arg, t_args *args)
 	args->cmd[0][j] = '\0';
 	args->cmd[1] = NULL;
 	return (args->cmd);
-}
+}*/
 
-void	check_bar(int i, char **argv, t_args *args, char *arg)
+/*void	check_bar(int i, char **argv, t_args *args, char *arg)
 {
 	if (access(arg, X_OK) == 0)
 	{
@@ -51,9 +51,9 @@ void	check_bar(int i, char **argv, t_args *args, char *arg)
 			exit (127);
 		}
 	}
-}
+}*/
 
-char	**check_args(char *arg, int i, t_args *args, char **argv)
+/*char	**check_args(char *arg, int i, t_args *args, char **argv)
 {
 	int	j;
 
@@ -75,7 +75,7 @@ char	**check_args(char *arg, int i, t_args *args, char **argv)
 			|| access(argv[4], F_OK) != 0))
 		cmd_errors(argv);
 	return (args->cmd);
-}
+}*/
 
 void	cmd_errors(char **argv)
 {

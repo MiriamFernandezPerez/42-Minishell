@@ -6,40 +6,48 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:22:00 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/13 17:57:57 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/16 18:35:59 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execution(t_data *data, t_section *exe)
+void	execution(t_data *data)
 {
-	if (data->sections_qt == 1 && make_builtins(char **str, data) == 0)
-	// == builtin et tout s'est bien passe
-		//revenir au prompt
-	else //plus de une section ou une non builtins
+	t_section	*section;
+	t_red		*red;
+
+	section = data->sections;
+	red = section->files; // voir pour passer en args de la fonction si trop long les 4 lignes ci dessus
+	if (data->sections_qt == 1 && make_builtins(section->cmd, data) == 0)
+		// == builtin et tout s'est bien passe;
+		revenir au prompt;
+	else
 	{
-		//faire la boucle
+		while (section)
 		{
 			//creer l'enfant avec fork
-			while(exe->files)//checker permission des fichiers
+			while (red->file) //checker permission des fichiers
 			{
-				exe->files->fd = create_file(exe->files->file, exe->files->red, data);
-				if (exe->files->fd == -1)
-					return (data->rt_value, retourner au prompt + free tout sauf data);
-				exe->files = exe->files->next;
+				red->fd = create_file(red->file, red->redi, data);
+				if (red->fd == -1)
+					return (data->rt_value, + free tout sauf data);
+				red = red->next;
 			}
-			exe->fd = exe->files->fd; //garder le dernier fd pour executer
-			if (make_builtins(char **str, data) == 2) //n 'est pas un builtins 
+			section->fd = red->fd; //garder le dernier fd pour executer
+			if (make_builtins(section->cmd, data) == 2) //n 'est pas un builtins 
 			{
-				//chercher le chemin d'acces du path si besoin (/bin pas besoin) + messages erreurs
-				//fermer l'entree du pipe dupliquee avant l'exe et l'entree et sortie standard
 				if (!data->env_lst)
-					//si pas d'env retourner au prompt avec un message d'erreur
-				exe->path_array = lst_to_array(data->env_lst);
-				//execve cmd + path + message erreurs
+					//si pas d'env retourner au prompt avec un message d'erreur;
+				section->path_array = lst_to_array(data->env_lst, data, section->path_array);
+				if (search_path(data, section->path_array, section) != 0);
+					return (data->rt_value, free tout sauf data);
+				//fermer l'entree du pipe dupliquee avant l'exe et l'entree et sortie standard
+				//execve cmd + path + message erreurs // on sort de l'enfant, garder le pid
 			}
-			//passer a la boucle suivante
+			//si builtins + on sort de l'enfant garder le pid
+			// a voir si ok de pas free data a la fin du hijo
+			section = section->next;
 		}
 		//supprimer les struct d'exe (pas data!)
 		//revenir au prompt

@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:25:15 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/13 16:36:59 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:48:56 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,17 +80,16 @@ void	erase_lst(t_env *lst)
 
 	if (lst)
 	{
-		previous = lst;
 		current = lst;
 		while (current)
 		{
+			previous = current;
 			if (current->name)
 				free(current->name);
 			if (current->value)
 				free(current->value);
 			current = current->next;
 			free(previous);
-			previous = current;
 		}
 	}
 }

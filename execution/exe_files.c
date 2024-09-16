@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:17:45 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/13 18:02:56 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:18:06 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,3 +44,4 @@ if(access(file, F_OK) == 0 && access(file, W_OK) != 0)
 		if (fd == -1 || access(file, R_OK | W_OK) != 0)
 			return (fd); 
 */
+//a checker si ok car pas teste le strerror
