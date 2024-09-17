@@ -6,33 +6,23 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:11:40 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/16 18:03:27 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/17 18:43:10 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*check_path(t_section *section, t_data *data, char *path_lst)
+char	*find_path_cmd(char **array, int j, t_data *data, char *tmp)
 {
-	char	**array;
-	int		j;
-	char	*tmp;
 	char	*path;
 
-	j = 0;
-	array = split_env(path_lst);
-	if (!array)
-		ft_malloc_s(data, NULL, NULL, section);
-	tmp = ft_strjoin("/", section->path);
-	if (!tmp)
-		ft_malloc_s(data, array, NULL, section);
 	while (array[j])
 	{
 		path = ft_strjoin(array[j], tmp);
 		if (!path)
 		{
 			free(tmp);
-			ft_malloc_s(data, array, NULL, section);
+			ft_malloc(data, array, NULL);
 		}
 		if (access(path, F_OK | X_OK) == 0)
 		{
@@ -45,6 +35,23 @@ char	*check_path(t_section *section, t_data *data, char *path_lst)
 	}
 	free_array(array);
 	return (NULL);
+}
+
+char	*check_path(t_section *section, t_data *data, char *path_lst)
+{
+	char	**array;
+	int		j;
+	char	*tmp;
+	char	*path;
+
+	j = 0;
+	array = split_env(path_lst);
+	if (!array)
+		ft_malloc(data, NULL, NULL);
+	tmp = ft_strjoin("/", section->path);
+	if (!tmp)
+		ft_malloc(data, array, NULL);
+	return (find_path_cmd(array, j, data, tmp));
 }
 
 int	search_path(t_data *data, char **array, t_section *section)

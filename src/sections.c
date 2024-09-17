@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   sections.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
+/*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 23:27:18 by mirifern          #+#    #+#             */
-/*   Updated: 2024/08/17 19:05:56 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:32:31 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*Funcion para liberar las secciones*/
-void	ft_free_sections(t_section **sections, int len)
+/*void	ft_free_sections(t_section **sections, int len)
 {
 	int	i;
 
@@ -25,7 +25,7 @@ void	ft_free_sections(t_section **sections, int len)
 		i++;
 	}
 	free(sections);
-}
+}*/
 
 /*anade el token a la seccion a la que pertenece*/
 void	add_token_to_section(t_section *section, t_tokens *token)

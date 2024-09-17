@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 15:55:46 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/16 17:21:09 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/17 19:06:20 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@ t_section	*ft_initialize_section(void)
 	section->files = NULL; //Miriam
 	section->path_array = NULL;
 	section->path = malloc(sizeof (char));
-	section->flag = -100;
-	section->pid = -100;
-	section->fd = -100;
+	section->flag = -2;
+	section->pid = -2;
+	section->fd_in = -2;
+	section->fd_out = -2;
 	section->next = NULL; //Miriam
 	return (section);
 }
@@ -57,7 +58,7 @@ void	ft_free_section(t_section *section)
 	}
 }
 
-void	ft_malloc_s(t_data *data, char **array, t_env *lst, t_section *sec)
+/*void	ft_malloc_s(t_data *data, char **array, t_env *lst, t_section *sec)
 {
 	if (array)
 		free_array(array);
@@ -67,4 +68,4 @@ void	ft_malloc_s(t_data *data, char **array, t_env *lst, t_section *sec)
 	ft_free_section(sec);
 	ft_free_data(data);
 	exit(1);
-}
+}*/

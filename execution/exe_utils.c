@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:03:19 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/16 17:34:10 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:39:28 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,3 @@ int	error_exe(t_data *data, char *arg, int i)
 	return (data->rt_value = 1, 1);
 }
 //a tester le strerror
-

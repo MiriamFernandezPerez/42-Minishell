@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:22:00 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/16 18:35:59 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/17 19:03:21 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,11 @@ void	execution(t_data *data)
 	{
 		while (section)
 		{
-			//creer l'enfant avec fork
-			while (red->file) //checker permission des fichiers
-			{
-				red->fd = create_file(red->file, red->redi, data);
-				if (red->fd == -1)
-					return (data->rt_value, + free tout sauf data);
-				red = red->next;
-			}
-			section->fd = red->fd; //garder le dernier fd pour executer
+			section->pid = fork();
+			if (section->pid < 0)
+				return (perror("Fork error")); + free tout sauf data?// a checker
+			if (section->pid > 0)
+				on est dans le padre? le mettre avec le fork error?
 			if (make_builtins(section->cmd, data) == 2) //n 'est pas un builtins 
 			{
 				if (!data->env_lst)
@@ -42,8 +38,9 @@ void	execution(t_data *data)
 				section->path_array = lst_to_array(data->env_lst, data, section->path_array);
 				if (search_path(data, section->path_array, section) != 0);
 					return (data->rt_value, free tout sauf data);
-				//fermer l'entree du pipe dupliquee avant l'exe et l'entree et sortie standard
+				//fermer l'entree du pipe + redirection des files si redirection
 				//execve cmd + path + message erreurs // on sort de l'enfant, garder le pid
+				//gerer la rt_value
 			}
 			//si builtins + on sort de l'enfant garder le pid
 			// a voir si ok de pas free data a la fin du hijo

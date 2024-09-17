@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:05:55 by mirifern          #+#    #+#             */
-/*   Updated: 2024/09/09 15:47:34 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:34:05 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void	ft_free_data(t_data *data)
 		}
 		if (data->sections)
 		{
-			printf("num sections = %d\n", data->sections_qt);
-			ft_free_sections(data->sections, data->sections_qt);
+			//printf("num sections = %d\n", data->sections_qt);
+			ft_free_section(data->sections);
 			data->sections = NULL;
 		}
 		if (data->env_lst)
