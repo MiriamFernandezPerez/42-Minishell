@@ -6,17 +6,17 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/13 12:55:05 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/18 19:25:04 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	make_builtins(char **str, t_data *data) //checker avec un pipe et autres args ensuite
+int	make_builtins(char **str, t_data *data)
 {
-	if (ft_strcmp("echo", str[0]) == 0)//with option -n
+	if (ft_strcmp("echo", str[0]) == 0)
 		make_echo(str);
-	if (ft_strcmp("cd", str[0]) == 0)// with only relative or absolute path
+	if (ft_strcmp("cd", str[0]) == 0)
 		make_cd(str, data);
 	if (ft_strcmp("pwd", str[0]) == 0)
 		make_pwd(data);
@@ -29,15 +29,13 @@ int	make_builtins(char **str, t_data *data) //checker avec un pipe et autres arg
 	if (ft_strcmp("exit", str[0]) == 0)
 		make_exit(str, data);
 	else
-		return(2); //pour pas confondre avec un erreur de malloc
-	//if (make_cd == 1 || make_export == 1 || make_pwd == 1 || make_env == 1
-	//	|| make_exit == 1)
-	//	return (data->rt_value = 1, 1); // voir comment gerer l'erreur dans l'exe (on stop et retourne le prompt?)
+		return (2);
+	if (make_cd == 1 || make_pwd == 1 || make_env == 1 || make_exit == 1)
+		return (data->rt_value = 1, 1);
 	return (data->rt_value = 0, 0);
 }
 
-//si n,entre pas ici cherche dans l'array du path si la commande existe, avant l'exe
- // unset retourne tjr 0 et prend tous les args sauf -l... 
+ // unset retourne tjr 0 et prend tous les args sauf -l...
  //(a manager pour tous car pas d'options pour les builtins
  
 int	exit_number(char **str, t_data *data)

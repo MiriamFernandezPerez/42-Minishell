@@ -64,8 +64,6 @@ int	cd_home(char **str, t_data *data)
 
 int	make_cd(char **str, t_data *data)
 {
-	//if (str[0][2]) // a l'exe)
-	//	return (printf("%s: command not found\n", str[0]), 1);
 	if (str[1] && str[2])
 		return (print_errors(str, data, 0), 1);
 	if (!str[1] || str[1][0] == '~')

@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:07:08 by mirifern          #+#    #+#             */
-/*   Updated: 2024/09/17 18:33:39 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/18 20:15:57 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,15 @@ int	main(int ac, char **av, char **env)
 		i = 0;
 		if (ft_read_prompt(data) == -1)
 			break ;
-		check_files(data, data->sections, (*data)->sections->files);
+		check_files(data, data->sections, data->sections[0]->files);
 		create_pipe(data);
-		//execution
+		execution(data, data->sections);
 	}
 	if (data)
 		ft_free_data(data);
 	return (0);
 }
+
 
 /*int	main(int ac, char **av, char **env)
 {

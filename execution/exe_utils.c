@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:03:19 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/17 17:39:28 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/18 20:49:21 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*ft_strjoin_three(char const *s1, char const *s2, char const *s3)
 	return (NULL);
 }
 
-char	**lst_to_array(t_env *lst, t_data *data, char **array)
+char	**lst_to_arr(t_env *lst, t_data *data, char **array)
 {
 	int		i;
 
@@ -73,7 +73,7 @@ int	error_exe(t_data *data, char *arg, int i)
 		write(2, ": ", 2);
 		write(2, strerror(errno), ft_strlen(strerror(errno)));
 		write(2, "\n", 1);
-		//et le return value?
+		return(errno); // a checker si renvoie bien!
 	}
 	else if (i == 1)
 	{
@@ -81,13 +81,14 @@ int	error_exe(t_data *data, char *arg, int i)
 		write(2, ": command not found\n", 20);
 		return (data->rt_value = 127, 127);
 	}
-	/*else if (i == )
+	else if (i == 2)
 	{
-		write(2, "👯 minishell> : ", 18);
-		write(2, arg, ft_strlen(arg));
-		write(2, ": No such file or directory\n", 28);
+		perror("Dup2 error");
+		ft_free_data(data);
+		exit(1);
 	}
-	else if (i == )
+	
+	/*else if (i == )
 	{
 		write(2, "👯 minishell> : ", 18);
 		write(2, arg, ft_strlen(arg));

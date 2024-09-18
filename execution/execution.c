@@ -6,50 +6,65 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:22:00 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/17 19:03:21 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/18 20:48:46 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execution(t_data *data)
+void	classic_exe(t_data *data, t_section *section)
 {
-	t_section	*section;
-	t_red		*red;
+	section->path_array = lst_to_arr(data->env_lst, data, section->path_array);
+	if (search_path(data, section->path_array, section) != 0)
+		return (data->rt_value);
+	if (section->fd_in != -2)
+	{
+		if (dup2(section->fd_in, STDIN_FILENO) == -1)
+			return (error_exe(data, NULL, 2)); // trouver le moyen de sortir completement
+		close (section->fd_in);
+	}
+	if (section->fd_out != -2)
+	{
+		if (dup2(section->fd_out, STDOUT_FILENO) == -1)
+			return (error_exe(data, NULL, 2));// trouver le moyen de sortir completement
+		close (section->fd_out);
+		if (section->next->fd_in != -2) // si c'est un pipe ca ferme la sortie de lecture pour pas aue ca sorte si autre chose ca fait rien car dans l'enfant
+			close (section->next->fd_in);
+	}
+	if (execve(section->path, section->cmd, section->path_array) == -1)
+		exit (error_exe(data, "execve", 0));
+}
 
-	section = data->sections;
-	red = section->files; // voir pour passer en args de la fonction si trop long les 4 lignes ci dessus
-	if (data->sections_qt == 1 && make_builtins(section->cmd, data) == 0)
-		// == builtin et tout s'est bien passe;
-		revenir au prompt;
+void	execution(t_data *data, t_section *section)
+{
+	if (data->sections_qt == 1 && make_builtins(section->cmd, data) != 2)
+		return (data->rt_value);
 	else
 	{
 		while (section)
 		{
 			section->pid = fork();
 			if (section->pid < 0)
-				return (perror("Fork error")); + free tout sauf data?// a checker
-			if (section->pid > 0)
-				on est dans le padre? le mettre avec le fork error?
-			if (make_builtins(section->cmd, data) == 2) //n 'est pas un builtins 
+				return (perror("Fork error"), ft_free_data(data), exit(1));
+			if (section->pid == 0)
 			{
-				if (!data->env_lst)
-					//si pas d'env retourner au prompt avec un message d'erreur;
-				section->path_array = lst_to_array(data->env_lst, data, section->path_array);
-				if (search_path(data, section->path_array, section) != 0);
-					return (data->rt_value, free tout sauf data);
-				//fermer l'entree du pipe + redirection des files si redirection
-				//execve cmd + path + message erreurs // on sort de l'enfant, garder le pid
-				//gerer la rt_value
+				if (make_builtins(section->cmd, data) == 2)
+					return (classic_exe(data, section));
+				if (make_builtins(section->cmd, data) == 1)
+					exit(1);
+				else
+					exit(0);
 			}
-			//si builtins + on sort de l'enfant garder le pid
-			// a voir si ok de pas free data a la fin du hijo
+			if (section->fd_out != -2)
+				close (section->fd_out);
+			if (section->fd_in != -2)
+				close (section->fd_in);
 			section = section->next;
+			//waitpid
+			// a voir si ok de pas free data a la fin du hijo
 		}
-		//supprimer les struct d'exe (pas data!)
-		//revenir au prompt
+		return (ft_free_section(data->sections), 0);
 	}
-	return ;
 }
 
 //check avec le main pour les builtins dans les sections et surtout ne pas utiliser l'execve pour eux
