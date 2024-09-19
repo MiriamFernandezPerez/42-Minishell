@@ -92,6 +92,7 @@ int	ft_read_prompt(t_data *data)
 	}
 	if (*data->prompt)
 		add_history(data->prompt);
+	set_signal();
 	if (ft_parser(data) == 1 || token_expand_clean(data) == 1)
 	{
 		free(data->prompt);

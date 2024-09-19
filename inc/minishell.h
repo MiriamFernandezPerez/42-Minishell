@@ -13,6 +13,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+//Llibraries
 # include <limits.h>
 # include <stdio.h>
 # include <unistd.h>
@@ -24,7 +25,10 @@
 # include <readline/history.h>
 # include "../libft/libft.h"
 # include <string.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
+//Errors msn
 # define NO_ARGS "Error. Execution don't allow arguments\n"
 # define NO_GETCWD "getcwd() error, can't read current path directory\n"
 # define EXIT "exit\n"
@@ -214,5 +218,11 @@ int			create_value(t_env *new_node, int i, int j, char *str);
 
 //executer.c
 void		ft_execute(t_data *data);
+
+//signals.c
+/*void		sigint(void);
+void		sigquit(void);
+void		handle_signal(int sign);*/
+/*void		set_signal(void);*/
 
 #endif

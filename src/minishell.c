@@ -80,6 +80,7 @@ int	main(int ac, char **av, char **env)
 	if (ac != 1)
 		return (ft_msn(NO_ARGS, 2));
 	ft_initialize(&data, env);
+	set_signal();
 	while (1)
 	{
 		if (ft_read_prompt(data) == -1)
