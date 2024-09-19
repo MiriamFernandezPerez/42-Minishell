@@ -6,14 +6,16 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:17:45 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/17 18:29:32 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/19 20:59:37 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*int		ft_heredoc()
-{}*/
+int	ft_heredoc()
+{
+	
+}
 
 int	create_file(char *file, int i, t_data *data)
 {
@@ -28,7 +30,7 @@ int	create_file(char *file, int i, t_data *data)
 	else if (i == HEREDOC)
 		//fd = ft_heredoc();
 	if (fd == -1)
-		return(error_exe(data, file, 0), 1);
+		error_exe(data, file, 0);
 	return (fd);
 }
 /*
@@ -69,12 +71,12 @@ void	create_pipe(t_data *data)
 	}
 }
 
-void	check_files(t_data *data, t_section *current, t_red *red)
+int	check_files(t_data *data, t_section *current, t_red *red)
 {
 	current = data->sections;
-	red = current->files;
 	while (current)
 	{
+		red = current->files;
 		while (red)
 		{
 			if (red->redi == INPUT || red->redi == HEREDOC)
@@ -90,9 +92,10 @@ void	check_files(t_data *data, t_section *current, t_red *red)
 				current->fd_out = create_file(red->file, red->redi, data);
 			}
 			if (current->fd_in == -1 || current->fd_out == -1)
-				return (data->rt_value, + free tout sauf data + retour prompt); //fichier n'existe pas
+				break ;
 			red = red->next;
 		}
 		current = current->next;
 	}
+	return (0);
 }

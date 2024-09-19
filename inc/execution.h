@@ -6,24 +6,24 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/18 20:17:49 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/19 21:21:29 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_H
 # define EXECUTION_H
 
-typedef struct s_red // Miriam expand
+typedef struct s_red // Miriam expand ->listas
 {
 	char		*file;
 	int			redi; //HEREDOC/APPEND/INPUT/TRUNC
 	t_red		*next;
 }				t_red;
 
-typedef struct s_section
+typedef struct s_section //->listas
 {
-	char		**cmd; //Miriam expand
-	t_red		**files; //Miriam expand
+	char		**cmd; //Miriam expand ->array
+	t_red		**files; //Miriam expand -> listas
 	char		**path_array; //Emilie exe
 	char		*path; //Emilie exe
 	int			flag; //Emilie exe
@@ -52,18 +52,22 @@ char		**put_path(char **array, char *str, char c, int path);
 char		**split_env(char *str);
 
 //exe
+int			builtins_exe(t_data *data, t_section *section);
 void		classic_exe(t_data *data, t_section *section);
+void		close_fd(t_section *section);
+int			ft_waitpid_status(t_section *section);
 void		execution(t_data *data, t_section *section);
 
 //exe_utils
 char		**lst_to_arr(t_env *lst, t_data *data, char **array);
 char		*ft_strjoin_three(char const *s1, char const *s2, char const *s3);
 int			error_exe(t_data *data, char *arg, int i);
+int			check_builtins(char **str);
 
 //exe_files
 int			create_file(char *file, int i, t_data *data);
 void		create_pipe(t_data *data);
-void		check_files(t_data *data, t_section *current, t_red *red);
+int			check_files(t_data *data, t_section *current, t_red *red);
 
 //path
 int			search_path(t_data *data, char **array, t_section *section);

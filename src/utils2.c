@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:05:55 by mirifern          #+#    #+#             */
-/*   Updated: 2024/09/17 17:34:05 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/19 21:12:32 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	ft_free_data(t_data *data)
 		}
 		if (data->env_lst)
 			erase_lst(data->env_lst);
-		free(data);
 	}
+	free(data);
 }
 
 //Write msn function
