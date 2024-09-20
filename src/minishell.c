@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:07:08 by mirifern          #+#    #+#             */
-/*   Updated: 2024/09/19 19:55:48 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:41:58 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ int	main(int ac, char **av, char **env)
 {
 	t_data	*data;
 	char	**array;
-	int		i;
 
 	(void)av;
 	data = NULL;
@@ -90,7 +89,6 @@ int	main(int ac, char **av, char **env)
 	ft_initialize(&data, env);
 	while (1)
 	{
-		i = 0;
 		if (ft_read_prompt(data) == -1)
 			break ;
 		check_files(data, data->sections, data->sections[0]->files);

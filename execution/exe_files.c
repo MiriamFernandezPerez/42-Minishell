@@ -6,16 +6,84 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:17:45 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/19 20:59:37 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/20 18:35:10 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_heredoc()
+int	ft_heredoc(t_data *data, t_section *section)
 {
-	
+	char	*del;
+	char	*line;
+	int		*fd;
+
+	del = section->files[0]->file; //delimitador ,check si les '' sont quites
+	if (pipe(fd) == -1)
+	{
+		perror("Pipe error");
+		ft_free_data(data);
+		exit(1);
+	}
+	if (dup2(fd[1], STDOUT_FILENO) == -1)
+		return (error_exe(data, NULL, 2));
+	close (fd[0]);
+	while (1)
+	{
+		line = readline(">");
+		if (!line)
+		{
+			ft_msn(EXIT, 2);
+			return (-1);
+		}
+		printf("%d\n", line);
+		if (ft_strcmp(line, del) == 0)
+			break ;
+	}
+	close (fd[1]);
+	//while()
+	//	add_history(?);
+	//mettre a la fin car c'est en un seul bloc que ca arrive a l'historique, peut etre pas necessaire?
+	return (fd[1]);
 }
+
+/*int	ft_heredoc(t_data *data, t_section *section)
+{
+	char	**array;
+	char	*tmp;
+	int		*fd;
+	int		i;
+
+	i = 0;
+	tmp = section->files[0]->file; //delimitador // check si les '' sont quites
+	tmp = ft_strjoin(">", tmp);
+	if (!tmp)
+		ft_malloc(data, NULL, NULL);
+	array = (char **)malloc(sizeof (char *));
+	while (1)
+	{
+		data->prompt = readline(">");
+		if (!data->prompt)
+		{
+			ft_msn(EXIT, 2);
+			return (-1);
+		}
+		array[i]= malloc(sizeof (char*))
+		if (ft_strcmp(data->prompt, tmp) == 0)
+		{
+			printf(">%s\n", data->prompt);
+			break;
+		}
+		i++;
+	}
+	if (dup2(fd[0], STDOUT_FILENO) == -1);
+		return (error_exe(data, NULL, 2));
+	while()
+		add_history(?);
+	//mettre a la fin car c'est en un seul bloc que ca arrive a l'historique
+	sans les > de debuts de lignes
+}*/
+
 
 int	create_file(char *file, int i, t_data *data)
 {

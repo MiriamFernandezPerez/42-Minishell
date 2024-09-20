@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:05:55 by mirifern          #+#    #+#             */
-/*   Updated: 2024/09/19 21:12:32 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/20 14:44:29 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,14 @@ void	ft_free_data(t_data *data)
 			ft_free_section(data->sections);
 			data->sections = NULL;
 		}
-		if (data->env_lst)
+		if (data->env_lst) // solo si exit de minishell
+		{
 			erase_lst(data->env_lst);
+			data->env_lst = NULL;
+		}
+		//data->tokens_qt = 0;
+		//data->sections_qt = 0;
+		//data->rt_value = 0;
 	}
 	free(data);
 }
