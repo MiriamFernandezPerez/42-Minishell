@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:25:15 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/16 15:48:56 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/25 18:16:13 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,20 @@ int	print_errors(char **str, t_data *data, int i)
 {
 	if (i == 0)
 	{
-		write(2, "👯 minishell> : ", 18);
+		//write(2, "👯 minishell> : ", 18);
 		write(2, str[0], ft_strlen(str[0]));
 		write(2, ": too many arguments\n", 21);
 	}
 	if (i == 1)
 	{
-		write(2, "👯 minishell> : ", 18);
+		//write(2, "👯 minishell> : ", 18);
 		write(2, str[0], ft_strlen(str[0]));
 		write(2, ": ", 2);
 		write(2, str[1], ft_strlen(str[1]));
 		write(2, ": No such file or directory\n", 28);
 	}
 	if (i == 2)
-		write(2, "cannot find 'home' directory\n", 29);
+		write(2, "getenv error: 'home' variable doesn't exist\n", 44);
 	return (data->rt_value = 1, 1);
 }
 

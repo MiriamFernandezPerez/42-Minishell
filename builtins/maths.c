@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:59:43 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/13 12:23:18 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/25 13:28:39 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,28 @@ int	strncmp_long(const char *s1, const char *s2)
 	return (0);
 }
 
+int	check_num(char *str)
+{
+	int	i;
+
+	i = 0;
+	while ((str[i] >= 9 && str[i] <= 13) || (str[i] == 32))
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	while (str[i])
+	{
+		if (str[i] < '0' || str[i] > '9')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	check_minmax(char *str)
 {
+	if (check_num(str) == 1)
+		return (1);
 	if ((ft_atoi(str) != 0 || ft_strncmp(str, "0", 1) == 0)
 		|| ft_strncmp(str, "-9223372036854775808", 20) == 0)
 	{

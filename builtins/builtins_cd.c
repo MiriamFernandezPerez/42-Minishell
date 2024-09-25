@@ -12,53 +12,73 @@
 
 #include <minishell.h>
 
-int	change_pwd(t_data *data, char *str)
+void	ft_free_cd(t_data *data, char *old, char *new, int i)
+{
+	if (i == 0)
+	{
+		free (old);
+		free (new);
+		ft_malloc(data, NULL, NULL);
+		return ;
+	}
+	if (i == 1)
+	{
+		perror("getcwd error: ");
+		free (new);
+		free (old);
+		return ;
+	}
+}
+
+int	change_pwd(t_data *data, char *old, char *new)
 {
 	t_env	*current;
 	t_env	*previous;
 
 	current = search_str("PWD", data);
 	previous = search_str("OLDPWD", data);
-	if (!current || !previous)
-		return (1);
 	if (previous)
 	{
 		free (previous->value);
-		if (current)
-			previous->value = ft_strdup(current->value);
-		else
-			previous->value = ft_strdup('\0');
+		previous->value = ft_strdup(old);
 		if (!previous->value)
-			return (1);
+			ft_free_cd(data, old, new, 0);
 	}
 	if (current)
 	{
 		free (current->value);
-		current->value = ft_strdup(str);
+		current->value = ft_strdup(new);
 		if (!current->value)
-			return (1);
+			ft_free_cd(data, old, new, 0);
 	}
+	free (old);
+	free (new);
 	return (0);
 }
 
 int	cd_home(char **str, t_data *data)
 {
-	char	*tmp;
+	char	*old_buf;
+	char	*new_buf;
 
-	if (str[1] && str[1][1]) // si quelque chose apres ~
+	if (str[1] && str[1][1])
 		return (print_errors(str, data, 1), 1);
+	old_buf = ft_calloc(1, 256);
+	if (!old_buf)
+		ft_malloc(data, NULL, NULL);
+	new_buf = ft_calloc(1, 256);
+	if (! new_buf)
+		ft_malloc(data, NULL, NULL);
+	if (getcwd(old_buf, 256) == 0)
+		return (ft_free_cd(NULL, old_buf, new_buf, 1), 1);
 	if (chdir(getenv("HOME")) == 0)
 	{
-		tmp = ft_calloc(1, 256);
-		if (!tmp)
-			ft_malloc(data, NULL, NULL);
-		if (change_pwd(data, getcwd(tmp, 256)) == 1) // a checker si fonctionne
-		{
-			free (tmp);
-			ft_malloc(data, NULL, NULL);
-		}
-		return (free (tmp), 0);
+		if (getcwd(new_buf, 256) == 0)
+			return (ft_free_cd(NULL, old_buf, new_buf, 1), 1);
+		return (change_pwd(data, old_buf, new_buf));
 	}
+	free (old_buf);
+	free(new_buf);
 	return (print_errors(str, data, 2), 1);
 }
 
@@ -82,9 +102,6 @@ int	make_cd(char **str, t_data *data)
 	return (0);
 }
 
-// cd . (on update OLDPWD qui devient = PWD ou vide si pas de PWD (unset))
-// faire cd -
-
 int	make_pwd(t_data *data)
 {
 	char	*buf;
@@ -94,7 +111,7 @@ int	make_pwd(t_data *data)
 		ft_malloc(data, NULL, NULL);
 	if (getcwd(buf, 256) == 0)
 	{
-		write(2, "cannot find current directory\n", 30);
+		perror("getcwd error: ");
 		return (free(buf), 1);
 	}
 	else
@@ -102,3 +119,5 @@ int	make_pwd(t_data *data)
 	return (free(buf), 0);
 }
 //getcwd = fonction qui recupere l'adresse actuelle (fonctionne si unset PWD)
+//chdir = changer de dossier, ouvrir celui indiquer et y aller
+//getenv = choppe une ligne dans l'environnement

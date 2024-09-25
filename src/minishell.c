@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:07:08 by mirifern          #+#    #+#             */
-/*   Updated: 2024/09/20 15:41:58 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/25 16:48:53 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	print_tokens(t_data *data)
 y hace una copia del environment*/
 int	ft_initialize(t_data **data, char **env)
 {
-	if (!*env)
+	if (!*env) //bloquer certaines lignes de code de l'env?
 	{
 		write(2, "⚠️⚠️⚠️\nDear evaluator,\nplease use our ", 50);
 		write(2, "program with a full set environnement 😉\n", 43);
