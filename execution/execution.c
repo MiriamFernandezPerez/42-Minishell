@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:22:00 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/20 14:38:57 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/26 17:51:43 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 int	builtins_exe(t_data *data, t_section *section)
 {
 	if (section->fd_in == -1 || section->fd_out == -1)
-		return (data->rt_value);
+		exit (1);
 	if (section->fd_in != -2)
 	{
 		if (dup2(section->fd_in, STDIN_FILENO) == -1)
-			return (error_exe(data, NULL, 2)); // trouver le moyen de sortir completement
+			return (error_exe(data, NULL, 2), data->rt_value);
 		close (section->fd_in);
 	}
 	if (section->fd_out != -2)
 	{
 		if (dup2(section->fd_out, STDOUT_FILENO) == -1)
-			return (error_exe(data, NULL, 2));// trouver le moyen de sortir completement
+			return (error_exe(data, NULL, 2), data->rt_value);
 		close (section->fd_out);
 	}
 	data->rt_value = make_builtins(section->cmd, data);
@@ -43,15 +43,15 @@ void	classic_exe(t_data *data, t_section *section)
 	if (section->fd_in != -2)
 	{
 		if (dup2(section->fd_in, STDIN_FILENO) == -1)
-			return (error_exe(data, NULL, 2)); // trouver le moyen de sortir completement
+			return (error_exe(data, NULL, 2), data->rt_value);
 		close (section->fd_in);
 	}
 	if (section->fd_out != -2)
 	{
 		if (dup2(section->fd_out, STDOUT_FILENO) == -1)
-			return (error_exe(data, NULL, 2));// trouver le moyen de sortir completement
+			return (error_exe(data, NULL, 2), data->rt_value);
 		close (section->fd_out);
-		if (section->next->fd_in != -2) // si c'est un pipe ca ferme la sortie de lecture pour pas aue ca sorte si autre chose ca fait rien car dans l'enfant
+		if (section->next && section->next->fd_in != -2)// si c'est un pipe ca ferme la sortie de lecture pour pas aue ca sorte si autre chose ca fait rien car dans l'enfant
 			close (section->next->fd_in);
 	}
 	if (execve(section->path, section->cmd, section->path_array) == -1)
@@ -125,13 +125,13 @@ void	execution(t_data *data, t_section *section)
 		if (section->pid == 0)
 		{
 			if (check_builtins(section->cmd) == 1)
-				return (classic_exe(data, section)); // si exit 1 = erreur dup2
-			else if (make_builtins(section->cmd, data) == 1)
-				exit(1);
+				return (classic_exe(data, section), data ->rt_value);
 			else
-				exit(0);
+				return (make_builtins(section->cmd, data), data->rt_value)
 			// a voir si ok de pas free la data a la fin du hijo
 		}
+		if (data->rt_value == -1) // comment faire car change dans l'enfant et pas le padre le rt_value
+			exit(1);
 		close_fd(section);
 		section = section->next;
 	}

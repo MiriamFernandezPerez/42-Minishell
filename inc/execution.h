@@ -6,43 +6,12 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/20 18:37:13 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/26 16:59:22 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_H
 # define EXECUTION_H
-
-typedef struct s_red // Miriam expand ->listas
-{
-	char		*file;
-	int			redi; //HEREDOC/APPEND/INPUT/TRUNC
-	t_red		*next;
-}				t_red;
-
-typedef struct s_section //->listas
-{
-	char		**cmd; //Miriam expand ->array
-	t_red		**files; //Miriam expand -> listas
-	char		**path_array; //Emilie exe
-	char		*path; //Emilie exe
-	int			flag; //Emilie exe
-	int			pid; //Emilie exe
-	int			fd_in; //Emilie exe
-	int			fd_out; //Emilie exe
-	t_section	*next; //Miriam expand
-}				t_section;
-
-typedef struct s_data
-{
-	char		*prompt;
-	t_tokens	**tokens;
-	t_section	**sections;
-	int			tokens_qt;
-	int			sections_qt;
-	int			rt_value;
-	t_env		*env_lst;
-}				t_data;
 
 //split
 int			count_path(char *str, char c);

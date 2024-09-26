@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/09/13 17:08:17 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/26 17:11:32 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # include "../libft/libft.h"
 # include <string.h>
 # include <errno.h>
+# include "builtins.h"
+# include "execution.h"
 
 # define NO_ARGS "Error. Execution don't allow arguments\n"
 # define NO_GETCWD "getcwd() error, can't read current path directory\n"
@@ -59,38 +61,55 @@
 
 typedef struct s_env
 {
-	char			*name;
-	char			*value;
-	struct s_env	*next;
-	char			flag;
-	int				print;
-}				t_env;
+	char				*name;
+	char				*value;
+	struct s_env		*next;
+	char				flag;
+	int					print;
+}						t_env;
 
 typedef struct s_tokens
 {
-	char	*value;
-	int		type;
-}			t_tokens;
+	char				*value;
+	int					type;
+}						t_tokens;
 
-typedef struct s_section
+typedef struct s_red // Miriam expand ->listas
 {
-	t_tokens	**tokens;
-	int			tokens_qt;
-}				t_section;
+	char				*file;
+	int					redi; //HEREDOC/APPEND/INPUT/TRUNC
+	t_red				*next;
+}						t_red;
+
+typedef struct s_section //->listas
+{
+	char				**cmd; //Miriam expand ->array
+	t_red				**files; //Miriam expand -> listas
+	char				**path_array; //Emilie exe
+	char				*path; //Emilie exe
+	int					flag; //Emilie exe
+	int					pid; //Emilie exe
+	int					fd_in; //Emilie exe
+	int					fd_out; //Emilie exe
+	t_section			*next; //Miriam expand
+}						t_section;
 
 typedef struct s_data
 {
-	char		*prompt;
-	t_tokens	**tokens;
-	t_section	**sections;
-	int			tokens_qt;
-	int			sections_qt;
-	int			rt_value;
-	t_env		*env_lst;
-}				t_data;
+	char				*prompt;
+	t_tokens			**tokens;
+	t_section			**sections;
+	int					tokens_qt;
+	int					sections_qt;
+	int					rt_value;
+	t_env				*env_lst;
+}						t_data;
 
-# include "builtins.h"
-# include "execution.h"
+/*typedef struct s_section
+{
+	t_tokens	**tokens;
+	int			tokens_qt;
+}				t_section;*/
 
 //Main minishell.c
 void		print_sections(t_data *data);

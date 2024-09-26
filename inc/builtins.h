@@ -39,16 +39,16 @@ int		make_export(char **str, t_data *data);
 
 //builtins_cd
 void	ft_free_cd(t_data *data, char *old, char *new, int i);
-int		change_pwd(t_data *data, char *str);
+int		change_pwd(t_data *data, char *old, char *new);
 int		cd_home(char **str, t_data *data);
 int		make_cd(char **str, t_data *data);
 int		make_pwd(t_data *data);
 //maths
 int		modulo_negativ(int a);
-int     check_num(char *str);
+int		check_num(char *str);
 int		check_minmax(char *str);
 int		strncmp_long(const char *s1, const char *s2);
-int     count_lst(t_env *lst);
+int		count_lst(t_env *lst);
 
 //env
 t_env	*create_flag(t_env *new_node);

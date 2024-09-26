@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:03:19 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/19 20:20:57 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/26 17:38:08 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	error_exe(t_data *data, char *arg, int i)
 {
 	if (i == 0)
 	{
-		write(2, "👯 minishell> : ", 18);
+		//write(2, "👯 minishell> : ", 18);
 		write(2, arg, ft_strlen(arg));
 		write(2, ": ", 2);
 		write(2, strerror(errno), ft_strlen(strerror(errno)));
@@ -84,7 +84,7 @@ int	error_exe(t_data *data, char *arg, int i)
 	{
 		perror("Dup2 error");
 		ft_free_data(data);
-		exit(1);
+		return (data->rt_value = -1);
 	}
 	
 	/*else if (i == )

@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:25:15 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/25 18:16:13 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/26 16:38:05 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	print_errors(char **str, t_data *data, int i)
 		write(2, ": No such file or directory\n", 28);
 	}
 	if (i == 2)
-		write(2, "getenv error: 'home' variable doesn't exist\n", 44);
+		write(2, "bash: cd: HOME not set\n", 23);
 	return (data->rt_value = 1, 1);
 }
 

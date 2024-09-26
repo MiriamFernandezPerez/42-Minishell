@@ -35,10 +35,12 @@ SRC = 	minishell.c \
 		builtins/builtins_env.c \
 		builtins/builtins_export.c \
 		builtins/builtins_export_utils.c \
-		execution/exe_utils.c \
 		execution/exe_files.c \
+		execution/exe_path.c \
+		execution/exe_section_utils.c \
+		execution/exe_split.c \
+		execution/exe_utils.c \
 		execution/execution.c
-		#exe_section_utils.c
 
 OBJS = src/$(SRC:.c=.o)
 
