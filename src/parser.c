@@ -117,13 +117,6 @@ acepta pipes en medio pero las que esten dentro de comillas no las detecte
 como pipes, sino como texto plano*/
 int	ft_parser(t_data *data)
 {
-	char	*trim_input;
-
-	if (!data->prompt)
-		exit(EXIT_FAILURE);
-	trim_input = ft_strtrim(data->prompt, " ");
-	ft_strlcpy(data->prompt, trim_input, ft_strlen(trim_input) + 1);
-	free(trim_input);
 	if (find_quotes(data->prompt, 0, 0) == 1
 		|| find_pipes(data->prompt) == 1 || find_others(data->prompt) == 1)
 	{

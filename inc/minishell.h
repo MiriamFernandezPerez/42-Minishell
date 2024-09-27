@@ -47,7 +47,6 @@
 # define TOKEN_SIZE 64
 
 //delimiters
-# define CMD 0 // Command
 # define SPACES 1 //Spaces and tabs
 # define PIPE 2 // |
 # define INPUT 3 // <
@@ -69,23 +68,38 @@ typedef struct s_env
 	int				print;
 }				t_env;
 
+typedef struct s_red // Miriam expand ->listas
+{
+	char			*file;
+	int				redi; //HEREDOC/APPEND/INPUT/TRUNC
+	struct s_red	*next;
+}					t_red;
+
+typedef struct s_section //->listas
+{
+	char				**cmd; //Miriam expand ->array
+	t_red				*files; //Miriam expand -> listas
+	char				**path_array; //Emilie exe
+	char				*path; //Emilie exe
+	int					flag; //Emilie exe
+	int					pid; //Emilie exe
+	int					fd_in; //Emilie exe
+	int					fd_out; //Emilie exe
+	int					tokens_qt; //lo necesito???
+	struct s_section	*next; //Miriam expand
+}						t_section;
+
 typedef struct s_tokens
 {
 	char	*value;
 	int		type;
 }			t_tokens;
 
-typedef struct s_section
-{
-	t_tokens	**tokens;
-	int			tokens_qt;
-}				t_section;
-
 typedef struct s_data
 {
 	char		*prompt;
 	t_tokens	**tokens;
-	t_section	**sections;
+	t_section	*sections;
 	int			tokens_qt;
 	int			sections_qt;
 	int			rt_value;
@@ -104,6 +118,9 @@ int			only_spaces(char *s);
 int			token_expand_clean(t_data *data);
 void		free_for_new_prompt(t_data *data);
 int			ft_read_prompt(t_data *data);
+
+//read_prompt_utils.c
+void    trim_prompt(t_data *data);
 
 //parse.c
 int			end_quote(char *input, char c, int i);
@@ -168,11 +185,18 @@ int			verify_previous_type(t_data *d, int i, char *value);
 int			verify_next_type(t_data *d);
 
 //sections.c
-void		ft_free_sections(t_section **section, int len);
-void		add_token_to_section(t_section *section, t_tokens *token);
-t_section	*create_section(int tokens_qt);
-t_section	**split_into_sections(t_data *data, int i);
+t_section	*create_node(void);
+void		add_redir(t_section *temp_section, t_data *data, int i);
+int			ft_isredir(int type);
+void		init_sections(t_data *data);
 void		ft_sections(t_data *data);
+
+//sections_utils.c
+void		add_first_redir(t_section *section, t_tokens **tokens, int i);
+void		add_rest_redir(t_section *section, t_tokens **tokens, int i);
+char		**create_cmd(t_section *section, char *arg);
+int			size_cmd(char **cmd);
+char		**add_arg(t_section *section, char *arg);
 
 //builtins
 void		make_builtins(char **str, t_data *data);

@@ -6,7 +6,7 @@
 /*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 18:44:22 by mirifern          #+#    #+#             */
-/*   Updated: 2024/08/13 21:34:24 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/09/28 00:38:35 by mirifern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	free_for_new_prompt(t_data *data)
 	data->prompt = NULL;
 	ft_free(data->tokens);
 	data->tokens = NULL;
-	ft_free_sections(data->sections, data->sections_qt);
 	data->sections = NULL;
 }
 
@@ -86,24 +85,23 @@ int	ft_read_prompt(t_data *data)
 {
 	data->prompt = readline("\033[1;34m👯 minishell> \033[0m");
 	if (!data->prompt)
-	{
-		ft_msn(EXIT, 2);
-		return (-1);
-	}
-	if (*data->prompt)
+		return (ft_msn(EXIT, 2), -1);
+	trim_prompt(data);
+	if (data->prompt && !data->prompt[0])
+		return (0);
+	else if (data->prompt)
 		add_history(data->prompt);
-	set_signal();
 	if (ft_parser(data) == 1 || token_expand_clean(data) == 1)
 	{
+		//Podria utilizar una funcion general para liberar?
 		free(data->prompt);
 		data->prompt = NULL;
 		ft_free(data->tokens);
 		data->tokens = NULL;
 		return (0);
 	}
-	//Funcion para Emilie para separar los tokens en secciones cuando hay Pipes
-	//ft_sections(data);
-	//printf("TOTAL DE SECCIONES FINAL = %d\n", data->sections_qt);
+	ft_sections(data);
+	print_sections(data);
 	free_for_new_prompt(data);
 	return (0);
 }
