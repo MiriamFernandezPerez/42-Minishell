@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/27 19:09:58 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/27 19:11:51 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,5 @@ int	check_args(char *str)
 }
 
 //checkname= check si la variable existe ou non,
-//si exite pas, cree le node, sinon modifie la value de celui-ci
+//si exite pas, cree le node, sinon modifie la value de celui-ci, 
+//changer le flag si mtn s'imprime dans l'env et pas avant
