@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_Emilie.c                                      :+:      :+:    :+:   */
+/*   TO DELATE_main_Emilie.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/06 19:49:07 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/27 17:54:03 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,3 @@ int	main(int argc, char **argv, char **env)
 }
 //verifier avec un nom _test si dans l'export et l'env
 
-//ATTENTION Miriam envoie les args separes de la cmd, changer les fonctions comme ca

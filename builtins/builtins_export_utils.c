@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_export_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/06 18:40:43 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/27 19:09:58 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,17 @@ int	check_name(char *str, int i, t_env *current, t_data *data)
 	ft_strlcpy(name, str, i + 1);
 	while (current && ft_strcmp(name, current->name) != 0)
 		current = current->next;
-	if (current && ft_strcmp(name, current->name) == 0 && current->value)
+	if (current && ft_strcmp(name, current->name) == 0) //&& current->value
 	{
 		j = 0;
 		while (str[i++])
 			j++;
 		value = check_value(data, j, name);
 		ft_strlcpy(value, &str[i - j], j + 1);
-		free(current->value);
+		if (current->value)
+			free(current->value);
 		current->value = value;
+		current->flag = 'v'; //new
 		return (free(name), 1);
 	}
 	return (free(name), 0);

@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:03:19 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/26 17:38:08 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:46:30 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	error_exe(t_data *data, char *arg, int i)
 {
 	if (i == 0)
 	{
-		//write(2, "👯 minishell> : ", 18);
+		//write(2, "👯 minishell> : ", 18); //a tester le strerror
 		write(2, arg, ft_strlen(arg));
 		write(2, ": ", 2);
 		write(2, strerror(errno), ft_strlen(strerror(errno)));
@@ -86,26 +86,16 @@ int	error_exe(t_data *data, char *arg, int i)
 		ft_free_data(data);
 		return (data->rt_value = -1);
 	}
-	
-	/*else if (i == )
-	{
-		write(2, "👯 minishell> : ", 18);
-		write(2, arg, ft_strlen(arg));
-		write(2, ": Permission denied\n", 20);
-	}
-	*/
 	return (data->rt_value = 1, 1);
 }
-//a tester le strerror
 
 int	check_builtins(char **str)
 {
 	if ((ft_strcmp("echo", str[0]) == 0) || (ft_strcmp("cd", str[0]) == 0)
-	|| (ft_strcmp("pwd", str[0]) == 0) || (ft_strcmp("export", str[0]) == 0)
-	|| (ft_strcmp("unset", str[0]) == 0) || (ft_strcmp("env", str[0]) == 0)
-	|| (ft_strcmp("exit", str[0]) == 0))
+		|| (ft_strcmp("pwd", str[0]) == 0) || (ft_strcmp("export", str[0]) == 0)
+		|| (ft_strcmp("unset", str[0]) == 0) || (ft_strcmp("env", str[0]) == 0)
+		|| (ft_strcmp("exit", str[0]) == 0))
 		return (0);
 	else
 		return (1);
 }
-//return 0 si builtins et 1 si non

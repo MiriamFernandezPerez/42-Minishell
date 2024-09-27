@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 15:55:46 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/17 19:06:20 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/27 16:35:08 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,10 @@ t_section	*ft_initialize_section(void)
 	return (section);
 }
 
-void	ft_free_section(t_section *section)
+void	ft_free_section(t_section *section, t_section *previous)
 {
 	t_red		*red;
 	t_red		*prev;
-	t_section	*previous;
 
 	while (section)
 	{
@@ -53,6 +52,7 @@ void	ft_free_section(t_section *section)
 			free_array(section->path_array);
 		if (section->path)
 			free(section->path);
+		close_fd(section);
 		section = section->next;
 		free(previous);
 	}
@@ -69,3 +69,12 @@ void	ft_free_section(t_section *section)
 	ft_free_data(data);
 	exit(1);
 }*/
+
+void	close_fd(t_section *section)
+{
+	if (section->fd_out > -1)
+		close (section->fd_out);
+	if (section->fd_in > -1)
+		close (section->fd_in);
+	return ;
+}

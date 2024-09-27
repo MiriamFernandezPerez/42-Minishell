@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:22:00 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/26 17:51:43 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/27 16:48:44 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	builtins_exe(t_data *data, t_section *section)
 	return (data->rt_value);
 }
 
-void	classic_exe(t_data *data, t_section *section)
+int	classic_exe(t_data *data, t_section *section)
 {
 	if (section->fd_in == -1 || section->fd_out == -1)
 		exit (1);
@@ -58,14 +58,6 @@ void	classic_exe(t_data *data, t_section *section)
 		exit (error_exe(data, "execve", 0));
 }
 
-void	close_fd(t_section *section)
-{
-	if (section->fd_out != -2)
-		close (section->fd_out);
-	if (section->fd_in != -2)
-		close (section->fd_in);
-	return ;
-}
 
 /*int	*ft_waitpid(t_section *section)
 {
@@ -125,16 +117,19 @@ void	execution(t_data *data, t_section *section)
 		if (section->pid == 0)
 		{
 			if (check_builtins(section->cmd) == 1)
-				return (classic_exe(data, section), data ->rt_value);
+				data->rt_value = classic_exe(data, section);
 			else
-				return (make_builtins(section->cmd, data), data->rt_value)
+				data->rt_value = make_builtins(section->cmd, data);
 			// a voir si ok de pas free la data a la fin du hijo
 		}
-		if (data->rt_value == -1) // comment faire car change dans l'enfant et pas le padre le rt_value
-			exit(1);
+		if (data->rt_value == -1)
+		{
+			ft_free_data(data);
+			exit (1);
+		}
 		close_fd(section);
 		section = section->next;
 	}
 	data->rt_value = ft_waitpid_status(data->sections);
-	return (ft_free_section(data->sections), data->rt_value);
+	return (ft_free_section(data->sections[0], section), data->rt_value);
 }

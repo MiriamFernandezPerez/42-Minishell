@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:14:34 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/05 17:17:09 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/27 19:09:11 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int main(int argc, char **argv, char **env)
 
 int	create_value(t_env *new_node, int i, int j, char *str)
 {
-	if (j > 1)
+	if (j > 0) // j > 1
 	{
 		new_node->value = malloc((j + 1) * sizeof(char));
 		if (!new_node->value)
@@ -142,13 +142,20 @@ int	exp_new(char *str, t_env *new_node)
 		j++;
 	if (create_value(new_node, i, j, str) == 1)
 		return (1);
-	if (j < 2)
+	new_node->flag = 'v';
+	if (j == 0)
+		new_node->value = '\0';
+	if (j == 0)
+		new_node->flag = 'W';
+	if (str[i] == '=')
+		new_node->flag = 'V';
+	/*if (j < 2)
 		new_node->value = '\0';
 	new_node->flag = 'v';
 	if (j == 1)
 		new_node->flag = 'V';
 	if (j == 0)
-		new_node->flag = 'W';
+		new_node->flag = 'W';*/
 	new_node->print = 0;
 	return (0);
 }

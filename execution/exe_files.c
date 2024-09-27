@@ -6,19 +6,18 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:17:45 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/20 18:35:10 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:42:50 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_heredoc(t_data *data, t_section *section)
+int	ft_heredoc(t_data *data, char *del)
 {
-	char	*del;
+	char	*del; //delimitador ,checker avec Miriam si les '' sont quites
 	char	*line;
 	int		*fd;
 
-	del = section->files[0]->file; //delimitador ,check si les '' sont quites
 	if (pipe(fd) == -1)
 	{
 		perror("Pipe error");
@@ -26,7 +25,10 @@ int	ft_heredoc(t_data *data, t_section *section)
 		exit(1);
 	}
 	if (dup2(fd[1], STDOUT_FILENO) == -1)
-		return (error_exe(data, NULL, 2));
+	{
+		error_exe(data, NULL, 2);
+		exit (1);
+	}
 	close (fd[0]);
 	while (1)
 	{
@@ -42,9 +44,9 @@ int	ft_heredoc(t_data *data, t_section *section)
 	}
 	close (fd[1]);
 	//while()
-	//	add_history(?);
-	//mettre a la fin car c'est en un seul bloc que ca arrive a l'historique, peut etre pas necessaire?
-	return (fd[1]);
+	//	add_history(?); //voir avec Miriam si cest pas deja fait par le prompt
+	//mettre a la fin car c'est en un seul bloc que ca arrive a l'historique
+	return (fd[0]);
 }
 
 /*int	ft_heredoc(t_data *data, t_section *section)
@@ -87,7 +89,7 @@ int	ft_heredoc(t_data *data, t_section *section)
 
 int	create_file(char *file, int i, t_data *data)
 {
-	int	fd;
+	int		fd;
 
 	if (i == INPUT)
 		fd = open(file, O_RDONLY);
@@ -96,7 +98,7 @@ int	create_file(char *file, int i, t_data *data)
 	else if (i == APPEND)
 		fd = open(file, O_CREAT | O_APPEND | O_WRONLY, 0644);
 	else if (i == HEREDOC)
-		//fd = ft_heredoc();
+		fd = ft_heredoc(data, file);
 	if (fd == -1)
 		error_exe(data, file, 0);
 	return (fd);
