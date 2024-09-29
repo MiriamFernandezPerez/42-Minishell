@@ -27,7 +27,7 @@ t_section	*create_node(void)
 	return (node);
 }
 
-void	add_redir(t_section *temp_section, t_data *data, int i)
+void	add_redir(t_section *temp_section, t_data *data, int *i)
 {
 	if (!temp_section->cmd)
 		add_first_redir(temp_section, data->tokens, i);
@@ -64,7 +64,7 @@ void	ft_sections(t_data *data)
 	while (data->tokens[i])
 	{
 		if (ft_isredir(data->tokens[i]->type))
-			add_redir(temp_section, data, i);
+			add_redir(temp_section, data, &i);
 		else if (data->tokens[i]->type == ARG)
 			temp_section->cmd = add_arg(temp_section, data->tokens[i]->value);
 		else if (data->tokens[i]->type == PIPE)

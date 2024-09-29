@@ -69,6 +69,11 @@ void	free_for_new_prompt(t_data *data)
 	data->prompt = NULL;
 	ft_free(data->tokens);
 	data->tokens = NULL;
+	if (data->sections)
+	{
+		printf("hay secciones\n");
+		/* anadir funcion para liberar las secciones*/
+	}
 	data->sections = NULL;
 }
 
@@ -92,16 +97,8 @@ int	ft_read_prompt(t_data *data)
 	else if (data->prompt)
 		add_history(data->prompt);
 	if (ft_parser(data) == 1 || token_expand_clean(data) == 1)
-	{
-		//Podria utilizar una funcion general para liberar?
-		free(data->prompt);
-		data->prompt = NULL;
-		ft_free(data->tokens);
-		data->tokens = NULL;
 		return (0);
-	}
 	ft_sections(data);
 	print_sections(data);
-	free_for_new_prompt(data);
 	return (0);
 }

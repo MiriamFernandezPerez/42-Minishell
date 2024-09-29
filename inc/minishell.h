@@ -120,7 +120,7 @@ void		free_for_new_prompt(t_data *data);
 int			ft_read_prompt(t_data *data);
 
 //read_prompt_utils.c
-void    trim_prompt(t_data *data);
+void    	trim_prompt(t_data *data);
 
 //parse.c
 int			end_quote(char *input, char c, int i);
@@ -186,14 +186,14 @@ int			verify_next_type(t_data *d);
 
 //sections.c
 t_section	*create_node(void);
-void		add_redir(t_section *temp_section, t_data *data, int i);
+void		add_redir(t_section *temp_section, t_data *data, int *i);
 int			ft_isredir(int type);
 void		init_sections(t_data *data);
 void		ft_sections(t_data *data);
 
 //sections_utils.c
-void		add_first_redir(t_section *section, t_tokens **tokens, int i);
-void		add_rest_redir(t_section *section, t_tokens **tokens, int i);
+void		add_first_redir(t_section *section, t_tokens **tokens, int *i);
+void		add_rest_redir(t_section *section, t_tokens **tokens, int *i);
 char		**create_cmd(t_section *section, char *arg);
 int			size_cmd(char **cmd);
 char		**add_arg(t_section *section, char *arg);

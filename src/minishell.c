@@ -36,6 +36,10 @@ void	print_sections(t_data *data)
 				printf("  Comando %d: %s\n", j + 1, current_section->cmd[j]);
 				j++;
 			}
+			if (current_section->files)
+				printf("  Redir tipo %d, nombre archivo %s\n", current_section->files->redi, current_section->files->file);
+			else 
+				printf("Sin redirecciones\n");
 		}
 		current_section = current_section->next;
 		section_num++;
@@ -95,9 +99,7 @@ int	main(int ac, char **av, char **env)
 	{
 		if (ft_read_prompt(data) == -1)
 			break ;
-		//Sustituir por una funcion que libere todos los datos entre prompts
-		if (data->prompt)
-			free(data->prompt);
+		free_for_new_prompt(data);
 	}
 	if (data)
 		ft_free_data(data);
