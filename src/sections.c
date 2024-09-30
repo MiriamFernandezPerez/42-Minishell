@@ -6,82 +6,85 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 23:27:18 by mirifern          #+#    #+#             */
-/*   Updated: 2024/09/17 17:32:31 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/30 19:59:30 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*Funcion para liberar las secciones*/
-/*void	ft_free_sections(t_section **sections, int len)
+/* Funcion para crear los nodos de las secciones*/
+t_section	*create_node(t_data *data) //he cambiado con data para salir si problema de malloc
 {
-	int	i;
+	t_section	*node;
 
-	i = 0;
-	while (i < len)
+	node = malloc(sizeof(t_section));
+	if (!node)
+		ft_malloc(data, NULL, NULL);
+	node->cmd = NULL;
+	node->files = NULL;
+	node->path_array = NULL;
+	node->path = malloc(sizeof (char));
+	if (!node->path)
 	{
-		free(sections[i]->tokens);
-		free(sections[i]);
-		i++;
+		free(node);
+		ft_malloc(data, NULL, NULL);
 	}
-	free(sections);
-}*/
-
-/*anade el token a la seccion a la que pertenece*/
-void	add_token_to_section(t_section *section, t_tokens *token)
-{
-	section->tokens[section->tokens_qt++] = token;
+	node->flag = -2;
+	node->pid = -2;
+	node->fd_in = -2;
+	node->fd_out = -2;
+	node->next = NULL;
+	return (node);
 }
 
-/*Crea una seccion nueva por cada pipe*/
-t_section	*create_section(int tokens_qt)
+void	add_redir(t_section *temp_section, t_data *data, int *i)
 {
-	t_section	*section;
-
-	section = malloc(sizeof(t_section));
-	if (!section)
-		exit (EXIT_FAILURE);
-	section->tokens = malloc(sizeof(t_tokens *) * tokens_qt);
-	if (!section->tokens)
-		exit (EXIT_FAILURE);
-	section->tokens_qt = 0;
-	return (section);
-}
-
-/*Detecta pipes si hubiera y separada cada bloque de codigo en secciones*/
-t_section	**split_into_sections(t_data *data, int i)
-{
-	t_section	**sections;
-	t_section	*current_section;
-
-	sections = malloc(sizeof(t_section *) * data->tokens_qt);
-	if (!sections)
-		exit(EXIT_FAILURE);
-	current_section = create_section(data->tokens_qt);
-	while (++i < data->tokens_qt)
-	{
-		if (data->tokens[i]->type == PIPE)
-		{
-			sections[data->sections_qt++] = current_section;
-			current_section = create_section(data->tokens_qt);
-		}
-		else
-			add_token_to_section(current_section, data->tokens[i]);
-	}
-	if (current_section->tokens_qt > 0)
-		sections[data->sections_qt++] = current_section;
+	if (!temp_section->cmd)
+		add_first_redir(temp_section, data->tokens, i);
 	else
-	{
-		free(current_section->tokens);
-		free(current_section);
-	}
-	return (sections);
+		add_rest_redir(temp_section, data->tokens, i);
 }
 
-/*Funcion que llama a la que separa el input en secciones cuando
-encuentra una pipe*/
+int	ft_isredir(int type)
+{
+	if (type == INPUT || type == TRUNC || type == APPEND || type == HEREDOC)
+		return (1);
+	return (0);
+}
+
+// Inicializa la lista de secciones si no existe.
+void	init_sections(t_data *data)
+{
+	if (!data->sections)
+		data->sections = create_node(data);
+}
+
+/*Funcion que llama a la que separa el input en comandos, si encuentra
+redireccion guarda el tipo de redireccion y le asigna el nombre del archivo
+que le sigue y despues separa en secciones cuando encuentra una pipe*/
 void	ft_sections(t_data *data)
 {
-	data->sections = split_into_sections(data, 0);
-	print_sections(data);
+	int			i;
+	t_section	*temp_section;
+
+	i = 0;
+	init_sections(data);
+	data->sections_qt = 1;
+	temp_section = data->sections;
+	while (data->tokens[i])
+	{
+		if (ft_isredir(data->tokens[i]->type))
+			add_redir(temp_section, data, &i);
+		else if (data->tokens[i]->type == ARG)
+			temp_section->cmd = add_arg(temp_section, data->tokens[i]->value);
+		else if (data->tokens[i]->type == PIPE)
+		{
+			temp_section->next = create_node(data);
+			if (!temp_section->next)
+				exit(EXIT_FAILURE);
+			temp_section = temp_section->next;
+			data->sections_qt++;
+		}
+		i++;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/25 13:30:35 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/30 21:32:16 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,26 @@
 
 int	make_builtins(char **str, t_data *data)
 {
+	int	temp;
+
+	temp = 0;
 	if (ft_strcmp("echo", str[0]) == 0)
 		make_echo(str);
-	if (ft_strcmp("cd", str[0]) == 0)
-		make_cd(str, data);
-	if (ft_strcmp("pwd", str[0]) == 0)
-		make_pwd(data);
-	if (ft_strcmp("export", str[0]) == 0)
+	else if (ft_strcmp("cd", str[0]) == 0)
+		temp = make_cd(str, data);
+	else if (ft_strcmp("pwd", str[0]) == 0)
+		temp = make_pwd(data);
+	else if (ft_strcmp("export", str[0]) == 0)
 		make_export(str, data);
-	if (ft_strcmp("unset", str[0]) == 0)
+	else if (ft_strcmp("unset", str[0]) == 0)
 		make_unset(str, data);
-	if (ft_strcmp("env", str[0]) == 0)
-		make_env(data, str);
-	if (ft_strcmp("exit", str[0]) == 0)
-		make_exit(str, data);
+	else if (ft_strcmp("env", str[0]) == 0)
+		temp = make_env(data, str);
+	else if (ft_strcmp("exit", str[0]) == 0)
+		temp = make_exit(str, data);
 	else
 		return (2);
-	if (make_cd == 1 || make_pwd == 1 || make_env == 1 || make_exit == 1)
+	if (temp == 1)
 		return (data->rt_value = 1, 1);
 	return (data->rt_value = 0, 0);
 }

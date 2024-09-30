@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:05:55 by mirifern          #+#    #+#             */
-/*   Updated: 2024/09/27 16:36:33 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/30 17:11:00 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,12 @@ void	ft_free_data(t_data *data)
 		if (data->sections)
 		{
 			//printf("num sections = %d\n", data->sections_qt);
-			ft_free_section(data->sections[0], data->sections[0]);
+			//ft_free_sections(data->sections, data->sections_qt);
+			ft_free_section(data->sections, NULL);
 			data->sections = NULL;
 		}
-		if (data->env_lst) // solo si exit de minishell
-		{
-			erase_lst(data->env_lst);
-			data->env_lst = NULL;
-		}
-		//data->tokens_qt = 0;
-		//data->sections_qt = 0;
-		//data->rt_value = 0;
+		final_free(data);
 	}
-	free(data);
 }
 
 //Write msn function
@@ -99,4 +92,27 @@ int	ft_isdelimiter(char c)
 	}
 	return (0);
 }
+void	final_free(t_data *data)
+{
+	t_env	*current;
+	t_env	*previous;
 
+	//parser
+	//prompt
+	if (data->env_lst)
+	{
+		previous = data->env_lst;
+		current = data->env_lst;
+		while (current)
+		{
+			if (current->name)
+				free(current->name);
+			if (current->value)
+				free(current->value);
+			current = current->next;
+			free(previous);
+			previous = current;
+		}
+	}
+	//ft_free_free(data);
+}

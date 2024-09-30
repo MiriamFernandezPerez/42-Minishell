@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/27 17:44:23 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/30 21:04:43 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ char		**split_env(char *str);
 //exe
 int			builtins_exe(t_data *data, t_section *section);
 int         classic_exe(t_data *data, t_section *section);
-int			ft_waitpid_status(t_section *section);
-void		execution(t_data *data, t_section *section);
+void        free_array_int(int **array);
+int			ft_waitpid_status(t_section *section, t_data *data);
+int         execution(t_data *data, t_section *section);
 
 //exe_utils
 char		**lst_to_arr(t_env *lst, t_data *data, char **array);
@@ -44,7 +45,7 @@ char		*check_path(t_section *section, t_data *data, char *path_lst);
 char		*find_path_cmd(char **array, int j, t_data *data, char *tmp);
 
 //exe_section-utils
-t_section	*ft_initialize_section(void);
+//t_section	*ft_initialize_section(void);
 void		ft_free_section(t_section *section, t_section *previous);
 void		close_fd(t_section *section);
 

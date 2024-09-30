@@ -18,6 +18,7 @@ LIB_READ = -lreadline
 
 SRC = 	minishell.c \
 		src/read_prompt.c\
+		src/read_prompt_utils.c\
 		src/utils2.c\
 		src/parser.c\
 		src/tokenize.c\
@@ -26,6 +27,7 @@ SRC = 	minishell.c \
 		src/expander_utils.c\
 		src/verify_tokens.c\
 		src/sections.c\
+		src/sections_utils.c\
 		builtins/maths.c \
 		builtins/utils.c \
 		builtins/builtins.c \

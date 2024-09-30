@@ -6,31 +6,46 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:07:08 by mirifern          #+#    #+#             */
-/*   Updated: 2024/09/25 16:48:53 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/30 20:13:04 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Función de prueba para imprimir las secciones
+/*Función de prueba para imprimir las secciones | comentar o eliminar al final*/
 void	print_sections(t_data *data)
 {
-	int	i;
-	int	j;
+	t_section	*current_section;
+	int			j;
+	int			section_num;
 
-	i = 0;
-	while (i < data->sections_qt)
+	if (!data->sections)
+		return ;
+	section_num = 0;
+	current_section = data->sections;
+	printf("data->sections_qt: %d\n", data->sections_qt);
+	while (current_section)
 	{
-		j = 0;
-		printf("SECCION %d:\n", i + 1);
-		while (j < data->sections[i]->tokens_qt)
+		printf("SECCION %d:\n", section_num + 1);
+		if (!current_section->cmd)
+			printf("  No hay comandos en esta sección\n");
+		else
 		{
-			printf("  Token %d: %s (Type: %d)\n", j,
-				data->sections[i]->tokens[j]->value,
-				data->sections[i]->tokens[j]->type);
-			j++;
+			j = 0;
+			while (current_section->cmd && current_section->cmd[j])
+			{
+				printf("  Comando %d: %s\n", j + 1, current_section->cmd[j]);
+				j++;
+			}
+			if (current_section->files)
+				printf("  Redir tipo %d, nombre archivo %s\n", current_section->files->redi, current_section->files->file);
+			else 
+				printf("Sin redirecciones\n");
 		}
-		i++;
+		current_section = current_section->next;
+		section_num++;
+		if (section_num >= data->sections_qt)
+			break ;
 	}
 }
 
@@ -58,12 +73,6 @@ void	print_tokens(t_data *data)
 y hace una copia del environment*/
 int	ft_initialize(t_data **data, char **env)
 {
-	if (!*env) //bloquer certaines lignes de code de l'env?
-	{
-		write(2, "⚠️⚠️⚠️\nDear evaluator,\nplease use our ", 50);
-		write(2, "program with a full set environnement 😉\n", 43);
-		exit (EXIT_FAILURE);
-	}
 	*data = malloc(sizeof(t_data));
 	if (!*data)
 		exit(EXIT_FAILURE);
@@ -80,45 +89,23 @@ int	ft_initialize(t_data **data, char **env)
 int	main(int ac, char **av, char **env)
 {
 	t_data	*data;
-	char	**array;
 
 	(void)av;
 	data = NULL;
 	if (ac != 1)
 		return (ft_msn(NO_ARGS, 2));
 	ft_initialize(&data, env);
+	//set_signal();
 	while (1)
 	{
 		if (ft_read_prompt(data) == -1)
 			break ;
-		check_files(data, data->sections, data->sections[0]->files);
+		check_files(data, data->sections, NULL);
 		create_pipe(data);
 		execution(data, data->sections);
+		free_for_new_prompt(data);
 	}
 	if (data)
 		ft_free_data(data);
 	return (0);
 }
-
-
-/*int	main(int ac, char **av, char **env)
-{
-	t_data	*data;
-	char	**array;
-	int i = 0;
-
-	(void)ac;
-	(void)av;
-	data = NULL;
-	ft_initialize(&data, env);
-	array = lst_to_array(data->env_lst, data);
-	while (array[i])
-	{
-		printf("%s\n", array[i]);
-		i++;
-	}
-	free_array(array);
-	if (data)
-		ft_free_data(data);
-	return (0);
-}*/

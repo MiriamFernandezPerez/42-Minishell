@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 18:44:22 by mirifern          #+#    #+#             */
-/*   Updated: 2024/09/13 13:41:34 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/30 21:22:01 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,11 @@ void	free_for_new_prompt(t_data *data)
 	data->prompt = NULL;
 	ft_free(data->tokens);
 	data->tokens = NULL;
-	ft_free_sections(data->sections, data->sections_qt);
+	if (data->sections)
+	{
+		printf("hay secciones %d\n", data->sections_qt);
+		/* anadir funcion para liberar las secciones*/
+	}
 	data->sections = NULL;
 }
 
@@ -86,24 +90,15 @@ int	ft_read_prompt(t_data *data)
 {
 	data->prompt = readline("\033[1;34m👯 minishell> \033[0m");
 	if (!data->prompt)
-	{
-		ft_msn(EXIT, 2);
-		return (-1);
-	}
-	if (*data->prompt)
+		return (ft_msn(EXIT, 2), -1);
+	trim_prompt(data);
+	if (data->prompt && !data->prompt[0])
+		return (0);
+	else if (data->prompt)
 		add_history(data->prompt);
 	if (ft_parser(data) == 1 || token_expand_clean(data) == 1)
-	{
-		free(data->prompt);
-		data->prompt = NULL;
-		ft_free(data->tokens);
-		data->tokens = NULL;
 		return (0);
-	}
-	//Funcion para Emilie para separar los tokens en secciones cuando hay Pipes
-	//ft_sections(data);
-	//printf("TOTAL DE SECCIONES FINAL = %d\n", data->sections_qt);
-	//crear la structura seccion por execucion
-	free_for_new_prompt(data);
+	ft_sections(data);
+	print_sections(data);
 	return (0);
 }

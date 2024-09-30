@@ -6,13 +6,14 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/09/26 17:11:32 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/30 20:12:20 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+//Llibraries
 # include <limits.h>
 # include <stdio.h>
 # include <unistd.h>
@@ -24,10 +25,11 @@
 # include <readline/history.h>
 # include "../libft/libft.h"
 # include <string.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include <errno.h>
-# include "builtins.h"
-# include "execution.h"
 
+//Errors msn
 # define NO_ARGS "Error. Execution don't allow arguments\n"
 # define NO_GETCWD "getcwd() error, can't read current path directory\n"
 # define EXIT "exit\n"
@@ -46,7 +48,7 @@
 # define TOKEN_SIZE 64
 
 //delimiters
-# define CMD 0 // Command
+//# define CMD 0 // Command
 # define SPACES 1 //Spaces and tabs
 # define PIPE 2 // |
 # define INPUT 3 // <
@@ -74,42 +76,40 @@ typedef struct s_tokens
 	int					type;
 }						t_tokens;
 
-typedef struct s_red // Miriam expand ->listas
+typedef struct s_red
 {
 	char				*file;
 	int					redi; //HEREDOC/APPEND/INPUT/TRUNC
-	t_red				*next;
+	struct s_red		*next;
 }						t_red;
 
 typedef struct s_section //->listas
 {
 	char				**cmd; //Miriam expand ->array
-	t_red				**files; //Miriam expand -> listas
+	t_red				*files; //Miriam expand -> listas
 	char				**path_array; //Emilie exe
 	char				*path; //Emilie exe
 	int					flag; //Emilie exe
 	int					pid; //Emilie exe
 	int					fd_in; //Emilie exe
 	int					fd_out; //Emilie exe
-	t_section			*next; //Miriam expand
+	int					tokens_qt; //lo necesito???
+	struct s_section	*next; //Miriam expand
 }						t_section;
 
 typedef struct s_data
 {
 	char				*prompt;
 	t_tokens			**tokens;
-	t_section			**sections;
+	t_section			*sections; //avant **sections
 	int					tokens_qt;
 	int					sections_qt;
 	int					rt_value;
 	t_env				*env_lst;
 }						t_data;
 
-/*typedef struct s_section
-{
-	t_tokens	**tokens;
-	int			tokens_qt;
-}				t_section;*/
+# include "builtins.h"
+# include "execution.h"
 
 //Main minishell.c
 void		print_sections(t_data *data);
@@ -123,6 +123,9 @@ int			only_spaces(char *s);
 int			token_expand_clean(t_data *data);
 void		free_for_new_prompt(t_data *data);
 int			ft_read_prompt(t_data *data);
+
+//read_prompt_utils.c
+void		trim_prompt(t_data *data);
 
 //parse.c
 int			end_quote(char *input, char c, int i);
@@ -145,12 +148,12 @@ void		ft_move_tokens(t_data *data, int *i, int *j);
 void		join_tokens(t_data *d, int i, int j);
 void		delete_token_type(t_data *d, int type);
 
-
 //utils2.c
 void		ft_free(t_tokens **arr);
 void		ft_free_data(t_data *data);
 int			ft_msn(char *s, int fd);
 int			ft_isdelimiter(char c);
+void		final_free(t_data *data);
 
 //expander.c
 char		*find_var_name(char *value, int *i);
@@ -175,13 +178,26 @@ int			verify_previous_type(t_data *d, int i, char *value);
 int			verify_next_type(t_data *d);
 
 //sections.c
-void		ft_free_sections(t_section **section, int len);
-void		add_token_to_section(t_section *section, t_tokens *token);
-t_section	*create_section(int tokens_qt);
-t_section	**split_into_sections(t_data *data, int i);
+t_section	*create_node(t_data *data); //he cambiado el argumento por un free
+void		add_redir(t_section *temp_section, t_data *data, int *i);
+int			ft_isredir(int type);
+void		init_sections(t_data *data);
 void		ft_sections(t_data *data);
+
+//sections_utils.c
+void		add_first_redir(t_section *section, t_tokens **tokens, int *i);
+void		add_rest_redir(t_section *section, t_tokens **tokens, int *i);
+char		**create_cmd(t_section *section, char *arg);
+int			size_cmd(char **cmd);
+char		**add_arg(t_section *section, char *arg);
 
 //executer.c
 void		ft_execute(t_data *data);
+
+//signals.c
+/*void		sigint(void);
+void		sigquit(void);
+void		handle_signal(int sign);*/
+/*void		set_signal(void);*/
 
 #endif

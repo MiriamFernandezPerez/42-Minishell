@@ -16,16 +16,20 @@ void	ft_free_cd(t_data *data, char *old, char *new, int i)
 {
 	if (i == 0)
 	{
-		free (old);
-		free (new);
+		if (old)
+			free (old);
+		if (new)
+			free (new);
 		ft_malloc(data, NULL, NULL);
 		return ;
 	}
 	if (i == 1)
 	{
 		perror("getcwd error: ");
-		free (new);
-		free (old);
+		if (new)
+			free (new);
+		if (old)
+			free (old);
 		return ;
 	}
 }
@@ -84,6 +88,8 @@ int	cd_home(char **str, t_data *data)
 
 int	make_cd(char **str, t_data *data)
 {
+	char	*old_buf;
+
 	if (str[1] && str[2])
 		return (print_errors(str, data, 0), 1);
 	if (!str[1] || str[1][0] == '~')
@@ -96,7 +102,12 @@ int	make_cd(char **str, t_data *data)
 	{
 		if (chdir(str[1]) != 0)
 			return (print_errors(str, data, 1), 1);
-		if (change_pwd(data, str[1]) == 1)
+		old_buf = ft_calloc(1, 256);
+		if (!old_buf)
+			ft_malloc(data, NULL, NULL);
+		if (getcwd(old_buf, 256) == 0)
+			return (ft_free_cd(NULL, old_buf, NULL, 1), 1);
+		if (change_pwd(data, old_buf, str[1]) == 1)
 			ft_malloc(data, NULL, NULL);
 	}
 	return (0);

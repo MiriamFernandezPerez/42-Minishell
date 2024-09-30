@@ -105,8 +105,6 @@ int	verify_next_type(t_data *d)
 				return (1);
 			}
 		}
-		if (d->tokens[i]->type == PIPE && d->tokens[i + 1]->type == ARG)
-			d->tokens[i + 1]->type = CMD;
 		i++;
 	}
 	return (0);

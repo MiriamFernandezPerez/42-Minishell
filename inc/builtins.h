@@ -43,6 +43,7 @@ int		change_pwd(t_data *data, char *old, char *new);
 int		cd_home(char **str, t_data *data);
 int		make_cd(char **str, t_data *data);
 int		make_pwd(t_data *data);
+
 //maths
 int		modulo_negativ(int a);
 int		check_num(char *str);
@@ -68,5 +69,6 @@ int		print_errors(char **str, t_data *data, int i);
 void	ft_malloc(t_data *data, char **array, t_env *lst);
 void	free_array(char **arr);
 void	erase_lst(t_env *lst);
+//void	print_env(t_data *data);
 
 #endif

@@ -128,8 +128,6 @@ void	ft_tokenizer(t_data *d, int len, int start, int index)
 			while (end < len && !ft_isdelimiter(d->prompt[end]))
 				end++;
 			tok_nodelimiter(d, &index, &start, &end);
-			if (index - 1 == 0)
-				d->tokens[0]->type = CMD;
 		}
 	}
 	d->tokens[index] = NULL;

@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:25:15 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/26 16:38:05 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/30 17:20:51 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,3 +93,34 @@ void	erase_lst(t_env *lst)
 		}
 	}
 }
+//Write environtment
+/*void	print_env(t_data *data)
+{
+	t_env	*current;
+
+	current = data->env_lst;
+	while (current)
+	{
+		printf("%s = %s\n", current->name, current->value);
+		current = current->next;
+	}
+}*/
+
+/*int	print_errors(char **str, t_data *data, int i)
+{
+	if (i == 0)
+		printf("👯 minishell> : %s: too many arguments\n", str[0]);
+	if (i == 1)
+		printf("👯 minishell> : %s: %s: No such file or directory\n",
+			str[0], str[1]);
+	if (i == 2)
+		printf("cannot find 'home' directory\n");
+	if (i == 3)
+		printf("cannot find parent directory\n");
+	if (i == 4)
+		printf("cannot find current directory\n");
+	return (data->rt_value = 1, 1);
+	return (1);
+} NECESSITAMOS DE IMPRIMIR EN FD2 Y NO PODEMOS CON PRINTF */
+
+

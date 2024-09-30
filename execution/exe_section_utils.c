@@ -6,13 +6,13 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 15:55:46 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/27 16:35:08 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/30 20:14:21 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_section	*ft_initialize_section(void)
+/*t_section	*ft_initialize_section(void)
 {
 	t_section	*section;
 
@@ -27,7 +27,7 @@ t_section	*ft_initialize_section(void)
 	section->fd_out = -2;
 	section->next = NULL; //Miriam
 	return (section);
-}
+}*/
 
 void	ft_free_section(t_section *section, t_section *previous)
 {
@@ -36,8 +36,10 @@ void	ft_free_section(t_section *section, t_section *previous)
 
 	while (section)
 	{
+		red = NULL;
 		previous = section;
-		red = section->files;
+		if (section->files)
+			red = section->files;
 		if (section->cmd)
 			free_array(section->cmd);
 		while (red)

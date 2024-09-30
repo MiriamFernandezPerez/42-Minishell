@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:17:45 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/27 17:42:50 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/30 20:21:33 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 int	ft_heredoc(t_data *data, char *del)
 {
-	char	*del; //delimitador ,checker avec Miriam si les '' sont quites
 	char	*line;
-	int		*fd;
+	int		fd[2]; // ok norminette?
 
 	if (pipe(fd) == -1)
 	{
@@ -38,14 +37,11 @@ int	ft_heredoc(t_data *data, char *del)
 			ft_msn(EXIT, 2);
 			return (-1);
 		}
-		printf("%d\n", line);
+		printf("%s\n", line);
 		if (ft_strcmp(line, del) == 0)
 			break ;
 	}
 	close (fd[1]);
-	//while()
-	//	add_history(?); //voir avec Miriam si cest pas deja fait par le prompt
-	//mettre a la fin car c'est en un seul bloc que ca arrive a l'historique
 	return (fd[0]);
 }
 
@@ -134,7 +130,7 @@ void	create_pipe(t_data *data)
 				ft_free_data(data);
 				exit(1);
 			}
-			current->fd_out == tmp[1];
+			current->fd_out = tmp[1];
 			current->next->fd_in = tmp[0];
 		}
 		current = current->next;
@@ -143,27 +139,31 @@ void	create_pipe(t_data *data)
 
 int	check_files(t_data *data, t_section *current, t_red *red)
 {
-	current = data->sections;
+	if (data->sections)
+		current = data->sections;
 	while (current)
 	{
-		red = current->files;
-		while (red)
+		if (current->files)
 		{
-			if (red->redi == INPUT || red->redi == HEREDOC)
+			red = current->files;
+			while (red)
 			{
-				if (current->fd_in > -1)
-					close (current->fd_in);
-				current->fd_in = create_file(red->file, red->redi, data);
+				if (red->redi == INPUT || red->redi == HEREDOC)
+				{
+					if (current->fd_in > -1)
+						close (current->fd_in);
+					current->fd_in = create_file(red->file, red->redi, data);
+				}
+				if (red->redi == TRUNC || red->redi == APPEND)
+				{
+					if (current->fd_out > -1)
+						close(current->fd_out);
+					current->fd_out = create_file(red->file, red->redi, data);
+				}
+				if (current->fd_in == -1 || current->fd_out == -1)
+					break ;
+				red = red->next;
 			}
-			if (red->redi == TRUNC || red->redi == APPEND)
-			{
-				if (current->fd_out > -1)
-					close(current->fd_out);
-				current->fd_out = create_file(red->file, red->redi, data);
-			}
-			if (current->fd_in == -1 || current->fd_out == -1)
-				break ;
-			red = red->next;
 		}
 		current = current->next;
 	}

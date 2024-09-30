@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:22:00 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/27 16:48:44 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/30 21:49:41 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	builtins_exe(t_data *data, t_section *section)
 		close (section->fd_out);
 	}
 	data->rt_value = make_builtins(section->cmd, data);
-	ft_free_section(data->sections);
+	ft_free_section(data->sections, NULL);
 	return (data->rt_value);
 }
 
@@ -56,6 +56,7 @@ int	classic_exe(t_data *data, t_section *section)
 	}
 	if (execve(section->path, section->cmd, section->path_array) == -1)
 		exit (error_exe(data, "execve", 0));
+	return (0);
 }
 
 
@@ -84,42 +85,66 @@ int	ft_waitpid_status(t_section *section)
 		return (WTERMSIGN(status[i]));
 }*/
 
-int	ft_waitpid_status(t_section *section)
+void	free_array_int(int **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		free (array[i]);
+		i++;
+	}
+	free(array);
+	return ;
+}
+
+int	ft_waitpid_status(t_section *section, t_data *data)
 {
 	int	**status;
 	int	i;
+	int	tmp;
 
-	status = (int **)malloc(sizeof (int *));
+	i = 0;
+	status = (int **)malloc((data->sections_qt + 1) * sizeof (int *));
 	while (section)
 	{
+		status[i] = (int *)malloc(sizeof (int));
 		waitpid(section->pid, status[i], 0);
-		section = section->next;
 		i++;
+		section = section->next;
 	}
-	if (WIFEXITED(status[i]))
-		return (WEXITSTATUS(status[i]));
-	if (WIFSIGNALED(status[i]))
-		return (WTERMSIGN(status[i]));
+	status[i] = (int *)malloc(sizeof (int));
+	status[i] = NULL;
+	tmp = status[i - 1][0];
+	free_array_int(status); // leaks avec ctr d pour fermer minishell
+	if (WIFEXITED(tmp))
+		return (WEXITSTATUS(tmp));
+	else if (WIFSIGNALED(tmp))
+		return (WTERMSIG(tmp));
+	return (0);
 }
 
-void	execution(t_data *data, t_section *section)
+int	execution(t_data *data, t_section *section)
 {
 	if (data->sections_qt == 1 && check_builtins(section->cmd) == 0)
-	{
-		builtins_exe(data, section);
-		return (ft_free_section(data->sections), data->rt_value);
-	}
+		return (builtins_exe(data, section), data->rt_value);
 	while (section)
 	{
 		section->pid = fork();
 		if (section->pid < 0)
-			return (perror("Fork error"), ft_free_data(data), exit(1));
+		{
+			perror("Fork error");
+			ft_free_data(data);
+			exit(1);
+		}
 		if (section->pid == 0)
 		{
 			if (check_builtins(section->cmd) == 1)
 				data->rt_value = classic_exe(data, section);
 			else
 				data->rt_value = make_builtins(section->cmd, data);
+			exit (data->rt_value);
 			// a voir si ok de pas free la data a la fin du hijo
 		}
 		if (data->rt_value == -1)
@@ -130,6 +155,11 @@ void	execution(t_data *data, t_section *section)
 		close_fd(section);
 		section = section->next;
 	}
-	data->rt_value = ft_waitpid_status(data->sections);
-	return (ft_free_section(data->sections[0], section), data->rt_value);
+	data->rt_value = ft_waitpid_status(data->sections, data);
+	return (ft_free_section(data->sections, section), data->rt_value);
 }
+// si deux echo ne devrait pas imprimer le premier (echo Hola | echo aue tal) = aue tal
+//mettre ft_malloc aux fonctions de Miriam
+// mettre un flag por el ft_free_data
+//ajouter les fonctions aue miriam a modifie sur slack
+// il y a une boucle et il imprime le spritf de test dans les fichiers, je pense aue je n'ai pas bien fermer un fd

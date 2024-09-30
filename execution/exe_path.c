@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:11:40 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/17 18:43:10 by esellier         ###   ########.fr       */
+/*   Updated: 2024/09/30 17:40:45 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ char	*check_path(t_section *section, t_data *data, char *path_lst)
 	char	**array;
 	int		j;
 	char	*tmp;
-	char	*path;
 
 	j = 0;
 	array = split_env(path_lst);
@@ -59,8 +58,8 @@ int	search_path(t_data *data, char **array, t_section *section)
 	int	i;
 
 	i = 0;
-	if ((ft_strncmp(section->cmd[0], '/', 1) == 0)
-		|| (ft_strncmp(section->cmd[0], '.', 1) == 0))
+	if ((ft_strncmp(section->cmd[0], "/", 1) == 0)
+		|| (ft_strncmp(section->cmd[0], ".", 1) == 0))
 		return (section->path = section->cmd[0], 0);
 	while (array[i])
 	{
