@@ -121,6 +121,7 @@ int			ft_read_prompt(t_data *data);
 
 //read_prompt_utils.c
 void    	trim_prompt(t_data *data);
+int			find_not_allowed(char *input);
 
 //parse.c
 int			end_quote(char *input, char c, int i);
