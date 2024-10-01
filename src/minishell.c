@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:07:08 by mirifern          #+#    #+#             */
-/*   Updated: 2024/09/30 20:13:04 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/01 16:49:40 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,10 @@ int	ft_initialize(t_data **data, char **env)
 {
 	*data = malloc(sizeof(t_data));
 	if (!*data)
+	{
+		write(2, "malloc error, please check your computer's memory\n", 50);
 		exit(EXIT_FAILURE);
+	}
 	(*data)->prompt = NULL;
 	(*data)->tokens = NULL;
 	(*data)->sections = NULL;
@@ -103,9 +106,9 @@ int	main(int ac, char **av, char **env)
 		check_files(data, data->sections, NULL);
 		create_pipe(data);
 		execution(data, data->sections);
-		free_for_new_prompt(data);
+		ft_free_data(data, 0); //free_for_new_prompt(data) , no necessitmos este fucion
 	}
 	if (data)
-		ft_free_data(data);
+		ft_free_data(data, 1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 18:44:22 by mirifern          #+#    #+#             */
-/*   Updated: 2024/09/30 21:22:01 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/01 16:48:06 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	token_expand_clean(t_data *data)
 }
 
 /*Funion que libera toda la estructura para el siguiente prompt*/
-void	free_for_new_prompt(t_data *data)
+/*void	free_for_new_prompt(t_data *data) ft_free_data(data, 0)
 {
 	free(data->prompt);
 	data->prompt = NULL;
@@ -71,11 +71,11 @@ void	free_for_new_prompt(t_data *data)
 	data->tokens = NULL;
 	if (data->sections)
 	{
+		ft_free_section(data->sections, NULL);
 		printf("hay secciones %d\n", data->sections_qt);
-		/* anadir funcion para liberar las secciones*/
+		data->sections = NULL;
 	}
-	data->sections = NULL;
-}
+}*/
 
 /*1 - lee el input del prompt
 2 - Si detecta un EOF (ctr+d) muestra un exit y devuelve -1 para que

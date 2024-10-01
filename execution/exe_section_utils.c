@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 15:55:46 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/30 20:14:21 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/01 14:23:47 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	ft_free_section(t_section *section, t_section *previous)
 		section = section->next;
 		free(previous);
 	}
-}
+} // poner data->sections == NULL ?
 
 /*void	ft_malloc_s(t_data *data, char **array, t_env *lst, t_section *sec)
 {

@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:05:55 by mirifern          #+#    #+#             */
-/*   Updated: 2024/09/30 17:11:00 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/01 14:45:43 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_free(t_tokens **arr)
 	free(arr);
 }
 
-void	ft_free_data(t_data *data)
+void	ft_free_data(t_data *data, int flag)
 {
 	if (data)
 	{
@@ -45,12 +45,14 @@ void	ft_free_data(t_data *data)
 		}
 		if (data->sections)
 		{
-			//printf("num sections = %d\n", data->sections_qt);
-			//ft_free_sections(data->sections, data->sections_qt);
 			ft_free_section(data->sections, NULL);
 			data->sections = NULL;
 		}
-		final_free(data);
+		if (flag == 1)
+		{
+			erase_lst(data->env_lst);
+			exit(1);
+		}
 	}
 }
 
@@ -82,37 +84,35 @@ int	ft_isdelimiter(char c)
 		return (END);
 	else if (c == '$')
 		return (VAR);
-	else if (c == '\\' || c == ';')
+	/*else if (c == '\\' || c == ';')
 	{
 		if (c == '\\')
 			ft_msn(ERR_BACKSLASH, 2);
 		else
 			ft_msn(ERR_SEMICOL, 2);
 		exit(EXIT_FAILURE);
-	}
+	}*/
 	return (0);
 }
-void	final_free(t_data *data)
+
+/*void	final_free(t_data *data)
 {
 	t_env	*current;
 	t_env	*previous;
 
-	//parser
-	//prompt
 	if (data->env_lst)
 	{
-		previous = data->env_lst;
 		current = data->env_lst;
 		while (current)
 		{
+			previous = current;
 			if (current->name)
 				free(current->name);
 			if (current->value)
 				free(current->value);
 			current = current->next;
 			free(previous);
-			previous = current;
 		}
 	}
 	//ft_free_free(data);
-}
+}*/

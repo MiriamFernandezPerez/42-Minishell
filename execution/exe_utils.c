@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:03:19 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/27 17:46:30 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/01 16:42:40 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,13 @@ int	error_exe(t_data *data, char *arg, int i)
 		write(2, ": command not found\n", 20);
 		return (data->rt_value = 127, 127);
 	}
-	else if (i == 2)
+	else if (i == 2 || i == 3)
 	{
-		perror("Dup2 error");
-		ft_free_data(data);
+		if (i == 2)
+			perror("Dup2 error");
+		if (i == 3)
+			perror("Dup error");
+		ft_free_data(data, 1);
 		return (data->rt_value = -1);
 	}
 	return (data->rt_value = 1, 1);
@@ -98,4 +101,18 @@ int	check_builtins(char **str)
 		return (0);
 	else
 		return (1);
+}
+
+void	exe_builtins_redi(t_data *data, int fd_in, int fd_out)
+{
+	if (dup2(fd_out, STDOUT_FILENO) == -1 || dup2(fd_in, STDIN_FILENO) == -1)
+	{
+		close (fd_in);
+		close (fd_out);
+		error_exe(data, NULL, 2);
+		exit(1);
+	}
+	close (fd_in);
+	close (fd_out);
+	return ;
 }

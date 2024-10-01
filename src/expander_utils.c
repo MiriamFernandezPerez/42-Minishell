@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
+/*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 21:57:37 by mirifern          #+#    #+#             */
-/*   Updated: 2024/08/07 21:32:29 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/10/01 12:39:45 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*allocate_result_buffer(void)
+char	*allocate_result_buffer(t_data *data)
 {
 	char	*result;
 
 	result = malloc(sizeof(char) * 10240);
 	if (!result)
-		exit(EXIT_FAILURE);
+		ft_malloc(data, NULL, NULL);
 	return (result);
 }
 
@@ -74,7 +74,7 @@ char	*expand_env_variables(t_data *data, char *input, char *temp, char *res)
 {
 	char	*result;
 
-	result = allocate_result_buffer();
+	result = allocate_result_buffer(data);
 	temp = input;
 	res = result;
 	while (*temp != '\0')

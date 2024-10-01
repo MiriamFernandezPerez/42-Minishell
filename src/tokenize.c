@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
+/*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:09:23 by mirifern          #+#    #+#             */
-/*   Updated: 2024/07/25 00:40:24 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/10/01 12:39:16 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ void	tok_delimiter(t_data *data, char *input, int *ind, int *start)
 {
 	data->tokens[*ind] = malloc(sizeof(t_tokens));
 	if (!data->tokens[*ind])
-		exit(EXIT_FAILURE);
+		ft_malloc(data, NULL, NULL);
 	data->tokens[*ind]->value = malloc(sizeof(char) * 2);
 	if (!data->tokens[*ind]->value)
 	{
 		free(data->tokens[*ind]);
-		exit(EXIT_FAILURE);
+		ft_malloc(data, NULL, NULL);
 	}
 	data->tokens[*ind]->value[0] = input[*start];
 	data->tokens[*ind]->value[1] = '\0';
@@ -49,13 +49,13 @@ void	tok_nodelimiter(t_data *data, int *ind, int *start, int *end)
 
 	str = malloc((*end - *start + 1) * sizeof(char));
 	if (!str)
-		exit(EXIT_FAILURE);
+		ft_malloc(data, NULL, NULL);
 	ft_strlcpy(str, data->prompt + *start, *end - *start + 1);
 	data->tokens[*ind] = malloc(sizeof(t_tokens));
 	if (!data->tokens[*ind])
 	{
 		free(str);
-		exit(EXIT_FAILURE);
+		ft_malloc(data, NULL, NULL);
 	}
 	data->tokens[*ind]->value = str;
 	if (ft_isdelimiter(data->prompt[*start]))
@@ -117,7 +117,7 @@ void	ft_tokenizer(t_data *d, int len, int start, int index)
 
 	d->tokens = malloc(MAX_TOKENS * sizeof(t_tokens *));
 	if (!d->tokens)
-		exit(EXIT_FAILURE);
+		ft_malloc(d, NULL, NULL);
 	while (start < len)
 	{
 		end = start;

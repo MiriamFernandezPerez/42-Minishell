@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:11:40 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/30 17:40:45 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/01 18:18:02 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	*find_path_cmd(char **array, int j, t_data *data, char *tmp)
 		free(path);
 		j++;
 	}
+	free (tmp);
 	free_array(array);
 	return (NULL);
 }
@@ -47,7 +48,7 @@ char	*check_path(t_section *section, t_data *data, char *path_lst)
 	array = split_env(path_lst);
 	if (!array)
 		ft_malloc(data, NULL, NULL);
-	tmp = ft_strjoin("/", section->path);
+	tmp = ft_strjoin("/", section->cmd[0]);
 	if (!tmp)
 		ft_malloc(data, array, NULL);
 	return (find_path_cmd(array, j, data, tmp));
@@ -63,15 +64,15 @@ int	search_path(t_data *data, char **array, t_section *section)
 		return (section->path = section->cmd[0], 0);
 	while (array[i])
 	{
-		if (ft_strncmp("PATH=", array[i], 5) != 0)
-			i++;
-		else
+		if (ft_strncmp("PATH=", array[i], 5) == 0)
 		{
 			section->path = check_path(section, data, array[i]);
 			if (! section->path)
 				return (error_exe(data, section->cmd[0], 1)); //checker si ok rt_value (127)
 			return (0);
 		}
+		else
+			i++;
 	}
 	error_exe(data, section->cmd[0], 0);//si PATH unset (No such file or directory)
 	return (data->rt_value = 127); // verifier si ok

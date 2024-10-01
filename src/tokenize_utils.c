@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
+/*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 21:48:18 by mirifern          #+#    #+#             */
-/*   Updated: 2024/08/13 21:33:57 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/10/01 12:13:06 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	join_tokens(t_data *d, int i, int j)
 			new_value = malloc(ft_strlen(d->tokens[i]->value)
 					+ ft_strlen(d->tokens[i + 1]->value) + 1);
 			if (!new_value)
-				exit(EXIT_FAILURE);
+				ft_malloc(d, NULL, NULL);
 			ft_strlcpy(new_value, d->tokens[i]->value,
 				ft_strlen(d->tokens[i]->value) + 1);
 			ft_strlcat(new_value, d->tokens[i + 1]->value,

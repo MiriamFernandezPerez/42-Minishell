@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
+/*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 19:00:48 by mirifern          #+#    #+#             */
-/*   Updated: 2024/08/13 21:33:13 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/10/01 11:50:17 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*Funcion que busca el nombre de la variable del environment*/
-char	*find_var_name(char *value, int *i)
+char	*find_var_name(char *value, int *i, t_data *data)
 {
 	char	*env_var;
 	int		k;
@@ -25,7 +25,7 @@ char	*find_var_name(char *value, int *i)
 		k++;
 	env_var = malloc(sizeof(char *) * k);
 	if (!env_var)
-		exit(EXIT_FAILURE);
+		ft_malloc(data, NULL, NULL);
 	while (value[*i + len + 1] != 32 && value[*i + len + 1] != '\0')
 	{
 		env_var[len] = value[*i + len + 1];

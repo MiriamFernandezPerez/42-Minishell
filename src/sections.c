@@ -6,14 +6,14 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 23:27:18 by mirifern          #+#    #+#             */
-/*   Updated: 2024/09/30 19:59:30 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/01 12:40:40 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* Funcion para crear los nodos de las secciones*/
-t_section	*create_node(t_data *data) //he cambiado con data para salir si problema de malloc
+t_section	*create_node(t_data *data)
 {
 	t_section	*node;
 
@@ -40,9 +40,9 @@ t_section	*create_node(t_data *data) //he cambiado con data para salir si proble
 void	add_redir(t_section *temp_section, t_data *data, int *i)
 {
 	if (!temp_section->cmd)
-		add_first_redir(temp_section, data->tokens, i);
+		add_first_redir(temp_section, data->tokens, i, data);
 	else
-		add_rest_redir(temp_section, data->tokens, i);
+		add_rest_redir(temp_section, data->tokens, i, data);
 }
 
 int	ft_isredir(int type)
@@ -76,12 +76,13 @@ void	ft_sections(t_data *data)
 		if (ft_isredir(data->tokens[i]->type))
 			add_redir(temp_section, data, &i);
 		else if (data->tokens[i]->type == ARG)
-			temp_section->cmd = add_arg(temp_section, data->tokens[i]->value);
+			temp_section->cmd = add_arg(temp_section, data->tokens[i]->value,
+					data);
 		else if (data->tokens[i]->type == PIPE)
 		{
 			temp_section->next = create_node(data);
-			if (!temp_section->next)
-				exit(EXIT_FAILURE);
+			if (!temp_section->next) //no necessitamos
+				exit(EXIT_FAILURE);//no necessitamos
 			temp_section = temp_section->next;
 			data->sections_qt++;
 		}

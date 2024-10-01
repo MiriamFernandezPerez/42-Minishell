@@ -6,14 +6,20 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:22:00 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/30 21:49:41 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/01 18:49:26 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	builtins_exe(t_data *data, t_section *section)
-{
+{ 
+	int	fd[2];
+
+	fd[0] = dup(STDIN_FILENO);
+	fd[1] = dup(STDOUT_FILENO);
+	if (!fd[0] || !fd[1])
+		return (error_exe(data, NULL, 3), data->rt_value);
 	if (section->fd_in == -1 || section->fd_out == -1)
 		exit (1);
 	if (section->fd_in != -2)
@@ -29,7 +35,7 @@ int	builtins_exe(t_data *data, t_section *section)
 		close (section->fd_out);
 	}
 	data->rt_value = make_builtins(section->cmd, data);
-	ft_free_section(data->sections, NULL);
+	exe_builtins_redi(data, fd[0], fd[1]);
 	return (data->rt_value);
 }
 
@@ -135,7 +141,7 @@ int	execution(t_data *data, t_section *section)
 		if (section->pid < 0)
 		{
 			perror("Fork error");
-			ft_free_data(data);
+			ft_free_data(data, 1);
 			exit(1);
 		}
 		if (section->pid == 0)
@@ -144,22 +150,19 @@ int	execution(t_data *data, t_section *section)
 				data->rt_value = classic_exe(data, section);
 			else
 				data->rt_value = make_builtins(section->cmd, data);
-			exit (data->rt_value);
-			// a voir si ok de pas free la data a la fin du hijo
+			exit (data->rt_value); //only por make_builtins
 		}
+		//printf("rt_value = %d\n", data->rt_value);
 		if (data->rt_value == -1)
-		{
-			ft_free_data(data);
-			exit (1);
-		}
+			ft_free_data(data, 1);
 		close_fd(section);
 		section = section->next;
 	}
 	data->rt_value = ft_waitpid_status(data->sections, data);
-	return (ft_free_section(data->sections, section), data->rt_value);
+	//printf("rt_value = %d\n", data->rt_value);
+	return (data->rt_value);
 }
-// si deux echo ne devrait pas imprimer le premier (echo Hola | echo aue tal) = aue tal
-//mettre ft_malloc aux fonctions de Miriam
-// mettre un flag por el ft_free_data
-//ajouter les fonctions aue miriam a modifie sur slack
-// il y a une boucle et il imprime le spritf de test dans les fichiers, je pense aue je n'ai pas bien fermer un fd
+// si deux echo ne devrait pas imprimer le premier 
+//(echo Hola | echo aue tal) = aue tal
+
+//tester heredoc, ahora sale siempre

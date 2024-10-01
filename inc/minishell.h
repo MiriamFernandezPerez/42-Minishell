@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/09/30 20:12:20 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/01 14:42:48 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ int			ft_read_prompt(t_data *data);
 
 //read_prompt_utils.c
 void		trim_prompt(t_data *data);
+int			find_not_allowed(char *input);
 
 //parse.c
 int			end_quote(char *input, char c, int i);
@@ -150,20 +151,20 @@ void		delete_token_type(t_data *d, int type);
 
 //utils2.c
 void		ft_free(t_tokens **arr);
-void		ft_free_data(t_data *data);
+void		ft_free_data(t_data *data, int flag);
 int			ft_msn(char *s, int fd);
 int			ft_isdelimiter(char c);
 void		final_free(t_data *data);
 
 //expander.c
-char		*find_var_name(char *value, int *i);
+char		*find_var_name(char *value, int *i, t_data *data);
 int			find_dollar(char *str);
 char		*quit_dollar(char *value, int *i);
 char		*expand_var(t_data *data, char *value);
 int			ft_expander(t_data *d, int i, int j);
 
 //expander_utils.c
-char		*allocate_result_buffer(void);
+char		*allocate_result_buffer(t_data *data);
 void		handle_rt_value(t_data *data, char **temp, char **res);
 void		handle_digit_variable(char **temp, char **res);
 void		handle_normal_variable(t_data *data, char **temp, char **res);
@@ -185,11 +186,13 @@ void		init_sections(t_data *data);
 void		ft_sections(t_data *data);
 
 //sections_utils.c
-void		add_first_redir(t_section *section, t_tokens **tokens, int *i);
-void		add_rest_redir(t_section *section, t_tokens **tokens, int *i);
-char		**create_cmd(t_section *section, char *arg);
+void		add_first_redir(t_section *section, t_tokens **tokens, int *i,
+				t_data *data);
+void		add_rest_redir(t_section *section, t_tokens **tokens, int *i,
+				t_data *data);
+char		**create_cmd(t_section *section, char *arg, t_data *data);
 int			size_cmd(char **cmd);
-char		**add_arg(t_section *section, char *arg);
+char		**add_arg(t_section *section, char *arg, t_data *data);
 
 //executer.c
 void		ft_execute(t_data *data);

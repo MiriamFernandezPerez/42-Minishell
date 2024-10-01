@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:50:28 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/10 14:32:01 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/01 18:11:15 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	count_path(char *str, char c)
 	int	i;
 
 	count = 0;
-	i = 0;
+	i = 1;
 	while (str[i])
 	{
 		if (str[i] == c && str[i + 1] != c)
@@ -60,22 +60,21 @@ char	**put_path(char **array, char *str, char c, int path)
 	int	s;
 
 	j = 0;
-	s = 0;
-	while (j < path)
+	s = 5;
+	while (j <= path)
 	{
 		i = 0;
 		len = strlen_path(&str[s], c);
 		array[j] = (char *)malloc((len + 1) * sizeof (char));
 		if (!array[j])
 			free_array(array);
-		while (str[s] != c)
+		while (str[s] != c && str[s] != '\0')
 			array[j][i++] = str[s++];
 		array[j][i] = '\0';
 		j++;
 		s++;
 	}
-	if (j == path)
-		array[j] = NULL;
+	array[j] = NULL;
 	return (array);
 }
 
@@ -89,8 +88,8 @@ char	**split_env(char *str)
 	if (! str)
 		return (NULL);
 	path = count_path(str, c);
-	array = (char **)malloc((path + 1) * sizeof(char *));
+	array = (char **)malloc((path + 2) * sizeof(char *));
 	if (!array)
-		return (NULL);
+		return (NULL); //ft_malloc
 	return (put_path(array, str, c, path));
 }

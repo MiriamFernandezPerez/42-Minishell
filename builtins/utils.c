@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:25:15 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/30 17:20:51 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/01 14:17:19 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_malloc(t_data *data, char **array, t_env *lst)
 	if (lst)
 		erase_lst(lst);
 	write(2, "malloc error, please check your computer's memory\n", 50);
-	ft_free_data(data);
+	ft_free_data(data, 1);
 	exit(1);
 }
 

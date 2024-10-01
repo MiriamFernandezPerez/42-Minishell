@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
+/*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 22:44:10 by mirifern          #+#    #+#             */
-/*   Updated: 2024/08/07 21:13:45 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/10/01 14:48:13 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,9 @@ como pipes, sino como texto plano*/
 int	ft_parser(t_data *data)
 {
 	if (find_quotes(data->prompt, 0, 0) == 1
-		|| find_pipes(data->prompt) == 1 || find_others(data->prompt) == 1)
+		|| find_pipes(data->prompt) == 1
+		|| find_others(data->prompt) == 1
+		|| find_not_allowed(data->prompt) == 1)
 	{
 		data->rt_value = 2;
 		return (1);

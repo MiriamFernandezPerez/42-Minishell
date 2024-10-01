@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/30 21:04:43 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/01 16:43:20 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ char		**lst_to_arr(t_env *lst, t_data *data, char **array);
 char		*ft_strjoin_three(char const *s1, char const *s2, char const *s3);
 int			error_exe(t_data *data, char *arg, int i);
 int			check_builtins(char **str);
+void		exe_builtins_redi(t_data *data, int fd_in, int fd_out);
 
 //exe_files
 int			ft_heredoc(t_data *data, char *del);
