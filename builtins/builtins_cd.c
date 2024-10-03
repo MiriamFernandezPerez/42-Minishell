@@ -39,6 +39,8 @@ int	change_pwd(t_data *data, char *old, char *new)
 	t_env	*current;
 	t_env	*previous;
 
+	if (getcwd(new, 256) == 0)
+		return (ft_free_cd(NULL, old, new, 1), 1);
 	current = search_str("PWD", data);
 	previous = search_str("OLDPWD", data);
 	if (previous)
@@ -76,11 +78,7 @@ int	cd_home(char **str, t_data *data)
 	if (getcwd(old_buf, 256) == 0)
 		return (ft_free_cd(NULL, old_buf, new_buf, 1), 1);
 	if (chdir(getenv("HOME")) == 0)
-	{
-		if (getcwd(new_buf, 256) == 0)
-			return (ft_free_cd(NULL, old_buf, new_buf, 1), 1);
 		return (change_pwd(data, old_buf, new_buf));
-	}
 	free (old_buf);
 	free(new_buf);
 	return (print_errors(str, data, 2), 1);
@@ -89,25 +87,23 @@ int	cd_home(char **str, t_data *data)
 int	make_cd(char **str, t_data *data)
 {
 	char	*old_buf;
+	char	*new_buf;
 
 	if (str[1] && str[2])
 		return (print_errors(str, data, 0), 1);
 	if (!str[1] || str[1][0] == '~')
-	{
-		if (cd_home(str, data) == 1)
-			return (1);
-		return (0);
-	}
+		return (cd_home(str, data));
 	else
 	{
-		if (chdir(str[1]) != 0)
-			return (print_errors(str, data, 1), 1);
 		old_buf = ft_calloc(1, 256);
-		if (!old_buf)
+		new_buf = ft_calloc(1, 256);
+		if (!old_buf || !new_buf)
 			ft_malloc(data, NULL, NULL);
 		if (getcwd(old_buf, 256) == 0)
 			return (ft_free_cd(NULL, old_buf, NULL, 1), 1);
-		if (change_pwd(data, old_buf, str[1]) == 1)
+		if (chdir(str[1]) != 0)
+			return (print_errors(str, data, 1), 1);
+		if (change_pwd(data, old_buf, new_buf) == 1)
 			ft_malloc(data, NULL, NULL);
 	}
 	return (0);

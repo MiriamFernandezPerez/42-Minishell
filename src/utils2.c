@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:05:55 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/01 14:45:43 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/03 18:41:54 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,13 @@ void	ft_free_data(t_data *data, int flag)
 			ft_free_section(data->sections, NULL);
 			data->sections = NULL;
 		}
-		if (flag == 1)
+		if (flag == 1 || flag == 2)
 		{
 			erase_lst(data->env_lst);
-			exit(1);
+			if (flag == 1)
+				exit(1);
 		}
-	}
+	} //free data?
 }
 
 //Write msn function

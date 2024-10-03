@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:50:28 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/01 18:11:15 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/03 15:57:03 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,6 @@ int	strlen_path(char *str, char c)
 		len++;
 	return (len);
 }
-
-/*void	free_array(char **array)
-{
-	int	j;
-
-	j = 0;
-	while (array[j])
-	{
-		free (array[j]);
-		j++;
-	}
-	if (array)
-		free (array);
-}*/
 
 char	**put_path(char **array, char *str, char c, int path)
 {

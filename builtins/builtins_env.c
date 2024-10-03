@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/05 19:57:10 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/03 15:58:35 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,51 +59,6 @@ void	make_unset(char **str, t_data *data)
 }
 //check si on n'est pas en read only? ok env sans
 
-/*int main(int argc, char **argv, char **env) //unset
-{
-	t_env	*envi;
-	(void)argc;
-	t_env	*current;
-	t_env	*to_print;
-	
-	envi = create_env(env);
-	if (check_path(envi) == 1)
-			return (127);
-	check_path(envi);
-	envi = make_unset(argv, envi);
-	to_print = envi;
-	while (to_print)
-	{
-        printf("%s", to_print->name);
-        printf("%s\n", to_print->value);
-		to_print = to_print->next;
-	}
-	while(envi)
-	{
-		current = envi;
-		free(current->name);
-		free(current->value);
-		envi = current->next;
-		free (current);
-	}
-	return(0);
-}*/
-
-/*int	check_path(t_data *data) // pas sur que ce soit necessaire, car c'est possible qu'on doive voir l'env dans tous les cas
-{
-	t_env	*current;
-
-	current = data->env_lst;
-	while (current)
-	{
-		if (ft_strncmp(current->name, "PATH=", 5)== 0)
-			return(0);
-		current = current->next;
-	}
-	write(2, "👯 minishell> : env: No such file or directory", 48);
-	return (1);
-}*/
-
 int	make_env(t_data *data, char **str)
 {
 	t_env	*current;
@@ -117,7 +72,7 @@ int	make_env(t_data *data, char **str)
 	current = data->env_lst;
 	if (!current)
 	{
-		write(2, "👯 minishell> : env: No such file or directory\n", 49);
+		write(2, "env: No such file or directory\n", 31);
 		return (1);
 	}
 	while (current)
@@ -130,24 +85,3 @@ int	make_env(t_data *data, char **str)
 	}
 	return (0);
 }
-
-/*int main(int argc, char **argv, char **env) //env
-{
-	(void)argc;
-	(void)argv;
-	t_env *env_lst;
-	t_env	*tmp;
-
-	env_lst = create_env(env);
-	make_env(env_lst);
-	while(env_lst)
-	{
-		tmp = env_lst;
-		free(env_lst->name);
-		free(env_lst->value);
-		env_lst = env_lst->next;
-		free (tmp);
-	}
-    return(0);
-}*/
-

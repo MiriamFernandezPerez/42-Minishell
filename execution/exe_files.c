@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:17:45 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/30 20:21:33 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/03 19:01:55 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,10 @@ int	ft_heredoc(t_data *data, char *del)
 	if (pipe(fd) == -1)
 	{
 		perror("Pipe error");
-		ft_free_data(data);
-		exit(1);
+		ft_free_data(data, 1);
 	}
 	if (dup2(fd[1], STDOUT_FILENO) == -1)
-	{
 		error_exe(data, NULL, 2);
-		exit (1);
-	}
 	close (fd[0]);
 	while (1)
 	{
@@ -35,7 +31,7 @@ int	ft_heredoc(t_data *data, char *del)
 		if (!line)
 		{
 			ft_msn(EXIT, 2);
-			return (-1);
+			return (-1); //check si ok ici
 		}
 		printf("%s\n", line);
 		if (ft_strcmp(line, del) == 0)
@@ -44,44 +40,6 @@ int	ft_heredoc(t_data *data, char *del)
 	close (fd[1]);
 	return (fd[0]);
 }
-
-/*int	ft_heredoc(t_data *data, t_section *section)
-{
-	char	**array;
-	char	*tmp;
-	int		*fd;
-	int		i;
-
-	i = 0;
-	tmp = section->files[0]->file; //delimitador // check si les '' sont quites
-	tmp = ft_strjoin(">", tmp);
-	if (!tmp)
-		ft_malloc(data, NULL, NULL);
-	array = (char **)malloc(sizeof (char *));
-	while (1)
-	{
-		data->prompt = readline(">");
-		if (!data->prompt)
-		{
-			ft_msn(EXIT, 2);
-			return (-1);
-		}
-		array[i]= malloc(sizeof (char*))
-		if (ft_strcmp(data->prompt, tmp) == 0)
-		{
-			printf(">%s\n", data->prompt);
-			break;
-		}
-		i++;
-	}
-	if (dup2(fd[0], STDOUT_FILENO) == -1);
-		return (error_exe(data, NULL, 2));
-	while()
-		add_history(?);
-	//mettre a la fin car c'est en un seul bloc que ca arrive a l'historique
-	sans les > de debuts de lignes
-}*/
-
 
 int	create_file(char *file, int i, t_data *data)
 {
@@ -95,7 +53,7 @@ int	create_file(char *file, int i, t_data *data)
 		fd = open(file, O_CREAT | O_APPEND | O_WRONLY, 0644);
 	else if (i == HEREDOC)
 		fd = ft_heredoc(data, file);
-	if (fd == -1)
+	if (fd == -1) //a tester, check si exit ou non ?
 		error_exe(data, file, 0);
 	return (fd);
 }
@@ -120,15 +78,14 @@ void	create_pipe(t_data *data)
 	int			tmp[2];
 
 	current = data->sections;
-	while (current->next)
+	while (current && current->next)
 	{
 		if (current->fd_out == -2 && current->next->fd_in == -2)
 		{
 			if (pipe(tmp) == -1)
 			{
 				perror("Pipe error");
-				ft_free_data(data);
-				exit(1);
+				ft_free_data(data, 1);
 			}
 			current->fd_out = tmp[1];
 			current->next->fd_in = tmp[0];

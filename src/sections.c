@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 23:27:18 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/01 12:40:40 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/03 16:19:20 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ t_section	*create_node(t_data *data)
 	node->cmd = NULL;
 	node->files = NULL;
 	node->path_array = NULL;
-	node->path = malloc(sizeof (char));
-	if (!node->path)
+	node->path = NULL; //malloc(sizeof (char));
+	/*if (!node->path)
 	{
 		free(node);
 		ft_malloc(data, NULL, NULL);
-	}
+	}*/
 	node->flag = -2;
 	node->pid = -2;
 	node->fd_in = -2;

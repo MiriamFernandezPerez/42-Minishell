@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:11:40 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/01 18:18:02 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/03 15:55:45 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,3 @@ int	search_path(t_data *data, char **array, t_section *section)
 	error_exe(data, section->cmd[0], 0);//si PATH unset (No such file or directory)
 	return (data->rt_value = 127); // verifier si ok
 }
-// checker si ok avec le malloc general a l'initialisation

@@ -6,13 +6,13 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/30 21:32:16 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/03 18:43:00 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	make_builtins(char **str, t_data *data)
+int	make_builtins(char **str, t_data *data, int flag)
 {
 	int	temp;
 
@@ -31,11 +31,10 @@ int	make_builtins(char **str, t_data *data)
 		temp = make_env(data, str);
 	else if (ft_strcmp("exit", str[0]) == 0)
 		temp = make_exit(str, data);
-	else
-		return (2);
-	if (temp == 1)
-		return (data->rt_value = 1, 1);
-	return (data->rt_value = 0, 0);
+	data->rt_value = temp;
+	if (flag == 1)
+		exit(data->rt_value);
+	return (data->rt_value);
 }
 
  // unset retourne tjr 0 et prend tous les args sauf -l...
@@ -53,12 +52,12 @@ int	exit_number(char **str, t_data *data)
 		if (num > 255)
 			num = num % 256;
 		write(2, "exit\n", 5);
-		ft_free_data(data);
+		ft_free_data(data, 2);
 		exit (num);
 	}
 	else
 	{
-		write(2, "exit\n👯 minishell> : exit: too many arguments\n", 48);
+		write(2, "exit\nminishell : exit: too many arguments\n", 42);
 		// a valider avec le prompt car ne doit pas sortir du programme
 		return (data->rt_value = 1, 1);
 	}
@@ -70,7 +69,7 @@ int	make_exit(char **str, t_data *data)
 	if (!str[1] || (ft_strncmp(str[1], "0", 1) == 0 && !str[2])) //1 arg
 	{
 		write(2, "exit\n", 5);
-		ft_free_data(data);
+		ft_free_data(data, 2);
 		exit (0);
 	}
 	if (str[1]) // si 2 args et plus
@@ -82,10 +81,10 @@ int	make_exit(char **str, t_data *data)
 		}
 		else
 		{
-			write(2, "exit\n👯 minishell> : exit: ", 29);
+			write(2, "exit\nminishell : exit: ", 23);
 			write(2, &(*str[1]), ft_strlen(str[1]));
 			write(2, ": numeric argument required\n", 28);
-			ft_free_data(data);
+			ft_free_data(data, 2);
 			exit (2);
 		}
 	}

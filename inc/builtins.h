@@ -14,7 +14,7 @@
 # define BUILTINS_H
 
 //builtins
-int		make_builtins(char **str, t_data *data);
+int		make_builtins(char **str, t_data *data, int flag);
 int		exit_number(char **str, t_data *data);
 int		make_exit(char **str, t_data *data);
 int		check_echo(char **str, int i);

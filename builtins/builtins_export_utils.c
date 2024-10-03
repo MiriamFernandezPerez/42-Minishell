@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/27 19:11:51 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/03 15:50:49 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	check_args(char *str)
 		i++;
 	else
 	{
-		write(2, "👯 minishell> : export: ", 26);
+		write(2, "minishell : export: ", 20);
 		write(2, str, ft_strlen(str));
 		return (write(2, ": not a valid identifier\n", 25), 1);
 	}
@@ -89,7 +89,7 @@ int	check_args(char *str)
 			return (0);
 	if (str[i])
 	{
-		write(2, "👯 minishell> : export: ", 26);
+		write(2, "minishell : export: ", 20);
 		write(2, str, ft_strlen(str));
 		return (write(2, ": not a valid identifier\n", 25), 1);
 	}

@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:14:34 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/27 19:09:11 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/03 17:47:25 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	create_value(t_env *new_node, int i, int j, char *str)
 	if (j > 0) // j > 1
 	{
 		new_node->value = malloc((j + 1) * sizeof(char));
-		if (!new_node->value)
+		if (!new_node->value) //ft_malloc
 		{
 			free(new_node->name);
 			return (free(new_node), 1);
@@ -134,20 +134,24 @@ int	exp_new(char *str, t_env *new_node)
 		i++;
 	new_node->name = malloc((i + 1) * sizeof(char));
 	if (!new_node->name)
-		return (free(new_node), 1);
+		return (free(new_node), 1); //ft_malloc
 	ft_strlcpy(new_node->name, str, i + 1);
 	new_node->name[i] = '\0';
 	j = 0;
-	while (str[i++])
+	while (str[i])
+	{
+		i++;
 		j++;
-	if (create_value(new_node, i, j, str) == 1)
+	}
+	if (create_value(new_node, i + 1, j, str) == 1)
 		return (1);
 	new_node->flag = 'v';
 	if (j == 0)
 		new_node->value = '\0';
 	if (j == 0)
 		new_node->flag = 'W';
-	if (str[i] == '=')
+	printf("name = %s, value = %s\n", new_node->name, new_node->value);
+	if (str[i] && str[i] == '=')
 		new_node->flag = 'V';
 	/*if (j < 2)
 		new_node->value = '\0';
