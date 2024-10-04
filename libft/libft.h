@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 18:49:34 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/09 12:53:41 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/04 15:58:35 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <string.h>
 # include <stdlib.h>
+#include "get_next_line.h"
 
 typedef struct s_list
 {

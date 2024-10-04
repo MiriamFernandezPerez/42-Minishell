@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:03:19 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/03 16:00:46 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/04 18:48:55 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,36 +67,34 @@ char	**lst_to_arr(t_env *lst, t_data *data, char **array)
 int	error_exe(t_data *data, char *arg, int i)
 {
 	write(2, "minishell : ", 12);
-	if (i == 0)
+	/*if (i == 0) // check si pas egal a  i == 2 ?
 	{
 		write(2, arg, ft_strlen(arg)); //a tester le strerror
 		write(2, ": ", 2);
 		write(2, strerror(errno), ft_strlen(strerror(errno)));
 		write(2, "\n", 1);
-	}
-	else if (i == 1)
+	}*/
+	if (i == 1)
 	{
 		write(2, arg, ft_strlen(arg));
 		write(2, ": command not found\n", 20);
 		return (data->rt_value = 127, 127);
 	}
-	else if (i == 2 || i == 3 || i == 4)
+	if (i == 0 || i == 2 || i == 3)
 	{
-		if (i == 4)
+		perror(arg);
+		if (i == 2)
+			ft_free_data(data, 1);
+		if (i == 3)
 		{
-			perror("Dup2 error");
 			ft_free_data(data, 0);
 			erase_lst(data->env_lst);
 			exit (-1);
 		}
-		if (i == 2)
-			perror("Dup2 error");
-		if (i == 3)
-			perror("Dup error");
-		ft_free_data(data, 1);
 	}
 	return (data->rt_value = 1, 1);
 }
+
 
 int	check_builtins(char **str)
 {
@@ -115,7 +113,7 @@ void	exe_builtins_redi(t_data *data, int fd_in, int fd_out)
 	{
 		close (fd_in);
 		close (fd_out);
-		error_exe(data, NULL, 2);
+		error_exe(data, "Dup2 error", 2);
 		exit(1);
 	}
 	close (fd_in);

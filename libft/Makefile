@@ -34,44 +34,38 @@ SRC =   ft_atoi.c \
 		ft_split.c \
 		ft_itoa.c \
 		ft_strmapi.c \
-		ft_striteri.c
-
-BONUS = ft_lstnew_bonus.c \
-		ft_lstadd_front_bonus.c \
-		ft_lstsize_bonus.c \
-		ft_lstlast_bonus.c \
-		ft_lstadd_back_bonus.c \
-		ft_lstdelone_bonus.c \
-		ft_lstclear_bonus.c \
-		ft_lstiter_bonus.c \
-		ft_lstmap_bonus.c
+		ft_striteri.c \
+		ft_lstnew.c \
+		ft_lstadd_front.c \
+		ft_lstsize.c \
+		ft_lstlast.c \
+		ft_lstadd_back.c \
+		ft_lstdelone.c \
+		ft_lstclear.c \
+		ft_lstiter.c \
+		ft_lstmap.c \
+		get_next_line.c \
+		get_next_line_utils.c
 
 CC = gcc
 FLAGS = -Wall -Wextra -Werror
 
 OBJ = $(SRC:.c=.o)
-OBJ_B = $(BONUS:.c=.o)
 
 all : $(NAME)
 
-%.o : %.c Makefile libft.h
+%.o : %.c Makefile libft.h get_next_line.h
 	$(CC) $(FLAGS) -o $@ -c $<
 
 $(NAME) : $(OBJ)
 	ar rcs $(NAME) $(OBJ)
 
-bonus: .bonus
-
-.bonus : $(NAME) $(OBJ_B)
-	touch .bonus
-	ar rcs $(NAME) $(OBJ_B)
-
 clean :
-	rm -f *.o .bonus
+	rm -f *.o
 
 fclean : clean
 	rm -f $(NAME)
 
 re : fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re

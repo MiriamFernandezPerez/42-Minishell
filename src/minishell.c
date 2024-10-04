@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:07:08 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/01 16:49:40 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/04 20:12:12 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,9 @@ int	ft_initialize(t_data **data, char **env)
 int	main(int ac, char **av, char **env)
 {
 	t_data	*data;
+	int		prompt;
 
+	prompt = 0;
 	(void)av;
 	data = NULL;
 	if (ac != 1)
@@ -101,12 +103,16 @@ int	main(int ac, char **av, char **env)
 	//set_signal();
 	while (1)
 	{
-		if (ft_read_prompt(data) == -1)
+		prompt = ft_read_prompt(data);
+		if (prompt == -1)
 			break ;
-		check_files(data, data->sections, NULL);
-		create_pipe(data);
-		execution(data, data->sections);
-		ft_free_data(data, 0); //free_for_new_prompt(data) , no necessitmos este fucion
+		if (prompt == 0)
+		{
+			check_files(data, data->sections, NULL);
+			create_pipe(data);
+			execution(data, data->sections);
+		}
+		ft_free_data(data, 0);
 	}
 	if (data)
 		ft_free_data(data, 1);

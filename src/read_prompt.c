@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 18:44:22 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/03 19:07:32 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/04 20:11:53 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	token_expand_clean(t_data *data)
 	delete_token_type(data, SPACES);
 	if (verify_next_type(data) == 1)
 		return (1);
-	print_tokens(data);
+	//print_tokens(data);
 	return (0);
 }
 
@@ -93,12 +93,12 @@ int	ft_read_prompt(t_data *data)
 		return (ft_msn(EXIT, 2), -1);
 	trim_prompt(data);
 	if (data->prompt && !data->prompt[0])
-		return (0);
+		return (1);
 	else if (data->prompt)
 		add_history(data->prompt);
 	if (ft_parser(data) == 1 || token_expand_clean(data) == 1)
-		return (0);
+		return (1);
 	ft_sections(data);
-	print_sections(data);
+	//print_sections(data);
 	return (0);
 }

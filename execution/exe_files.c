@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:17:45 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/03 19:01:55 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/04 20:46:18 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,36 +15,29 @@
 int	ft_heredoc(t_data *data, char *del)
 {
 	char	*line;
-	int		fd[2]; // ok norminette?
+	int		fd[2];
 
 	if (pipe(fd) == -1)
-	{
-		perror("Pipe error");
-		ft_free_data(data, 1);
-	}
-	if (dup2(fd[1], STDOUT_FILENO) == -1)
-		error_exe(data, NULL, 2);
-	close (fd[0]);
+		error_exe(data, "pipe error", 2);
 	while (1)
 	{
+		line = NULL;
 		line = readline(">");
-		if (!line)
-		{
-			ft_msn(EXIT, 2);
-			return (-1); //check si ok ici
-		}
-		printf("%s\n", line);
-		if (ft_strcmp(line, del) == 0)
+		if (!line) //para signales (a ver si necesitamos hijo)
 			break ;
+		if (ft_strncmp(line, del, ft_strlen(line)) == 0)
+			break ;
+		write(fd[1], line, ft_strlen(line));
+		write (fd[1], "\n", 1);
 	}
 	close (fd[1]);
 	return (fd[0]);
 }
 
-int	create_file(char *file, int i, t_data *data)
+int	create_file(char *file, int i, t_data *data, int fd)
 {
-	int		fd;
-
+	if (fd > -1)
+		close(fd);	
 	if (i == INPUT)
 		fd = open(file, O_RDONLY);
 	else if (i == TRUNC)
@@ -83,15 +76,13 @@ void	create_pipe(t_data *data)
 		if (current->fd_out == -2 && current->next->fd_in == -2)
 		{
 			if (pipe(tmp) == -1)
-			{
-				perror("Pipe error");
-				ft_free_data(data, 1);
-			}
+				error_exe(data, "pipe error", 2);
 			current->fd_out = tmp[1];
 			current->next->fd_in = tmp[0];
 		}
 		current = current->next;
 	}
+	return ;
 }
 
 int	check_files(t_data *data, t_section *current, t_red *red)
@@ -106,17 +97,11 @@ int	check_files(t_data *data, t_section *current, t_red *red)
 			while (red)
 			{
 				if (red->redi == INPUT || red->redi == HEREDOC)
-				{
-					if (current->fd_in > -1)
-						close (current->fd_in);
-					current->fd_in = create_file(red->file, red->redi, data);
-				}
+					current->fd_in = create_file(red->file, red->redi, data,
+							current->fd_in);
 				if (red->redi == TRUNC || red->redi == APPEND)
-				{
-					if (current->fd_out > -1)
-						close(current->fd_out);
-					current->fd_out = create_file(red->file, red->redi, data);
-				}
+					current->fd_out = create_file(red->file, red->redi, data,
+							current->fd_out);
 				if (current->fd_in == -1 || current->fd_out == -1)
 					break ;
 				red = red->next;

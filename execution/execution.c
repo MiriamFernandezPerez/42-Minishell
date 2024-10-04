@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:22:00 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/03 19:06:54 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/04 20:28:18 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,19 @@ int	builtins_exe(t_data *data, t_section *section)
 	fd[0] = dup(STDIN_FILENO);
 	fd[1] = dup(STDOUT_FILENO);
 	if (!fd[0] || !fd[1])
-		return (error_exe(data, NULL, 3), data->rt_value);
+		return (error_exe(data, "dup error", 2), data->rt_value);
 	if (section->fd_in == -1 || section->fd_out == -1)
 		exit (1);
 	if (section->fd_in != -2)
 	{
 		if (dup2(section->fd_in, STDIN_FILENO) == -1)
-			return (error_exe(data, NULL, 2));
+			return (error_exe(data, "dup2 error", 2));
 		close (section->fd_in);
 	}
 	if (section->fd_out != -2)
 	{
 		if (dup2(section->fd_out, STDOUT_FILENO) == -1)
-			return (error_exe(data, NULL, 2));
+			return (error_exe(data, "dup2 error", 2));
 		close (section->fd_out);
 	}
 	data->rt_value = make_builtins(section->cmd, data, 0);
@@ -49,13 +49,13 @@ int	classic_exe(t_data *data, t_section *section)
 	if (section->fd_in != -2)
 	{
 		if (dup2(section->fd_in, STDIN_FILENO) == -1)
-			return (error_exe(data, NULL, 4));
+			return (error_exe(data, "dup2 error", 3));
 		close (section->fd_in);
 	}
 	if (section->fd_out != -2)
 	{
 		if (dup2(section->fd_out, STDOUT_FILENO) == -1)
-			return (error_exe(data, NULL, 4));
+			return (error_exe(data, "dup2 error", 3));
 		close (section->fd_out);
 		if (section->next && section->next->fd_in != -2)// si c'est un pipe ca ferme la sortie de lecture pour pas aue ca sorte si autre chose ca fait rien car dans l'enfant
 			close (section->next->fd_in);
@@ -114,7 +114,6 @@ int	ft_waitpid_status(t_section *section, t_data *data)
 	int	tmp;
 
 	i = 0;
-	printf("%d\n", data->sections_qt);
 	status = (int **)malloc((data->sections_qt + 1) * sizeof (int *));
 	while (section)
 	{
@@ -135,20 +134,18 @@ int	ft_waitpid_status(t_section *section, t_data *data)
 
 int	execution(t_data *data, t_section *section)
 {
-	if (data->sections_qt == 1 && check_builtins(section->cmd) == 0)
+	if (data->sections_qt == 1 && section->cmd
+		&& check_builtins(section->cmd) == 0)
 		return (builtins_exe(data, section), data->rt_value);
 	while (section)
 	{
 		section->pid = fork();
 		if (section->pid < 0)
-		{
-			perror("Fork error");
-			ft_free_data(data, 1);
-		}
-		if (section->pid == 0)
+			error_exe(data, "fork error", 2);
+		if (section->pid == 0 && section->cmd)
 			data->rt_value = classic_exe(data, section);
 		//printf("rt_value = %d\n", data->rt_value);
-		if (data->rt_value == -1) //fermer minishell si pb de dup2 ds le fils
+		if (data->rt_value == -1) //fermer minishell si pb de dup2 ds le fils et pere
 			ft_free_data(data, 1);
 		close_fd(section);
 		section = section->next;
@@ -157,5 +154,6 @@ int	execution(t_data *data, t_section *section)
 	//printf("rt_value = %d\n", data->rt_value);
 	return (data->rt_value);
 }
-
-//tester heredoc, ahora sale siempre
+//expansion dentro el heredoc
+// errors redi despues pipe
+// regarder pourquoi leheredoc renvoie 62 et l'exit ne fonctionne pas
