@@ -96,8 +96,7 @@ int	verify_next_type(t_data *d)
 	while (d->tokens[i])
 	{
 		if (d->tokens[i]->type == INPUT || d->tokens[i]->type == TRUNC
-			|| d->tokens[i]->type == HEREDOC || d->tokens[i]->type == APPEND
-			|| d->tokens[i]->type == PIPE)
+			|| d->tokens[i]->type == HEREDOC || d->tokens[i]->type == APPEND)
 		{
 			if (d->tokens[i + 1] && check_type(d->tokens[i + 1]->type) == 1)
 			{
