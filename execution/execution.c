@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:22:00 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/04 20:28:18 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/08 16:18:23 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,9 +151,22 @@ int	execution(t_data *data, t_section *section)
 		section = section->next;
 	}
 	data->rt_value = ft_waitpid_status(data->sections, data);
-	//printf("rt_value = %d\n", data->rt_value);
+	printf("rt_value = %d\n", data->rt_value);
 	return (data->rt_value);
 }
-//expansion dentro el heredoc
+//expansion dentro el heredoc = poner un flag si el arg despues << tiene commilas
+//simple o doble y en la creation del heredoc usamos el flag para no expandir
+//(hay funcion para desexpandir?)
+
 // errors redi despues pipe
-// regarder pourquoi leheredoc renvoie 62 et l'exit ne fonctionne pas
+
+// (regarder pourquoi leheredoc renvoie 62 et l'exit ne fonctionne pas)
+
+//heredoc no fuciona si redirecion dentro un ficho (sin commando) 
+//    "<< eof > file"    ; "<<" y "eof" no aparece en la lista de redi
+// y fichos (section->files)
+// exit no fuciona bien por eso (hay un leaks tambien)
+//la redirecion de "<<" y "eof" desaparecieron antes check_files (main)
+//pero fuctiona si hay un cat ( o otro comandos) antes  "cat << eof > file"  == OK
+//es possible que es el mismo problema que la redirection despues un pipe
+// (cuando la section empieza por un redirection hay problemas ?)

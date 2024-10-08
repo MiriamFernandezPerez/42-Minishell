@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:07:08 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/04 20:12:12 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/08 15:49:55 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,12 @@ int	main(int ac, char **av, char **env)
 			break ;
 		if (prompt == 0)
 		{
+			/*if (data->sections->cmd)
+				printf ( "cmd = %s \n", data->sections->cmd[0]);
+			if (data-> sections->files)
+				printf ("file_main1 = %s\n", data->sections->files->file);
+			if (data-> sections->files->next)
+				printf ("file_main2 = %s\n", data->sections->files->next->file);*/
 			check_files(data, data->sections, NULL);
 			create_pipe(data);
 			execution(data, data->sections);

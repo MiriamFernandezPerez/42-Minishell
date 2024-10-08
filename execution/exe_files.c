@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:17:45 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/04 20:46:18 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/08 15:40:32 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	ft_heredoc(t_data *data, char *del)
 	char	*line;
 	int		fd[2];
 
+	printf ("file = %s\n", del);
 	if (pipe(fd) == -1)
 		error_exe(data, "pipe error", 2);
 	while (1)
@@ -36,6 +37,7 @@ int	ft_heredoc(t_data *data, char *del)
 
 int	create_file(char *file, int i, t_data *data, int fd)
 {
+	printf ("redi = %d\n", i);
 	if (fd > -1)
 		close(fd);	
 	if (i == INPUT)
@@ -45,7 +47,10 @@ int	create_file(char *file, int i, t_data *data, int fd)
 	else if (i == APPEND)
 		fd = open(file, O_CREAT | O_APPEND | O_WRONLY, 0644);
 	else if (i == HEREDOC)
+	{
 		fd = ft_heredoc(data, file);
+		printf ("file1 = %s\n", file);
+	}
 	if (fd == -1) //a tester, check si exit ou non ?
 		error_exe(data, file, 0);
 	return (fd);
@@ -89,6 +94,7 @@ int	check_files(t_data *data, t_section *current, t_red *red)
 {
 	if (data->sections)
 		current = data->sections;
+	printf ("file1 = %s\n", current->files->file);
 	while (current)
 	{
 		if (current->files)
@@ -96,6 +102,7 @@ int	check_files(t_data *data, t_section *current, t_red *red)
 			red = current->files;
 			while (red)
 			{
+				printf ("file = %s\n", red->file);
 				if (red->redi == INPUT || red->redi == HEREDOC)
 					current->fd_in = create_file(red->file, red->redi, data,
 							current->fd_in);

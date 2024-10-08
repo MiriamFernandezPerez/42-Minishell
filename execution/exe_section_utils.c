@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 15:55:46 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/03 15:56:44 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/08 15:02:50 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,33 @@
 
 void	ft_free_section(t_section *section, t_section *previous)
 {
-	t_red		*red;
+	//t_red		*red;
 	t_red		*prev;
 
 	while (section)
 	{
-		red = NULL;
+		//red = NULL;
 		previous = section;
-		if (section->files)
-			red = section->files;
+		//if (section->files)
+		//	red = section->files;
 		if (section->cmd)
 			free_array(section->cmd);
-		while (red)
+		if (section->files)
+		{
+			prev = section->files;
+			if (section->files->file)
+				free (section->files->file);
+			section->files = section->files->next;
+			free(prev);
+		}
+		/*while (red)
 		{
 			prev = red;
 			if (red->file)
 				free(red->file);
 			red = red->next;
 			free(prev);
-		}
+		}*/
 		if (section->path_array)
 			free_array(section->path_array);
 		if (section->path)
