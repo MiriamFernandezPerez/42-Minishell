@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:22:00 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/08 16:18:23 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/09 22:36:21 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	classic_exe(t_data *data, t_section *section)
 			return (error_exe(data, "dup2 error", 3));
 		close (section->fd_in);
 	}
+	printf("test3 = %s\n", section->cmd[0]);
 	if (section->fd_out != -2)
 	{
 		if (dup2(section->fd_out, STDOUT_FILENO) == -1)
@@ -62,6 +63,7 @@ int	classic_exe(t_data *data, t_section *section)
 	}
 	if (check_builtins(section->cmd) == 0)
 		return (make_builtins(section->cmd, data, 1));
+	printf("test4 = %s\n", section->cmd[0]);
 	if (execve(section->path, section->cmd, section->path_array) == -1)
 		exit (error_exe(data, "execve", 0));
 	return (0);
@@ -70,6 +72,7 @@ int	classic_exe(t_data *data, t_section *section)
 
 /*int	*ft_waitpid(t_section *section)
 {
+	echo hola | ls > file | wc
 	int	status;
 
 	waitpid(section->pid, &status, 0);
@@ -117,9 +120,14 @@ int	ft_waitpid_status(t_section *section, t_data *data)
 	status = (int **)malloc((data->sections_qt + 1) * sizeof (int *));
 	while (section)
 	{
-		status[i] = (int *)malloc(sizeof (int));
-		waitpid(section->pid, status[i], 0);
-		i++;
+		if (section->pid != -2)
+		{
+			status[i] = (int *)malloc(sizeof (int));
+			if (!status[i])
+				ft_malloc(data, NULL, NULL);
+			waitpid(section->pid, status[i], 0);
+			i++;
+		}
 		section = section->next;
 	}
 	status[i] = NULL;
@@ -139,34 +147,34 @@ int	execution(t_data *data, t_section *section)
 		return (builtins_exe(data, section), data->rt_value);
 	while (section)
 	{
-		section->pid = fork();
-		if (section->pid < 0)
-			error_exe(data, "fork error", 2);
-		if (section->pid == 0 && section->cmd)
-			data->rt_value = classic_exe(data, section);
-		//printf("rt_value = %d\n", data->rt_value);
-		if (data->rt_value == -1) //fermer minishell si pb de dup2 ds le fils et pere
-			ft_free_data(data, 1);
+		printf("test = %s\n", section->cmd[0]);
+		if (section->cmd)
+		{
+			section->pid = fork();
+			if (section->pid < 0)
+				error_exe(data, "fork error", 2);
+			if (section->pid == 0)
+				data->rt_value = classic_exe(data, section);
+			if (data->rt_value == -1) //fermer minishell si pb de dup2 ds le fils et pere
+				ft_free_data(data, 1);
+		}
 		close_fd(section);
+		printf("test2 = %s\n", section->cmd[0]);
 		section = section->next;
 	}
+	printf("test5\n");
 	data->rt_value = ft_waitpid_status(data->sections, data);
-	printf("rt_value = %d\n", data->rt_value);
+	//printf("rt_value = %d\n", data->rt_value); ///to borrow
 	return (data->rt_value);
 }
 //expansion dentro el heredoc = poner un flag si el arg despues << tiene commilas
 //simple o doble y en la creation del heredoc usamos el flag para no expandir
 //(hay funcion para desexpandir?)
 
-// errors redi despues pipe
+// (regarder pourquoi leheredoc renvoie 62 quand pas de fonction devannt <<)
 
-// (regarder pourquoi leheredoc renvoie 62 et l'exit ne fonctionne pas)
+//problemos de link de readline
 
-//heredoc no fuciona si redirecion dentro un ficho (sin commando) 
-//    "<< eof > file"    ; "<<" y "eof" no aparece en la lista de redi
-// y fichos (section->files)
-// exit no fuciona bien por eso (hay un leaks tambien)
-//la redirecion de "<<" y "eof" desaparecieron antes check_files (main)
-//pero fuctiona si hay un cat ( o otro comandos) antes  "cat << eof > file"  == OK
-//es possible que es el mismo problema que la redirection despues un pipe
-// (cuando la section empieza por un redirection hay problemas ?)
+//echo Hola | ls > file | exit 56 == (pone exit : command not found)
+// echo Hola | ls > file | wc == boucle infito con el WC, cat -e
+//cuando hay una redirecion en el section antes, problemo de close?

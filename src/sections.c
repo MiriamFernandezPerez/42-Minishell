@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 23:27:18 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/03 16:19:20 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/09 17:48:17 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_section	*create_node(t_data *data)
 
 void	add_redir(t_section *temp_section, t_data *data, int *i)
 {
-	if (!temp_section->cmd)
+	if (!temp_section->files) //cmd
 		add_first_redir(temp_section, data->tokens, i, data);
 	else
 		add_rest_redir(temp_section, data->tokens, i, data);

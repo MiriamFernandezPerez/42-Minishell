@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 18:44:22 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/08 15:30:39 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/09 17:50:31 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	token_expand_clean(t_data *data)
 	delete_token_type(data, SPACES);
 	if (verify_next_type(data) == 1)
 		return (1);
-	print_tokens(data);
+	//print_tokens(data); //to borrow
 	return (0);
 }
 

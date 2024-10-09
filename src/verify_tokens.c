@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verify_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
+/*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 19:45:21 by mirifern          #+#    #+#             */
-/*   Updated: 2024/08/16 21:03:28 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/10/09 17:36:50 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,14 @@ int	verify_previous_type(t_data *d, int i, char *value)
 	{
 		if (d->tokens[i - 2] && (d->tokens[i - 2]->type == INPUT
 				|| d->tokens[i - 2]->type == TRUNC
-				|| d->tokens[i - 2]->type == APPEND))
+				|| d->tokens[i - 2]->type == APPEND)) //poner heredoc tambien?
 		{
 			write_msn(d, value);
 			return (1);
 		}
 	}
 	else if (d->tokens[i - 1]->type == INPUT || d->tokens[i - 1]->type == TRUNC
-		|| d->tokens[i - 1]->type == APPEND)
+		|| d->tokens[i - 1]->type == APPEND) //poner heredoc tambien?
 	{
 		write_msn(d, value);
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:07:08 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/08 15:49:55 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/09 20:26:52 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ int	main(int ac, char **av, char **env)
 			break ;
 		if (prompt == 0)
 		{
+			//printf ("prompt = %d \n", prompt);
 			/*if (data->sections->cmd)
 				printf ( "cmd = %s \n", data->sections->cmd[0]);
 			if (data-> sections->files)

@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:14:34 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/03 17:47:25 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/09 21:24:38 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,6 @@ int	exp_new(char *str, t_env *new_node)
 		new_node->value = '\0';
 	if (j == 0)
 		new_node->flag = 'W';
-	printf("name = %s, value = %s\n", new_node->name, new_node->value);
 	if (str[i] && str[i] == '=')
 		new_node->flag = 'V';
 	/*if (j < 2)
