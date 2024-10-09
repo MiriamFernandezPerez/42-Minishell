@@ -30,10 +30,14 @@ void	handle_rt_value(t_data *data, char **temp, char **res)
 	char	*original_var_value;
 
 	(*temp)++;
-	var_value = ft_itoa(data->rt_value);
+	if (signal_num != 0)
+		var_value = ft_itoa(signal_num);
+	else
+		var_value = ft_itoa(data->rt_value);
 	original_var_value = var_value;
 	while (*var_value != '\0')
 		*(*res)++ = *var_value++;
+	signal_num = 0;
 	free(original_var_value);
 }
 

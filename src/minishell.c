@@ -100,9 +100,9 @@ int	main(int ac, char **av, char **env)
 	if (ac != 1)
 		return (ft_msn(NO_ARGS, 2));
 	ft_initialize(&data, env);
-	//set_signal();
 	while (1)
 	{
+		set_readline_signals();
 		prompt = ft_read_prompt(data);
 		if (prompt == -1)
 			break ;
@@ -115,6 +115,7 @@ int	main(int ac, char **av, char **env)
 				printf ("file_main1 = %s\n", data->sections->files->file);
 			if (data-> sections->files->next)
 				printf ("file_main2 = %s\n", data->sections->files->next->file);*/
+			set_execution_signals();
 			check_files(data, data->sections, NULL);
 			create_pipe(data);
 			execution(data, data->sections);

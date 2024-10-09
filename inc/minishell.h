@@ -29,6 +29,9 @@
 # include <sys/wait.h>
 # include <errno.h>
 
+//Global
+extern int signal_num;
+
 //Errors msn
 # define NO_ARGS "Error. Execution don't allow arguments\n"
 # define NO_GETCWD "getcwd() error, can't read current path directory\n"
@@ -198,9 +201,9 @@ char		**add_arg(t_section *section, char *arg, t_data *data);
 void		ft_execute(t_data *data);
 
 //signals.c
-/*void		sigint(void);
-void		sigquit(void);
-void		handle_signal(int sign);*/
-/*void		set_signal(void);*/
+void    readline_sigint_handler(int signum);
+void    ignore_sigquit(int signum);
+void	set_execution_signals();
+void    set_readline_signals();
 
 #endif

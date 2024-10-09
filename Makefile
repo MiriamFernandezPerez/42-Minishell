@@ -28,6 +28,7 @@ SRC = 	minishell.c \
 		src/verify_tokens.c\
 		src/sections.c\
 		src/sections_utils.c\
+		src/signals.c\
 		builtins/maths.c \
 		builtins/utils.c \
 		builtins/builtins.c \
