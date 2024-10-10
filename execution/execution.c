@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:22:00 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/10 21:54:35 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/10 22:09:46 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,6 @@ int	classic_exe(t_data *data, t_section *section)
 {
 	if (section->fd_in == -1 || section->fd_out == -1)
 		exit (1);
-	section->path_array = lst_to_arr(data->env_lst, data, section->path_array);
-	if (search_path(data, section->path_array, section) != 0)
-		exit (data->rt_value);
 	if (section->fd_in != -2)
 	{
 		if (dup2(section->fd_in, STDIN_FILENO) == -1)
@@ -63,6 +60,9 @@ int	classic_exe(t_data *data, t_section *section)
 	fd_null(data, section);
 	if (check_builtins(section->cmd) == 0)
 		return (make_builtins(section->cmd, data, 1));
+	section->path_array = lst_to_arr(data->env_lst, data, section->path_array);
+	if (search_path(data, section->path_array, section) != 0)
+		exit (data->rt_value);
 	if (execve(section->path, section->cmd, section->path_array) == -1)
 		exit (error_exe(data, "execve", 0));
 	return (0);
@@ -144,8 +144,5 @@ int	execution(t_data *data, t_section *section)
 //simple o doble y en la creation del heredoc usamos el flag para no expandir
 //(hay funcion para desexpandir?)
 
-//problemos de link de readline
 
 //echo Hola | ls > file | exit 56 == (pone exit : command not found)
-// echo Hola | ls > file | wc == boucle infito con el WC, cat -e
-//cuando hay una redirecion en el section antes, problemo de close?
