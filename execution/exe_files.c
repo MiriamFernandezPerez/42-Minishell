@@ -30,14 +30,14 @@ int	ft_heredoc(t_data *data, char *del)
 			printf("contrl + c\n");
 			break ;
 		}
-		if (!line)
+		if (!line) //hacerlo con un hijo para las senalees?
 		{
 			printf("bash: warning: here-document delimited by end-of-file (wanted `%s')\n", del);
 			break ;
 		}
-		if (ft_strncmp(line, del, ft_strlen(line)) == 0)
+		if (ft_strncmp(line, del, ft_strlen(line) + 1) == 0)
 		{
-			free (line); // ESTO NO SIRVE, PORQUE SALE DEL BUCLE AL DAR ENTER Y DEBERIA MOSTRAR NUEVA LINEA
+			free (line);
 			break ;
 		}
 		write(fd[1], line, ft_strlen(line));
