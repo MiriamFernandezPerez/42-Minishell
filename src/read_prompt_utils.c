@@ -23,3 +23,25 @@ void	trim_prompt(t_data *data)
 	free(data->prompt);
 	data->prompt = trim_input;
 }
+/*
+int	find_not_allowed(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i] != '\0')
+	{
+		if (input[i] == ';')
+		{
+			ft_msn(ERR_SEMICOL, 2);
+			return (1);
+		}
+		else if (input[i] == '\\')
+		{
+			ft_msn(ERR_BACKSLASH, 2);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}*/
