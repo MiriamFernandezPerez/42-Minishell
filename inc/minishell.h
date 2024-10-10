@@ -51,7 +51,8 @@ extern int signal_num;
 # define TOKEN_SIZE 64
 
 //delimiters
-//# define CMD 0 // Command
+# define BACKSLASH -2 // '\'
+# define SEMICOL -1 // ;
 # define SPACES 1 //Spaces and tabs
 # define PIPE 2 // |
 # define INPUT 3 // <
@@ -129,7 +130,7 @@ int			ft_read_prompt(t_data *data);
 
 //read_prompt_utils.c
 void		trim_prompt(t_data *data);
-int			find_not_allowed(char *input);
+int			find_not_allowed_type(t_data *data);
 
 //parse.c
 int			end_quote(char *input, char c, int i);
@@ -201,9 +202,18 @@ char		**add_arg(t_section *section, char *arg, t_data *data);
 void		ft_execute(t_data *data);
 
 //signals.c
-void    readline_sigint_handler(int signum);
-void    ignore_sigquit(int signum);
-void	set_execution_signals();
-void    set_readline_signals();
+void	readline_sigint_handler(int signum);
+void	readline_sigquit_handler(int signum);
+void	set_readline_signals(void);
+
+//signals_exe.c
+void	exe_sigquit_handler(int signum);
+void	exe_sigint_handler(int signum);
+void	set_execution_signals(void);
+
+//signals_heredoc.c
+void	heredoc_sigquit_handler(int signum);
+void	heredoc_sigint_handler(int signum);
+void    set_heredoc_signals(void);
 
 #endif

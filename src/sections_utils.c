@@ -12,47 +12,46 @@
 
 #include "minishell.h"
 
-void	add_first_redir(t_section *section, t_tokens **tokens, int *i, t_data *data)
+void	add_first_redir(t_section *section, t_tokens **tok, int *i, t_data *d)
 {
 	int	len_name;
 
-	len_name = ft_strlen(tokens[*i + 1]->value);
+	len_name = ft_strlen(tok[*i + 1]->value);
 	section->files = malloc(sizeof(t_red));
 	if (!section->files)
-		ft_malloc(data, NULL, NULL);
+		ft_malloc(d, NULL, NULL);
 	section->files->file = malloc(sizeof(char) * (len_name + 1));
 	if (!section->files->file)
-		ft_malloc(data, NULL, NULL);
-	ft_strlcpy(section->files->file, tokens[*i + 1]->value, len_name + 1);
-	section->files->redi = tokens[*i]->type;
+		ft_malloc(d, NULL, NULL);
+	ft_strlcpy(section->files->file, tok[*i + 1]->value, len_name + 1);
+	section->files->redi = tok[*i]->type;
 	(*i)++;
-	//printf ("redi= %d, file= %s\n", section->files->redi, section->files->file);
 	section->files->next = NULL;
 }
 
-void	add_rest_redir(t_section *section, t_tokens **tokens, int *i, t_data *data)
+void	add_rest_redir(t_section *section, t_tokens **tokens, int *i, t_data *d)
 {
 	int		len_name;
 	t_red	*temp;
 
 	if (!section->files)
 	{
-		add_first_redir(section, tokens, i, data);
+		add_first_redir(section, tokens, i, d);
 		return ;
 	}
 	len_name = ft_strlen(tokens[*i + 1]->value);
 	temp = section->files;
 	while (temp->next)
 		temp = temp->next;
-	temp->next = malloc(sizeof(t_red)); // leaks
+	temp->next = malloc(sizeof(t_red));
 	if (!temp->next)
-		ft_malloc(data, NULL, NULL);
-	temp->next->file = malloc(sizeof(char) * (len_name + 1)); // leaks
+		ft_malloc(d, NULL, NULL);
+	temp->next->file = malloc(sizeof(char) * (len_name + 1));
 	if (!temp->next->file)
-		{
-			free (temp->next); //agregue esto
-			ft_malloc(data, NULL, NULL);
-		}
+	{
+		free (temp->next);
+		ft_malloc(d, NULL, NULL);
+	}
 	ft_strlcpy(temp->next->file, tokens[*i + 1]->value, len_name + 1);
 	temp->next->redi = tokens[*i]->type;
 	(*i)++;

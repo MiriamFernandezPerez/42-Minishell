@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 18:44:22 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/10 21:17:08 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/09 17:50:31 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,29 +53,15 @@ int	token_expand_clean(t_data *data)
 	ft_tokenizer(data, ft_strlen(data->prompt), 0, 0);
 	if (ft_expander(data, 0, 0) == 1)
 		return (1);
+	if (find_not_allowed_type(data) == 1)
+		return (1);
 	delete_token_type(data, END);
 	join_tokens(data, 0, 0);
 	delete_token_type(data, SPACES);
 	if (verify_next_type(data) == 1)
 		return (1);
-	//print_tokens(data); //to borrow
 	return (0);
 }
-
-/*Funion que libera toda la estructura para el siguiente prompt*/
-/*void	free_for_new_prompt(t_data *data) ft_free_data(data, 0)
-{
-	free(data->prompt);
-	data->prompt = NULL;
-	ft_free(data->tokens);
-	data->tokens = NULL;
-	if (data->sections)
-	{
-		ft_free_section(data->sections, NULL);
-		printf("hay secciones %d\n", data->sections_qt);
-		data->sections = NULL;
-	}
-}*/
 
 /*1 - lee el input del prompt
 2 - Si detecta un EOF (ctr+d) muestra un exit y devuelve -1 para que
@@ -99,6 +85,5 @@ int	ft_read_prompt(t_data *data)
 	if (ft_parser(data) == 1 || token_expand_clean(data) == 1)
 		return (1);
 	ft_sections(data);
-	//print_sections(data);
 	return (0);
 }

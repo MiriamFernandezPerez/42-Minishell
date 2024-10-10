@@ -29,6 +29,8 @@ SRC = 	minishell.c \
 		src/sections.c\
 		src/sections_utils.c\
 		src/signals.c\
+		src/signals_exe.c\
+		src/signals_heredoc.c\
 		builtins/maths.c \
 		builtins/utils.c \
 		builtins/builtins.c \

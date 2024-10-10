@@ -19,15 +19,25 @@ int	ft_heredoc(t_data *data, char *del)
 
 	if (pipe(fd) == -1)
 		error_exe(data, "pipe error", 2);
+	set_heredoc_signals();
 	while (1)
 	{
+		signal_num = 0;
 		line = NULL;
 		line = readline(">");
-		if (!line) //para signales (a ver si necesitamos hijo)
+		if (signal_num == 130)
+		{
+			printf("contrl + c\n");
 			break ;
+		}
+		if (!line)
+		{
+			printf("bash: warning: here-document delimited by end-of-file (wanted `%s')\n", del);
+			break ;
+		}
 		if (ft_strncmp(line, del, ft_strlen(line)) == 0)
 		{
-			free (line);
+			free (line); // ESTO NO SIRVE, PORQUE SALE DEL BUCLE AL DAR ENTER Y DEBERIA MOSTRAR NUEVA LINEA
 			break ;
 		}
 		write(fd[1], line, ft_strlen(line));

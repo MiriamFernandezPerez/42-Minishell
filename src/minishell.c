@@ -13,7 +13,7 @@
 #include "minishell.h"
 
 /*Función de prueba para imprimir las secciones | comentar o eliminar al final*/
-void	print_sections(t_data *data)
+/*void	print_sections(t_data *data)
 {
 	t_section	*current_section;
 	int			j;
@@ -38,8 +38,9 @@ void	print_sections(t_data *data)
 				j++;
 			}
 			if (current_section->files)
-				printf("  Redir tipo %d, nombre archivo %s\n", current_section->files->redi, current_section->files->file);
-			else 
+				printf("  Redir tipo %d, nombre archivo %s\n",
+					current_section->files->redi, current_section->files->file);
+			else
 				printf("Sin redirecciones\n");
 		}
 		current_section = current_section->next;
@@ -47,7 +48,7 @@ void	print_sections(t_data *data)
 		if (section_num >= data->sections_qt)
 			break ;
 	}
-}
+}*/
 
 //Write Tokens array
 void	print_tokens(t_data *data)
@@ -126,6 +127,3 @@ int	main(int ac, char **av, char **env)
 		ft_free_data(data, 1);
 	return (0);
 }
-
-
-/*2 pipes juntos segfault pq dejo pasar a execute*/

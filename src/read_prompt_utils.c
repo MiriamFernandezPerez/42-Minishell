@@ -23,25 +23,27 @@ void	trim_prompt(t_data *data)
 	free(data->prompt);
 	data->prompt = trim_input;
 }
-/*
-int	find_not_allowed(char *input)
+
+int	find_not_allowed_type(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	while (input[i] != '\0')
+	while (data->tokens[i])
 	{
-		if (input[i] == ';')
+		if (data->tokens[i]->type == SEMICOL)
 		{
 			ft_msn(ERR_SEMICOL, 2);
+			data->rt_value = 2;
 			return (1);
 		}
-		else if (input[i] == '\\')
+		else if (data->tokens[i]->type == BACKSLASH)
 		{
 			ft_msn(ERR_BACKSLASH, 2);
+			data->rt_value = 2;
 			return (1);
 		}
 		i++;
 	}
 	return (0);
-}*/
+}
