@@ -119,8 +119,7 @@ int	ft_parser(t_data *data)
 {
 	if (find_quotes(data->prompt, 0, 0) == 1
 		|| find_pipes(data->prompt) == 1
-		|| find_others(data->prompt) == 1
-		|| find_not_allowed(data->prompt) == 1)
+		|| find_others(data->prompt) == 1)
 	{
 		data->rt_value = 2;
 		return (1);

@@ -126,3 +126,6 @@ int	main(int ac, char **av, char **env)
 		ft_free_data(data, 1);
 	return (0);
 }
+
+
+/*2 pipes juntos segfault pq dejo pasar a execute*/
