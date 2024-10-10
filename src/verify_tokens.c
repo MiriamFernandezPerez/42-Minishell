@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 19:45:21 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/09 17:36:50 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/10 20:57:59 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,13 @@ int	verify_next_type(t_data *d)
 				d->rt_value = 2;
 				return (1);
 			}
+		}
+		else if ((d->tokens[i]->type == PIPE)
+			&& (d->tokens[i + 1]->type == PIPE))
+		{
+			ft_msn(ERR_PIPE, 2);
+			d->rt_value = 1;
+			return (1);
 		}
 		i++;
 	}

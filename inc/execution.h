@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/04 19:59:13 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/10 19:02:08 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void		exe_builtins_redi(t_data *data, int fd_in, int fd_out);
 //exe_files
 int			ft_heredoc(t_data *data, char *del);
 int			create_file(char *file, int i, t_data *data, int fd);
+int         fd_null(t_data *data, t_section *section);
 void		create_pipe(t_data *data);
 int			check_files(t_data *data, t_section *current, t_red *red);
 

@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/03 18:43:00 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/10 17:33:28 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int	exit_number(char **str, t_data *data)
 	else
 	{
 		write(2, "exit\nminishell : exit: too many arguments\n", 42);
-		// a valider avec le prompt car ne doit pas sortir du programme
 		return (data->rt_value = 1, 1);
 	}
 	return (0);

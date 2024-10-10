@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 18:44:22 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/09 17:50:31 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/10 21:17:08 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	ft_read_prompt(t_data *data)
 	trim_prompt(data);
 	if (data->prompt && !data->prompt[0])
 		return (1);
-	else if (data->prompt)
+	else if (data->prompt[0])
 		add_history(data->prompt);
 	if (ft_parser(data) == 1 || token_expand_clean(data) == 1)
 		return (1);

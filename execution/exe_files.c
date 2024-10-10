@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:17:45 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/09 17:54:10 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/10 20:08:29 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	ft_heredoc(t_data *data, char *del)
 	char	*line;
 	int		fd[2];
 
-	//printf ("file = %s\n", del);
 	if (pipe(fd) == -1)
 		error_exe(data, "pipe error", 2);
 	while (1)
@@ -27,9 +26,13 @@ int	ft_heredoc(t_data *data, char *del)
 		if (!line) //para signales (a ver si necesitamos hijo)
 			break ;
 		if (ft_strncmp(line, del, ft_strlen(line)) == 0)
+		{
+			free (line);
 			break ;
+		}
 		write(fd[1], line, ft_strlen(line));
 		write (fd[1], "\n", 1);
+		free (line);
 	}
 	close (fd[1]);
 	return (fd[0]);
@@ -37,9 +40,8 @@ int	ft_heredoc(t_data *data, char *del)
 
 int	create_file(char *file, int i, t_data *data, int fd)
 {
-	//printf ("redi = %d\n", i);
 	if (fd > -1)
-		close(fd);	
+		close(fd);
 	if (i == INPUT)
 		fd = open(file, O_RDONLY);
 	else if (i == TRUNC)
@@ -48,10 +50,37 @@ int	create_file(char *file, int i, t_data *data, int fd)
 		fd = open(file, O_CREAT | O_APPEND | O_WRONLY, 0644);
 	else if (i == HEREDOC)
 		fd = ft_heredoc(data, file);
-	if (fd == -1) //a tester, check si exit ou non ?
+	if (fd == -1)
 		error_exe(data, file, 0);
 	return (fd);
 }
+
+int	fd_null(t_data *data, t_section *section)
+{
+	int	fd;
+	int	fd2;
+
+	if (section->fd_in == -2 && section != data->sections)
+	{
+		fd = open("/dev/null", O_RDONLY);
+		if (fd == -1)
+			error_exe(data, "open", 2);
+		if (dup2(fd, STDIN_FILENO) == -1)
+			return (error_exe(data, "dup2 error", 3));
+		close (fd);
+	}
+	if (section->fd_out == -2 && data->sections_qt > 1 && section->next)
+	{
+		fd2 = open("/dev/null", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (fd2 == -1)
+			error_exe(data, "open", 2);
+		if (dup2(fd2, STDOUT_FILENO) == -1)
+			return (error_exe(data, "dup2 error", 3));
+		close (fd2);
+	}
+	return (0);
+}
+
 /*
 if (i == INPUT) <
 	if (access(file, F_OK) == 0 && access(file, R_OK) == 0)
@@ -98,7 +127,6 @@ int	check_files(t_data *data, t_section *current, t_red *red)
 			red = current->files;
 			while (red)
 			{
-				//printf ("file = %s\n", red->file);
 				if (red->redi == INPUT || red->redi == HEREDOC)
 					current->fd_in = create_file(red->file, red->redi, data,
 							current->fd_in);
