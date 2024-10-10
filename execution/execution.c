@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:22:00 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/10 19:14:51 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/10 21:46:10 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,8 +144,4 @@ int	execution(t_data *data, t_section *section)
 //simple o doble y en la creation del heredoc usamos el flag para no expandir
 //(hay funcion para desexpandir?)
 
-//problemos de link de readline
-
 //echo Hola | ls > file | exit 56 == (pone exit : command not found)
-// echo Hola | ls > file | wc == boucle infito con el WC, cat -e
-//cuando hay una redirecion en el section antes, problemo de close?
