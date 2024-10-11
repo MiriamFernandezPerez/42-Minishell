@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/10 22:21:23 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/11 15:41:38 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,14 @@ int	exit_number(char **str, t_data *data)
 			num = modulo_negativ(num);
 		if (num > 255)
 			num = num % 256;
-		write(2, "exit\n", 5);
+		write(1, "exit\n", 5);
 		ft_free_data(data, 2);
 		exit (num);
 	}
 	else
 	{
-		write(2, "exit\nminishell : exit: too many arguments\n", 42);
+		write (1, "exit\n", 5);
+		write(2, "minishell : exit: too many arguments\n", 37);
 		return (data->rt_value = 1, 1);
 	}
 	return (0);
@@ -67,7 +68,7 @@ int	make_exit(char **str, t_data *data)
 {
 	if (!str[1] || (ft_strncmp(str[1], "0", 1) == 0 && !str[2])) //1 arg
 	{
-		write(2, "exit\n", 5);
+		write(1, "exit\n", 5);
 		ft_free_data(data, 2);
 		exit (0);
 	}
@@ -80,7 +81,8 @@ int	make_exit(char **str, t_data *data)
 		}
 		else
 		{
-			write(2, "exit\nminishell : exit: ", 23);
+			write(1, "exit\n", 5);
+			write(2, "minishell : exit: ", 18);
 			write(2, &(*str[1]), ft_strlen(str[1]));
 			write(2, ": numeric argument required\n", 28);
 			ft_free_data(data, 2);

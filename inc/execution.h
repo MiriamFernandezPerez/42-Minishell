@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/10 19:02:08 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:49:23 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ char		*find_path_cmd(char **array, int j, t_data *data, char *tmp);
 //t_section	*ft_initialize_section(void);
 void		ft_free_section(t_section *section, t_section *previous);
 void		close_fd(t_section *section);
+void        close_fd_child(t_section *section);
 
 
 #endif

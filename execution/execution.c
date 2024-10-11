@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:22:00 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/10 22:09:46 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/11 17:26:49 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	builtins_exe(t_data *data, t_section *section)
 			return (error_exe(data, "dup2 error", 2));
 		close (section->fd_in);
 	}
-	if (section->fd_out != -2)
+	if (section->fd_out != -2 && ft_strcmp(section->cmd[0], "exit") != 0)
 	{
 		if (dup2(section->fd_out, STDOUT_FILENO) == -1)
 			return (error_exe(data, "dup2 error", 2));
@@ -54,9 +54,8 @@ int	classic_exe(t_data *data, t_section *section)
 		if (dup2(section->fd_out, STDOUT_FILENO) == -1)
 			return (error_exe(data, "dup2 error", 3));
 		close (section->fd_out);
-		if (section->next && section->next->fd_in != -2)// si c'est un pipe ca ferme la sortie de lecture pour pas aue ca sorte si autre chose ca fait rien car dans l'enfant
-			close (section->next->fd_in);
 	}
+	close_fd_child(section);
 	fd_null(data, section);
 	if (check_builtins(section->cmd) == 0)
 		return (make_builtins(section->cmd, data, 1));
@@ -64,11 +63,9 @@ int	classic_exe(t_data *data, t_section *section)
 	if (search_path(data, section->path_array, section) != 0)
 		exit (data->rt_value);
 	if (execve(section->path, section->cmd, section->path_array) == -1)
-		exit (error_exe(data, "execve", 0));
+		exit (error_exe(data, "execve", 4));
 	return (0);
 }
-//echo hola | ls > file | wc
-//echo hola | < file2 cat -e
 
 void	free_array_int(int **array)
 {
@@ -108,12 +105,11 @@ int	ft_waitpid_status(t_section *section, t_data *data)
 	if (i == 0)
 		return (free(status), data->rt_value);
 	tmp = status[i - 1][0];
-	free_array_int(status);
 	if (WIFEXITED(tmp))
-		return (WEXITSTATUS(tmp));
-	else if (WIFSIGNALED(tmp))
-		return (WTERMSIG(tmp));
-	return (0);
+		return (free_array_int(status), WEXITSTATUS(tmp));
+	//if (WIFSIGNALED(tmp))
+	return (free_array_int(status), WTERMSIG(tmp));
+	//return (0);
 }
 
 int	execution(t_data *data, t_section *section)
@@ -137,12 +133,8 @@ int	execution(t_data *data, t_section *section)
 		section = section->next;
 	}
 	data->rt_value = ft_waitpid_status(data->sections, data);
-	//printf("rt_value = %d\n", data->rt_value); ///to borrow
 	return (data->rt_value);
 }
 //expansion dentro el heredoc = poner un flag si el arg despues << tiene commilas
 //simple o doble y en la creation del heredoc usamos el flag para no expandir
 //(hay funcion para desexpandir?)
-
-
-//echo Hola | ls > file | exit 56 == (pone exit : command not found)

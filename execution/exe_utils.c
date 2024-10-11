@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:03:19 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/10 22:03:40 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/11 17:35:10 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	**lst_to_arr(t_env *lst, t_data *data, char **array)
 	array = (char **)malloc((count_lst(lst) + 1) * sizeof (char *));
 	if (!array)
 		ft_malloc(data, NULL, NULL);
-	while(lst) //+ check si les flags qui vont dans l'env sont necessaires
+	while (lst)
 	{
 		if (lst->name && lst->value)
 		{
@@ -66,21 +66,19 @@ char	**lst_to_arr(t_env *lst, t_data *data, char **array)
 
 int	error_exe(t_data *data, char *arg, int i)
 {
-	write(2, "minishell : ", 12);
-	/*if (i == 0) // check si pas egal a  i == 2 ?
-	{
-		write(2, arg, ft_strlen(arg)); //a tester le strerror
-		write(2, ": ", 2);
-		write(2, strerror(errno), ft_strlen(strerror(errno)));
-		write(2, "\n", 1);
-	}*/
 	if (i == 1)
 	{
 		write(2, arg, ft_strlen(arg));
 		write(2, ": command not found\n", 20);
 		return (data->rt_value = 127, 127);
 	}
-	if (i == 0 || i == 2 || i == 3)
+	write(2, "minishell: ", 11);
+	if (i == 0)
+	{
+		write(2, arg, ft_strlen(arg));
+		write(2, ": No such file or directory\n", 28);
+	}
+	if (i == 2 || i == 3 || i == 4)
 	{
 		perror(arg);
 		if (i == 2)
@@ -120,3 +118,4 @@ void	exe_builtins_redi(t_data *data, int fd_in, int fd_out)
 	close (fd_out);
 	return ;
 }
+//fonction qui remet le stdin et stdout a l'origine car pas de hijo dans les builtins

@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/01 14:42:48 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:54:04 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,29 +83,29 @@ typedef struct s_tokens
 typedef struct s_red
 {
 	char				*file;
-	int					redi; //HEREDOC/APPEND/INPUT/TRUNC
+	int					redi;
 	struct s_red		*next;
 }						t_red;
 
-typedef struct s_section //->listas
+typedef struct s_section
 {
-	char				**cmd; //Miriam expand ->array
-	t_red				*files; //Miriam expand -> listas
-	char				**path_array; //Emilie exe
-	char				*path; //Emilie exe
-	int					flag; //Emilie exe
-	int					pid; //Emilie exe
-	int					fd_in; //Emilie exe
-	int					fd_out; //Emilie exe
-	int					tokens_qt; //lo necesito???
-	struct s_section	*next; //Miriam expand
+	char				**cmd;
+	t_red				*files;
+	char				**path_array;
+	char				*path;
+	int					flag;
+	int					pid;
+	int					fd_in;
+	int					fd_out;
+	int					tokens_qt; //Necesitamos?
+	struct s_section	*next;
 }						t_section;
 
 typedef struct s_data
 {
 	char				*prompt;
 	t_tokens			**tokens;
-	t_section			*sections; //avant **sections
+	t_section			*sections;
 	int					tokens_qt;
 	int					sections_qt;
 	int					rt_value;
@@ -199,21 +199,21 @@ int			size_cmd(char **cmd);
 char		**add_arg(t_section *section, char *arg, t_data *data);
 
 //executer.c
-void		ft_execute(t_data *data);
+void		ft_execute(t_data *data); // ???
 
 //signals.c
-void	readline_sigint_handler(int signum);
-void	readline_sigquit_handler(int signum);
-void	set_readline_signals(void);
+void		readline_sigint_handler(int signum);
+void		readline_sigquit_handler(int signum);
+void		set_readline_signals(void);
 
 //signals_exe.c
-void	exe_sigquit_handler(int signum);
-void	exe_sigint_handler(int signum);
-void	set_execution_signals(void);
+void		exe_sigquit_handler(int signum);
+void		exe_sigint_handler(int signum);
+void		set_execution_signals(void);
 
 //signals_heredoc.c
-void	heredoc_sigquit_handler(int signum);
-void	heredoc_sigint_handler(int signum);
-void    set_heredoc_signals(void);
+void		heredoc_sigquit_handler(int signum);
+void		heredoc_sigint_handler(int signum);
+void    	set_heredoc_signals(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:17:45 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/10 20:08:29 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/11 19:08:16 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,37 +16,56 @@ int	ft_heredoc(t_data *data, char *del)
 {
 	char	*line;
 	int		fd[2];
+	int		pid;
 
 	if (pipe(fd) == -1)
 		error_exe(data, "pipe error", 2);
-	set_heredoc_signals();
-	while (1)
+	pid = fork();
+	if (pid < 0)
+		error_exe(data, "fork error", 2);
+	if (pid == 0)
 	{
-		signal_num = 0;
-		line = NULL;
-		line = readline(">");
-		if (signal_num == 130)
+		close(fd[0]);
+		set_heredoc_signals();
+		while (1)
 		{
-			printf("contrl + c\n");
-			break ;
-		}
-		if (!line) //hacerlo con un hijo para las senalees?
-		{
-			printf("bash: warning: here-document delimited by end-of-file (wanted `%s')\n", del);
-			break ;
-		}
-		if (ft_strncmp(line, del, ft_strlen(line) + 1) == 0)
-		{
+			signal_num = 0;
+			line = NULL;
+			line = readline(">");
+			if (signal_num == 130)
+			{
+				//si 'ctr + c' corta todo (-> exit (0) ( por salir del hijo)
+				// -> ft_free_data -> return prompt, rt_value == 130)
+				//close (fd[1]);
+				printf("contrl + c\n"); // necesitamos? si si write(2)!
+				break ;
+			}
+			if (!line)
+			{
+				write(2, "bash: warning: here-document delimited ", 40);
+				write(2, "by end-of-file (wanted `", 25);
+				write(2, del, ft_strlen(del));
+				write(2, "')\n", 3);
+				break ;
+			}
+			if (ft_strncmp(line, del, ft_strlen(line) + 1) == 0)
+			{
+				free (line);
+				close (fd[1]);
+				//exit (0);
+				break ;
+			}
+			write(fd[1], line, ft_strlen(line));
+			write (fd[1], "\n", 1);
 			free (line);
-			break ;
 		}
-		write(fd[1], line, ft_strlen(line));
-		write (fd[1], "\n", 1);
-		free (line);
+		exit (0);
 	}
 	close (fd[1]);
+	waitpid(pid, NULL, 0);
 	return (fd[0]);
 }
+//close el pipe en el hijo?
 
 int	create_file(char *file, int i, t_data *data, int fd)
 {
@@ -79,7 +98,8 @@ int	fd_null(t_data *data, t_section *section)
 			return (error_exe(data, "dup2 error", 3));
 		close (fd);
 	}
-	if (section->fd_out == -2 && data->sections_qt > 1 && section->next)
+	if ((section->fd_out == -2 && data->sections_qt > 1 && section->next)
+		|| ft_strcmp(section->cmd[0], "exit") == 0)
 	{
 		fd2 = open("/dev/null", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (fd2 == -1)
