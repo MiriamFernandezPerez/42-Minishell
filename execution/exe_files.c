@@ -20,26 +20,20 @@ int	ft_heredoc(t_data *data, char *del)
 
 	if (pipe(fd) == -1)
 		error_exe(data, "pipe error", 2);
+	signal(SIGQUIT, SIG_IGN);
 	pid = fork();
 	if (pid < 0)
 		error_exe(data, "fork error", 2);
 	if (pid == 0)
 	{
 		close(fd[0]);
-		set_heredoc_signals();
+		signal(SIGINT, heredoc_sigint_handler);
 		while (1)
 		{
-			signal_num = 0;
-			line = NULL;
-			line = readline(">");
-			if (signal_num == 130)
-			{
-				//si 'ctr + c' corta todo (-> exit (0) ( por salir del hijo)
-				// -> ft_free_data -> return prompt, rt_value == 130)
-				//close (fd[1]);
-				printf("contrl + c\n"); // necesitamos? si si write(2)!
+			if (g_signal_num == 130)
 				break ;
-			}
+			//line = NULL;
+			line = readline(">");
 			if (!line)
 			{
 				write(2, "bash: warning: here-document delimited ", 40);
@@ -59,6 +53,8 @@ int	ft_heredoc(t_data *data, char *del)
 			write (fd[1], "\n", 1);
 			free (line);
 		}
+		close(fd[1]);
+		data->rt_value = g_signal_num;
 		exit (0);
 	}
 	close (fd[1]);

@@ -12,6 +12,9 @@
 
 #include "minishell.h"
 
+//Global Variable Initzialize
+int	g_signal_num = 0;
+
 /*Función de prueba para imprimir las secciones | comentar o eliminar al final*/
 /*void	print_sections(t_data *data)
 {
@@ -103,7 +106,8 @@ int	main(int ac, char **av, char **env)
 	ft_initialize(&data, env);
 	while (1)
 	{
-		set_readline_signals();
+		signal(SIGQUIT, readline_sigquit_handler);
+		signal(SIGINT, readline_sigint_handler);
 		prompt = ft_read_prompt(data);
 		if (prompt == -1)
 			break ;
@@ -116,9 +120,11 @@ int	main(int ac, char **av, char **env)
 				printf ("file_main1 = %s\n", data->sections->files->file);
 			if (data-> sections->files->next)
 				printf ("file_main2 = %s\n", data->sections->files->next->file);*/
-			set_execution_signals();
+			
 			check_files(data, data->sections, NULL);
 			create_pipe(data);
+			signal(SIGQUIT, exe_sigquit_handler);
+			signal(SIGINT, exe_sigint_handler);
 			execution(data, data->sections);
 		}
 		ft_free_data(data, 0);

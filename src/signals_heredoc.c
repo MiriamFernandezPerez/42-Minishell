@@ -14,31 +14,18 @@
 
 void	heredoc_sigint_handler(int signum)
 {
-    ft_putstr_fd("\n", STDOUT_FILENO);
-	rl_on_new_line();
-	ft_putstr_fd("  \b\b", STDOUT_FILENO);
-	signal_num = 128 + signum;
+   g_signal_num = 128 + signum; // Guarda la señal
+
+    // Limpia la línea actual y muestra el mensaje
+    rl_replace_line("", 0);
+    rl_on_new_line();
+    write(2, " ^C\n", 4);
+
+    // Termina el proceso hijo
+    exit(g_signal_num);
 }
 
 void	heredoc_sigquit_handler(int signum)
 {
-	rl_on_new_line();
-	rl_redisplay();
-	ft_putstr_fd("  \b\b", STDOUT_FILENO);
-	signal_num = 128 + signum;
-}
-
-void    set_heredoc_signals(void)
-{
-	struct sigaction	sa_int;
-	struct sigaction	sa_quit;
-
-	sa_int.sa_handler = heredoc_sigint_handler;
-	sigemptyset(&sa_int.sa_mask);
-	sa_int.sa_flags = 0;
-	sigaction(SIGINT, &sa_int, NULL);
-	sa_quit.sa_handler = heredoc_sigquit_handler;
-	sigemptyset(&sa_quit.sa_mask);
-	sa_quit.sa_flags = 0;
-	sigaction(SIGQUIT, &sa_quit, NULL);
+	g_signal_num = 128 + signum;
 }

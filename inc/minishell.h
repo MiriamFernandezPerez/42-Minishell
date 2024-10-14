@@ -30,7 +30,7 @@
 # include <errno.h>
 
 //Global
-extern int signal_num;
+extern int g_signal_num;
 
 //Errors msn
 # define NO_ARGS "Error. Execution don't allow arguments\n"
