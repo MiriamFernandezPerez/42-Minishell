@@ -13,16 +13,11 @@
 #include "minishell.h"
 
 void	heredoc_sigint_handler(int signum)
-{
-   g_signal_num = 128 + signum; // Guarda la señal
-
-    // Limpia la línea actual y muestra el mensaje
-    rl_replace_line("", 0);
-    rl_on_new_line();
-    write(2, " ^C\n", 4);
-
-    // Termina el proceso hijo
-    exit(g_signal_num);
+{	
+    ft_putstr_fd("\n", STDOUT_FILENO);
+	//rl_replace_line("", 0);
+    g_signal_num = 128 + signum;
+	exit(g_signal_num);
 }
 
 void	heredoc_sigquit_handler(int signum)

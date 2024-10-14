@@ -19,7 +19,7 @@ int	signal_num = 0;
 linea actual, prepara un nuevo prompt y redibuja el prompt*/
 void	readline_sigint_handler(int signum)
 {
-	printf("\n");
+	ft_putstr_fd("\n", STDOUT_FILENO);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
@@ -29,8 +29,9 @@ void	readline_sigint_handler(int signum)
 /*Manejador para SIGQUIT durante readline*/
 void	readline_sigquit_handler(int signum)
 {
+	(void) signum;
 	rl_on_new_line();
 	rl_redisplay();
 	ft_putstr_fd("  \b\b", STDOUT_FILENO);
-	g_signal_num = 128 + signum;
+	g_signal_num = 0;
 }

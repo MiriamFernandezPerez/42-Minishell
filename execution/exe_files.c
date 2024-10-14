@@ -17,7 +17,9 @@ int	ft_heredoc(t_data *data, char *del)
 	char	*line;
 	int		fd[2];
 	int		pid;
+	int		status;
 
+	status = 0;
 	if (pipe(fd) == -1)
 		error_exe(data, "pipe error", 2);
 	signal(SIGQUIT, SIG_IGN);
@@ -30,9 +32,7 @@ int	ft_heredoc(t_data *data, char *del)
 		signal(SIGINT, heredoc_sigint_handler);
 		while (1)
 		{
-			if (g_signal_num == 130)
-				break ;
-			//line = NULL;
+			line = NULL;
 			line = readline(">");
 			if (!line)
 			{
@@ -40,6 +40,7 @@ int	ft_heredoc(t_data *data, char *del)
 				write(2, "by end-of-file (wanted `", 25);
 				write(2, del, ft_strlen(del));
 				write(2, "')\n", 3);
+				line = NULL;
 				break ;
 			}
 			if (ft_strncmp(line, del, ft_strlen(line) + 1) == 0)
@@ -54,14 +55,19 @@ int	ft_heredoc(t_data *data, char *del)
 			free (line);
 		}
 		close(fd[1]);
-		data->rt_value = g_signal_num;
 		exit (0);
 	}
 	close (fd[1]);
-	waitpid(pid, NULL, 0);
+	waitpid(pid, &status, 0);
+	if (status != 0)
+	{
+		data->rt_value = 128 + SIGINT;
+		return (-2);
+	}
 	return (fd[0]);
 }
 //close el pipe en el hijo?
+//si hacemos un ctr+C para salir del hijo, no habria que cerrar el fd del padre?
 
 int	create_file(char *file, int i, t_data *data, int fd)
 {

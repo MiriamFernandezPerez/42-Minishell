@@ -113,6 +113,7 @@ int	main(int ac, char **av, char **env)
 			break ;
 		if (prompt == 0)
 		{
+			signal(SIGINT, SIG_IGN);
 			//printf ("prompt = %d \n", prompt);
 			/*if (data->sections->cmd)
 				printf ( "cmd = %s \n", data->sections->cmd[0]);
@@ -120,7 +121,6 @@ int	main(int ac, char **av, char **env)
 				printf ("file_main1 = %s\n", data->sections->files->file);
 			if (data-> sections->files->next)
 				printf ("file_main2 = %s\n", data->sections->files->next->file);*/
-			
 			check_files(data, data->sections, NULL);
 			create_pipe(data);
 			signal(SIGQUIT, exe_sigquit_handler);

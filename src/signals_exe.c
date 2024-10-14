@@ -15,9 +15,7 @@
 void	exe_sigint_handler(int signum)
 {
 	ft_putstr_fd("\n", STDOUT_FILENO);
-	ft_putstr_fd(" ", STDOUT_FILENO);
-	rl_on_new_line();
-	ft_putstr_fd("  \b\b", STDOUT_FILENO);
+	//rl_on_new_line();
 	g_signal_num = 128 + signum;
 }
 
