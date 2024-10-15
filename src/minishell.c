@@ -15,7 +15,7 @@
 //Global Variable Initzialize
 int	g_signal_num = 0;
 
-/*Función de prueba para imprimir las secciones | comentar o eliminar al final*/
+/*Funtion to print sections not necessary*/
 /*void	print_sections(t_data *data)
 {
 	t_section	*current_section;
@@ -73,8 +73,7 @@ void	print_tokens(t_data *data)
 	}
 }
 
-/*Funcion que inicializa la estructura data
-y hace una copia del environment*/
+/*Funtion to initiaize data structure en make a copy of env*/
 int	ft_initialize(t_data **data, char **env)
 {
 	*data = malloc(sizeof(t_data));
@@ -93,6 +92,7 @@ int	ft_initialize(t_data **data, char **env)
 	return (0);
 }
 
+/*Main function*/
 int	main(int ac, char **av, char **env)
 {
 	t_data	*data;

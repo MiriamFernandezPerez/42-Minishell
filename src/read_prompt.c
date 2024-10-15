@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-/*Funcion que busca si hay > >> < o << al final del prompt*/
+/*Function to find > >> < o << in prompt*/
 int	find_others(char *input)
 {
 	int	len;
@@ -26,8 +26,7 @@ int	find_others(char *input)
 	return (0);
 }
 
-/*Funcion que verifica si el string esta compuesto
-solo por espacios y/o tabulaciones*/
+/*Function to find some spaces or tabs characters inside the string*/
 int	only_spaces(char *s)
 {
 	int	i;
@@ -46,8 +45,10 @@ int	only_spaces(char *s)
 	return (0);
 }
 
-/*Funcion que llama a las funciones tokenizer, expander, del_tokens_END
-join_tokens del_tokens_SPACES y verify_tokens*/
+/* Function is calling other functions like expander, to find not allowed types 
+like \ and ;, organize tokens if END_token appears, join tokens if 2 or more
+ARG tokens are together, and finaly verify all the tokens. If something is wrong
+return 1 still main o not excecute*/
 int	token_expand_clean(t_data *data)
 {
 	ft_tokenizer(data, ft_strlen(data->prompt), 0, 0);
@@ -63,14 +64,19 @@ int	token_expand_clean(t_data *data)
 	return (0);
 }
 
-/*1 - lee el input del prompt
-2 - Si detecta un EOF (ctr+d) muestra un exit y devuelve -1 para que
-se salga del bucle while(1) del main y cerrar el shell liberando
-el input
-3 - Anade el input al history
-4 - Paso el input para depurarlo a la funcion ft_parser
-5 - Tokeniza el input, lo expande y comprueba los types de cada token
-...
+/*
+1 - Read input prompt
+2 - If an EOF (ctr+d) is detected, make exit and return -1 to break while(1)
+in main function, free the structure and close minishell
+3 - Trim prompt to delete spaces after and before input
+4 - If prompt exist but it's empty return 1 to main to make a new prompt and
+free the structure
+5 - If everything it's ok, add input to history
+6 - Check prompt by parser if something is wrong and parser returns 1, return
+back 1 to main to not execute and prepare new prompt. Error msn should be write
+7 - Start tokenizer, expander and prepare the token structure to separete into
+sections if it's necessary. if something is wrong and parser returns 1, return
+back 1 to main to not execute and prepare new prompt. Error msn should be write
 */
 int	ft_read_prompt(t_data *data)
 {

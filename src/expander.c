@@ -123,6 +123,8 @@ int	ft_expander(t_data *d, int i, int j)
 	char	*res;
 	char	*cpy;
 
+	/*print_tokens(d);
+	printf("*************\n");*/
 	while (i < d->tokens_qt)
 	{
 		if (d->tokens[i]->type == VAR)
@@ -143,5 +145,6 @@ int	ft_expander(t_data *d, int i, int j)
 		}
 		i++;
 	}
+	//print_tokens(d);
 	return (0);
 }

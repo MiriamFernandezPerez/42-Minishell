@@ -97,7 +97,7 @@ typedef struct s_section
 	int					pid;
 	int					fd_in;
 	int					fd_out;
-	int					tokens_qt; //Necesitamos?
+	int					tokens_qt;
 	struct s_section	*next;
 }						t_section;
 
