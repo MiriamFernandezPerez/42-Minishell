@@ -14,24 +14,21 @@
 
 void	ft_free_cd(t_data *data, char *old, char *new, int i)
 {
-	if (i == 0)
-	{
-		if (old)
-			free (old);
-		if (new)
-			free (new);
-		ft_malloc(data, NULL, NULL);
-		return ;
-	}
 	if (i == 1)
-	{
 		perror("getcwd error: ");
-		if (new)
-			free (new);
-		if (old)
-			free (old);
-		return ;
+	if (old)
+	{
+		free (old);
+		old = NULL;
 	}
+	if (new)
+	{
+		free (new);
+		new = NULL;
+	}
+	if (i == 0)
+		ft_malloc(data, NULL, NULL);
+	return ;
 }
 
 int	change_pwd(t_data *data, char *old, char *new)
@@ -98,11 +95,19 @@ int	make_cd(char **str, t_data *data)
 		old_buf = ft_calloc(1, 256);
 		new_buf = ft_calloc(1, 256);
 		if (!old_buf || !new_buf)
+		{
+			if (old_buf)
+				free (old_buf);
 			ft_malloc(data, NULL, NULL);
+		}
 		if (getcwd(old_buf, 256) == 0)
-			return (ft_free_cd(NULL, old_buf, NULL, 1), 1);
+			return (ft_free_cd(NULL, old_buf, NULL, 1), 1); //NEW_BUF ?
 		if (chdir(str[1]) != 0)
+		{
+			free (old_buf);
+			free(new_buf);
 			return (print_errors(str, data, 1), 1);
+		}
 		if (change_pwd(data, old_buf, new_buf) == 1)
 			ft_malloc(data, NULL, NULL);
 	}

@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/11 15:41:38 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/15 21:43:55 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,6 @@ int	make_builtins(char **str, t_data *data, int flag)
 	return (data->rt_value);
 }
 
- // unset retourne tjr 0 et prend tous les args sauf -l...
- //(a manager pour tous car pas d'options pour les builtins
- 
 int	exit_number(char **str, t_data *data)
 {
 	long long	num;
@@ -66,15 +63,15 @@ int	exit_number(char **str, t_data *data)
 
 int	make_exit(char **str, t_data *data)
 {
-	if (!str[1] || (ft_strncmp(str[1], "0", 1) == 0 && !str[2])) //1 arg
+	if (!str[1] || (ft_strncmp(str[1], "0", 1) == 0 && !str[2]))
 	{
 		write(1, "exit\n", 5);
 		ft_free_data(data, 2);
 		exit (0);
 	}
-	if (str[1]) // si 2 args et plus
+	if (str[1])
 	{
-		if (check_minmax(str[1]) == 0) // est un nombre
+		if (check_minmax(str[1]) == 0)
 		{
 			if (exit_number(str, data) == 1)
 				return (1);

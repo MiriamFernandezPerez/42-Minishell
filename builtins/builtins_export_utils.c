@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/03 15:50:49 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/15 21:46:21 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*check_value(t_data *data, int j, char *name)
 {
 	char	*value;
-	
+
 	value = malloc((j + 1) * sizeof(char));
 	if (!value)
 	{
@@ -24,6 +24,7 @@ char	*check_value(t_data *data, int j, char *name)
 	}
 	return (value);
 }
+
 int	first_check(char *str)
 {
 	int	i;
@@ -52,7 +53,7 @@ int	check_name(char *str, int i, t_env *current, t_data *data)
 	ft_strlcpy(name, str, i + 1);
 	while (current && ft_strcmp(name, current->name) != 0)
 		current = current->next;
-	if (current && ft_strcmp(name, current->name) == 0) //&& current->value
+	if (current && ft_strcmp(name, current->name) == 0)
 	{
 		j = 0;
 		while (str[i++])
@@ -62,7 +63,7 @@ int	check_name(char *str, int i, t_env *current, t_data *data)
 		if (current->value)
 			free(current->value);
 		current->value = value;
-		current->flag = 'v'; //new
+		current->flag = 'v';
 		return (free(name), 1);
 	}
 	return (free(name), 0);

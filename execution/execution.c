@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:22:00 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/11 17:26:49 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:43:28 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	classic_exe(t_data *data, t_section *section)
 	if (search_path(data, section->path_array, section) != 0)
 		exit (data->rt_value);
 	if (execve(section->path, section->cmd, section->path_array) == -1)
-		exit (error_exe(data, "execve", 4));
+		exit (error_exe(data, section->cmd[0], 4));
 	return (0);
 }
 
@@ -138,3 +138,5 @@ int	execution(t_data *data, t_section *section)
 //expansion dentro el heredoc = poner un flag si el arg despues << tiene commilas
 //simple o doble y en la creation del heredoc usamos el flag para no expandir
 //(hay funcion para desexpandir?)
+
+//we need to put a limit on opening file y FD with errors message if not -> buffer overflow

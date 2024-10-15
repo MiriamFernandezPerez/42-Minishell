@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:03:19 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/11 17:35:10 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/15 20:04:28 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,29 +66,29 @@ char	**lst_to_arr(t_env *lst, t_data *data, char **array)
 
 int	error_exe(t_data *data, char *arg, int i)
 {
-	if (i == 1)
+	if (i != 1)
+		write(2, "minishell: ", 11);
+	if (i == 2 || i == 3 || i == 4)
+		perror(arg);
+	if (i == 0 || i == 1 || i == 4)
 	{
-		write(2, arg, ft_strlen(arg));
-		write(2, ": command not found\n", 20);
+		if (i == 0 || i == 1)
+			write(2, arg, ft_strlen(arg));
+		if (i == 0)
+			write(2, ": No such file or directory\n", 28);
+		if (i == 1)
+			write(2, ": command not found\n", 20);
+		//if (i == 4)
+		//	return (126); return execve int
 		return (data->rt_value = 127, 127);
 	}
-	write(2, "minishell: ", 11);
-	if (i == 0)
+	if (i == 2)
+		ft_free_data(data, 1);
+	if (i == 3)
 	{
-		write(2, arg, ft_strlen(arg));
-		write(2, ": No such file or directory\n", 28);
-	}
-	if (i == 2 || i == 3 || i == 4)
-	{
-		perror(arg);
-		if (i == 2)
-			ft_free_data(data, 1);
-		if (i == 3)
-		{
-			ft_free_data(data, 0);
-			erase_lst(data->env_lst);
-			exit (-1);
-		}
+		ft_free_data(data, 0);
+		erase_lst(data->env_lst);
+		exit (-1);
 	}
 	return (data->rt_value = 1, 1);
 }

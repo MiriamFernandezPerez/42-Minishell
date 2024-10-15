@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/03 15:58:35 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/15 21:45:25 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	make_unset(char **str, t_data *data)
 		{
 			if (ft_strcmp(str[i], current->name) == 0)
 			{
-				data->env_lst = adjust_env(data, current); //supprimer le node
+				data->env_lst = adjust_env(data, current);
 				current = data->env_lst;
 			}
 			else
@@ -57,7 +57,6 @@ void	make_unset(char **str, t_data *data)
 	}
 	return ;
 }
-//check si on n'est pas en read only? ok env sans
 
 int	make_env(t_data *data, char **str)
 {

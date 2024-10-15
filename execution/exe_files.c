@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:17:45 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/11 19:08:16 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:03:04 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	ft_heredoc(t_data *data, char *del)
 	if (status != 0)
 	{
 		data->rt_value = 128 + SIGINT;
-		return (-2);
+		return (-2); // porque no return rt_value?
 	}
 	return (fd[0]);
 }

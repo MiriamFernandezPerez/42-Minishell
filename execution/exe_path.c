@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:11:40 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/11 14:37:05 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/15 21:48:31 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,22 @@ int	search_path(t_data *data, char **array, t_section *section)
 		{
 			section->path = check_path(section, data, array[i]);
 			if (! section->path)
-				return (error_exe(data, section->cmd[0], 1)); //checker si ok rt_value (127)
+			{
+				if (ft_strchr(section->cmd[0], '/') != 0)
+					return (error_exe(data, section->cmd[0], 0));
+				return (error_exe(data, section->cmd[0], 1));
+			}
 			return (0);
 		}
 		else
 			i++;
 	}
-	error_exe(data, section->cmd[0], 0);//si PATH unset (No such file or directory)
-	return (data->rt_value = 127); // verifier si ok
+	return (error_exe(data, section->cmd[0], 0));
 }
+/*
+{
+		if (access(section->cmd[0], X_OK) == 0)
+			return (section->path = section->cmd[0], 0);
+		return (error_exe(data, section->cmd[0], 0));
+}
+*/

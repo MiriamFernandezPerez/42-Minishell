@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/11 16:54:04 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/15 21:41:10 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # include <errno.h>
 
 //Global
-extern int g_signal_num;
+extern int	g_signal_num;
 
 //Errors msn
 # define NO_ARGS "Error. Execution don't allow arguments\n"
@@ -47,8 +47,8 @@ extern int g_signal_num;
 # define ERR_HEREDOC "bash: syntax error near unexpected token `<<'\n"
 # define ERR_APPEND "bash: syntax error near unexpected token `>>'\n"
 
-# define MAX_TOKENS 100
-# define TOKEN_SIZE 64
+# define MAX_TOKENS 580000
+//# define TOKEN_SIZE 64
 
 //delimiters
 # define BACKSLASH -2 // '\'
@@ -214,6 +214,6 @@ void		set_execution_signals(void);
 //signals_heredoc.c
 void		heredoc_sigquit_handler(int signum);
 void		heredoc_sigint_handler(int signum);
-void    	set_heredoc_signals(void);
+void		set_heredoc_signals(void);
 
 #endif
