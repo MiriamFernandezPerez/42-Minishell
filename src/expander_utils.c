@@ -66,9 +66,9 @@ void	handle_normal_variable(t_data *data, char **temp, char **res)
 	while (**temp != '\0' && (ft_isalnum(**temp) || **temp == '_'))
 		var_name[i++] = *(*temp)++;
 	var_name[i] = '\0';
-	printf("var_name %s\n", var_name);
+	//printf("var_name %s\n", var_name);
 	var_value = expand_var(data, var_name);
-	printf("var_value %s\n", var_value);
+	//printf("var_value %s\n", var_value);
 	if (var_value && var_value[0])
 	{
 		while (*var_value != '\0')
@@ -78,10 +78,11 @@ void	handle_normal_variable(t_data *data, char **temp, char **res)
 		return ;
 }
 
-char	*expand_env_variables(t_data *data, char *input, char *temp, char *res)
+/*char	*expand_env_variables(t_data *data, char *input, char *temp, char *res)
 {
 	char	*result;
 
+	printf("input %s\n", input);
 	result = allocate_result_buffer(data);
 	temp = input;
 	res = result;
@@ -102,7 +103,35 @@ char	*expand_env_variables(t_data *data, char *input, char *temp, char *res)
 		else
 			*res++ = *temp++;
 	}
-	//free(input);
+	*res = '\0';		
+	return (result);
+}*/
+
+char	*expand_env_variables(t_data *data, char *input, char *res)
+{
+	char	*result;
+
+	//printf("input %s\n", input);
+	result = allocate_result_buffer(data);
+	res = result;
+	while (*input != '\0')
+	{
+		if (*input == '$')
+		{
+			input++;
+			if (*input == '\0' || *input == 32)
+				*input++ = '$';
+			else if (*input == '?')
+				handle_rt_value(data, &input, &res);
+			else if (ft_isdigit(*input))
+				handle_digit_variable(&input, &res);
+			else
+				handle_normal_variable(data, &input, &res);
+		}
+		else
+			*res++ = *input++;
+	}
 	*res = '\0';		
 	return (result);
 }
+

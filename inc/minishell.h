@@ -172,8 +172,7 @@ char		*allocate_result_buffer(t_data *data);
 void		handle_rt_value(t_data *data, char **temp, char **res);
 void		handle_digit_variable(char **temp, char **res);
 void		handle_normal_variable(t_data *data, char **temp, char **res);
-char		*expand_env_variables(t_data *data, char *input, char *temp,
-				char *res);
+char		*expand_env_variables(t_data *data, char *input, char *res);
 
 //verify_tokens.c
 void		print_err(int check);
