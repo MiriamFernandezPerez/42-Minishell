@@ -53,6 +53,7 @@ extern int	g_signal_num;
 //delimiters
 # define BACKSLASH -2 // '\'
 # define SEMICOL -1 // ;
+# define CMD 0 // command for expansion variables
 # define SPACES 1 //Spaces and tabs
 # define PIPE 2 // |
 # define INPUT 3 // <
@@ -165,7 +166,7 @@ char		*find_var_name(char *value, int *i, t_data *data);
 int			find_dollar(char *str);
 char		*quit_dollar(char *value, int *i);
 char		*expand_var(t_data *data, char *value);
-int			ft_expander(t_data *d, int i, int j);
+int			ft_expander(t_data *d, int i);
 
 //expander_utils.c
 char		*allocate_result_buffer(t_data *data);
@@ -173,6 +174,9 @@ void		handle_rt_value(t_data *data, char **temp, char **res);
 void		handle_digit_variable(char **temp, char **res);
 void		handle_normal_variable(t_data *data, char **temp, char **res);
 char		*expand_env_variables(t_data *data, char *input, char *res);
+
+//expander_checker.c
+void		check_var_spaces(t_data *data, char *input, int pos);
 
 //verify_tokens.c
 void		print_err(int check);

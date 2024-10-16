@@ -75,7 +75,7 @@ void	ft_sections(t_data *data)
 	{
 		if (ft_isredir(data->tokens[i]->type))
 			add_redir(temp_section, data, &i);
-		else if (data->tokens[i]->type == ARG)
+		else if (data->tokens[i]->type == ARG || data->tokens[i]->type == CMD)
 			temp_section->cmd = add_arg(temp_section, data->tokens[i]->value,
 					data);
 		else if (data->tokens[i]->type == PIPE)

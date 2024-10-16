@@ -93,7 +93,6 @@ char	*expand_var(t_data *data, char *value)
 		if (ft_strcmp(current->name, new_value) == 0)
 		{
 			temp = current->value;
-			//printf("temp %s\n", temp);
 			if (!temp)
 			{
 				new_value = "";
@@ -119,46 +118,30 @@ el nombre de la variable
 Si la variable no se puede expandir y por tanto se iguala a NULL y el token
 anterior es de tipo INPUT, TRUNC, o APPEND devuelvo un error, por eso creo una
 copia del value del token que siempre tengo que liberar*/
-int	ft_expander(t_data *d, int i, int j)
+int	ft_expander(t_data *d, int i)
 {
-	char	*res;
 	char	*cpy;
-	(void) j;
 
-	//printf("*************\n");
-	//print_tokens(d);
-	//printf("*************\n");
-	//printf("qt_tokens %d\n", d->tokens_qt);
 	while (i < d->tokens_qt)
 	{
-		//printf("i = %d\n", i);
 		if (d->tokens[i]->type == VAR)
 		{
 			cpy = ft_strdup(d->tokens[i]->value);
-			res = expand_env_variables(d, d->tokens[i]->value, NULL);
-			//printf("res final %s\n", res);
-			d->tokens[i]->value = res;
-			if (!res[0])
+			d->tokens[i]->value = expand_env_variables(d, d->tokens[i]->value, NULL);
+			check_var_spaces(d, d->tokens[i]->value, i);
+			if (!d->tokens[i]->value[0])
 			{
-				//printf("verifica previo\n");
 				if (verify_previous_type(d, i, cpy) == 1)
 					return (1);
+				else if (verify_previous_type(d, i, cpy) == 2)
+					d->tokens[i]->type = ARG;
 				else
-				{
-					//printf("sale con type end\n");
 					d->tokens[i]->type = END;
-				}
 			}
 			else
-			{
-				//printf("expande y cambia a type ARG\n");
 				d->tokens[i]->type = ARG;
-			}
-			free(cpy);
 		}
 		i++;
-		//printf("i++ = %d\n", i);
 	}
-	//print_tokens(d);
 	return (0);
 }

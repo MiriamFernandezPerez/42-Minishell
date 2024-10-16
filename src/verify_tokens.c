@@ -68,18 +68,29 @@ int	verify_previous_type(t_data *d, int i, char *value)
 	{
 		if (d->tokens[i - 2] && (d->tokens[i - 2]->type == INPUT
 				|| d->tokens[i - 2]->type == TRUNC
-				|| d->tokens[i - 2]->type == APPEND)) //poner heredoc tambien?
+				|| d->tokens[i - 2]->type == APPEND))
 		{
 			write_msn(d, value);
 			return (1);
 		}
+		else if (d->tokens[i - 2] && (d->tokens[i - 2]->type == HEREDOC))
+		{
+			d->tokens[i]->value = value;
+			printf("value %s\n", value);
+			printf("d->tokens[i]->value %s\n", d->tokens[i]->value);
+			return (2);
+		}
 	}
 	else if (d->tokens[i - 1]->type == INPUT || d->tokens[i - 1]->type == TRUNC
-		|| d->tokens[i - 1]->type == APPEND) //poner heredoc tambien?
+		|| d->tokens[i - 1]->type == APPEND)
 	{
-		printf("anterior de %s es redirec", value);
 		write_msn(d, value);
 		return (1);
+	}
+	else if (d->tokens[i - 1] && (d->tokens[i - 1]->type == HEREDOC))
+	{
+		d->tokens[i]->value = value;
+		return (2);
 	}
 	return (0);
 }
