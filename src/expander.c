@@ -93,10 +93,11 @@ char	*expand_var(t_data *data, char *value)
 		if (ft_strcmp(current->name, new_value) == 0)
 		{
 			temp = current->value;
+			printf("temp %s\n", temp);
 			if (!temp)
 			{
-				free(new_value);
-				return (NULL);
+				new_value = "";
+				return (new_value);
 			}
 			new_value = temp;
 			return (new_value);
@@ -122,28 +123,41 @@ int	ft_expander(t_data *d, int i, int j)
 {
 	char	*res;
 	char	*cpy;
+	(void) j;
 
-	/*print_tokens(d);
-	printf("*************\n");*/
+printf("*************\n");
+	print_tokens(d);
+	printf("*************\n");
+	printf("qt_tokens %d\n", d->tokens_qt);
 	while (i < d->tokens_qt)
 	{
+		printf("i = %d\n", i);
 		if (d->tokens[i]->type == VAR)
 		{
 			cpy = ft_strdup(d->tokens[i]->value);
 			res = expand_env_variables(d, d->tokens[i]->value, NULL, NULL);
+			printf("res final %s\n", res);
 			d->tokens[i]->value = res;
-			if (res[0] == '\0')
+			if (!res[0])
 			{
+				printf("verifica previo\n");
 				if (verify_previous_type(d, i, cpy) == 1)
 					return (1);
-				d->tokens[i]->type = END;
+				else
+				{
+					printf("sale con type end\n");
+					d->tokens[i]->type = END;
+				}
 			}
 			else
+			{
+				printf("expande y cambia a type ARG\n");
 				d->tokens[i]->type = ARG;
-			j++;
+			}
 			free(cpy);
 		}
 		i++;
+		printf("i++ = %d\n", i);
 	}
 	//print_tokens(d);
 	return (0);

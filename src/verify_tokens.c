@@ -64,8 +64,9 @@ int	verify_previous_type(t_data *d, int i, char *value)
 {
 	if (i == 0)
 	{
-		free(value);
-		return (1);
+		printf("entra i=0\n");
+		//free(value);
+		return (2);
 	}
 	if (d->tokens[i - 1] != NULL && d->tokens[i - 1]->type == SPACES)
 	{
@@ -80,6 +81,7 @@ int	verify_previous_type(t_data *d, int i, char *value)
 	else if (d->tokens[i - 1]->type == INPUT || d->tokens[i - 1]->type == TRUNC
 		|| d->tokens[i - 1]->type == APPEND) //poner heredoc tambien?
 	{
+		printf("anterior de %s es redirec", value);
 		write_msn(d, value);
 		return (1);
 	}
