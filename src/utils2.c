@@ -54,7 +54,7 @@ void	ft_free_data(t_data *data, int flag)
 			if (flag == 1)
 				exit(1);
 		}
-	} //free data?
+	}
 }
 
 //Write msn function
@@ -91,25 +91,3 @@ int	ft_isdelimiter(char c)
 		return (SEMICOL);
 	return (0);
 }
-
-/*void	final_free(t_data *data)
-{
-	t_env	*current;
-	t_env	*previous;
-
-	if (data->env_lst)
-	{
-		current = data->env_lst;
-		while (current)
-		{
-			previous = current;
-			if (current->name)
-				free(current->name);
-			if (current->value)
-				free(current->value);
-			current = current->next;
-			free(previous);
-		}
-	}
-	//ft_free_free(data);
-}*/

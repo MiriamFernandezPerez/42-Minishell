@@ -12,6 +12,7 @@
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
+# include "minishell.h"
 
 //builtins
 int		make_builtins(char **str, t_data *data, int flag);

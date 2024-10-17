@@ -10,12 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 void	exe_sigint_handler(int signum)
 {
 	ft_putstr_fd("\n", STDOUT_FILENO);
-	//rl_on_new_line();
 	g_signal_num = 128 + signum;
 }
 

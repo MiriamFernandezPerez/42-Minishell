@@ -12,6 +12,7 @@
 
 #ifndef EXECUTION_H
 # define EXECUTION_H
+# include "minishell.h"
 
 //split
 int			count_path(char *str, char c);

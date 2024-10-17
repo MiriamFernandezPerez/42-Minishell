@@ -17,7 +17,7 @@ void	trim_prompt(t_data *data)
 {
 	char	*trim_input;
 
-	trim_input = ft_strtrim(data->prompt, " ");  
+	trim_input = ft_strtrim(data->prompt, " ");
 	if (!trim_input)
 		ft_malloc(data, NULL, NULL);
 	free(data->prompt);

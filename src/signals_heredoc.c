@@ -13,10 +13,9 @@
 #include "minishell.h"
 
 void	heredoc_sigint_handler(int signum)
-{	
-    ft_putstr_fd("\n", STDOUT_FILENO);
-	//rl_replace_line("", 0);
-    g_signal_num = 128 + signum;
+{
+	ft_putstr_fd("\n", STDOUT_FILENO);
+	g_signal_num = 128 + signum;
 	exit(g_signal_num);
 }
 

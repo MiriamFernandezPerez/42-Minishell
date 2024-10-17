@@ -118,10 +118,8 @@ el nombre de la variable
 Si la variable no se puede expandir y por tanto se iguala a NULL y el token
 anterior es de tipo INPUT, TRUNC, o APPEND devuelvo un error, por eso creo una
 copia del value del token que siempre tengo que liberar*/
-int	ft_expander(t_data *d, int i)
+int	ft_expander(t_data *d, int i, char *cpy)
 {
-	char	*cpy;
-
 	while (i < d->tokens_qt)
 	{
 		if (d->tokens[i]->type == VAR)

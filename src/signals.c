@@ -12,9 +12,6 @@
 
 #include "minishell.h"
 
-//Global Variable
-int	signal_num = 0;
-
 /*Funcion que maneja SIGINT en readline, printa un salto de linea, borra la
 linea actual, prepara un nuevo prompt y redibuja el prompt*/
 void	readline_sigint_handler(int signum)

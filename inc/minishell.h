@@ -166,7 +166,7 @@ char		*find_var_name(char *value, int *i, t_data *data);
 int			find_dollar(char *str);
 char		*quit_dollar(char *value, int *i);
 char		*expand_var(t_data *data, char *value);
-int			ft_expander(t_data *d, int i);
+int			ft_expander(t_data *d, int i, char *cpy);
 
 //expander_utils.c
 char		*allocate_result_buffer(t_data *data);
