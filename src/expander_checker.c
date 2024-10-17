@@ -37,8 +37,7 @@ void ft_add_tokens(t_data *d, char *input, int add_tokens, int pos)
     {
         new_tokens[j] = (t_tokens *)malloc(sizeof(t_tokens));
         if (!new_tokens[j])
-            ft_malloc(d, NULL, NULL); // Manejar error si falla la memoria
-        // Copiamos tanto el value como el type
+            ft_malloc(d, NULL, NULL);
         new_tokens[j]->value = ft_strdup(d->tokens[i]->value);
         new_tokens[j]->type = d->tokens[i]->type;
         i++;
@@ -50,9 +49,8 @@ void ft_add_tokens(t_data *d, char *input, int add_tokens, int pos)
         new_tokens[j] = (t_tokens *)malloc(sizeof(t_tokens));
         if (!new_tokens[j])
             ft_malloc(d, NULL, NULL);
-        // Copiamos el valor del token expandido y asignamos su tipo
         new_tokens[j]->value = ft_strdup(split_tokens[k]);
-        new_tokens[j]->type = CMD;  // Aquí asumo que el tipo de los nuevos tokens es ARG (puedes cambiarlo si es necesario)
+        new_tokens[j]->type = CMD;
         k++;
         j++;
     }
@@ -62,8 +60,7 @@ void ft_add_tokens(t_data *d, char *input, int add_tokens, int pos)
     while (i < d->tokens_qt) {
         new_tokens[j] = (t_tokens *)malloc(sizeof(t_tokens));
         if (!new_tokens[j])
-            ft_malloc(d, NULL, NULL); // Manejar error si falla la memoria
-        // Copiamos tanto el value como el type de los tokens originales
+            ft_malloc(d, NULL, NULL);
         new_tokens[j]->value = ft_strdup(d->tokens[i]->value);
         new_tokens[j]->type = d->tokens[i]->type;
         i++;

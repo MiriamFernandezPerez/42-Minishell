@@ -127,7 +127,8 @@ int	ft_expander(t_data *d, int i)
 		if (d->tokens[i]->type == VAR)
 		{
 			cpy = ft_strdup(d->tokens[i]->value);
-			d->tokens[i]->value = expand_env_variables(d, d->tokens[i]->value, NULL);
+			free(d->tokens[i]->value);
+			d->tokens[i]->value = expand_env_variables(d, cpy, NULL);
 			check_var_spaces(d, d->tokens[i]->value, i);
 			if (!d->tokens[i]->value[0])
 			{
@@ -140,6 +141,7 @@ int	ft_expander(t_data *d, int i)
 			}
 			else
 				d->tokens[i]->type = ARG;
+			free(cpy);
 		}
 		i++;
 	}

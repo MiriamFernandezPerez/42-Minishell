@@ -99,6 +99,7 @@ char	*expand_env_variables(t_data *data, char *input, char *res)
 		else
 			*res++ = *input++;
 	}
+	//free(input);
 	*res = '\0';		
 	return (result);
 }
