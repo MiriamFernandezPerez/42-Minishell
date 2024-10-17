@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:07:08 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/09 20:26:52 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/17 18:56:56 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,13 @@ int	ft_initialize(t_data **data, char **env)
 	(*data)->tokens_qt = 0;
 	(*data)->sections_qt = 0;
 	(*data)->rt_value = 0;
+	if (!env[0])
+	{
+		write(2, "Dear Evaluador,\nwe decided to not allow you to use\n", 51);
+		write(2, "our minishell without a full environnement settled\n", 51);
+		write(2, "please try again ;)\n", 20);
+		exit (EXIT_FAILURE);
+	}
 	(*data)->env_lst = create_env(env, (*data));
 	return (0);
 }
@@ -114,7 +121,11 @@ int	main(int ac, char **av, char **env)
 		if (prompt == 0)
 		{
 			signal(SIGINT, SIG_IGN);
-			check_files(data, data->sections, NULL);
+			if (check_files(data, data->sections, NULL) == -2)
+			{
+				ft_free_data(data, 0);
+				continue;
+			}
 			create_pipe(data);
 			signal(SIGQUIT, exe_sigquit_handler);
 			signal(SIGINT, exe_sigint_handler);

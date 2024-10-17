@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:03:19 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/15 20:04:28 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/17 21:14:37 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,53 +35,52 @@ char	*ft_strjoin_three(char const *s1, char const *s2, char const *s3)
 	return (NULL);
 }
 
-char	**lst_to_arr(t_env *lst, t_data *data, char **array)
+int	check_dir(char *arg)
 {
-	int		i;
+	DIR		*dir;
 
-	i = 0;
-	array = (char **)malloc((count_lst(lst) + 1) * sizeof (char *));
-	if (!array)
-		ft_malloc(data, NULL, NULL);
-	while (lst)
+	dir = opendir(arg);
+	if (dir)
 	{
-		if (lst->name && lst->value)
-		{
-			array[i] = ft_strjoin_three(lst->name, "=", lst->value);
-			if (!array[i])
-				ft_malloc(data, array, NULL);
-		}
-		if (!lst->value)
-		{
-			array[i] = ft_strjoin(lst->name, "=");
-			if (!array[i])
-				ft_malloc(data, array, NULL);
-		}
-		lst = lst->next;
-		i++;
+		closedir(dir);
+		write(2, "minishell: ", 12);
+		write(2, arg, ft_strlen(arg));
+		return (write(2, ": Is a directory\n", 17), 126);
 	}
-	array[i] = '\0';
-	return (array);
+	if (access(arg, F_OK) == 0)
+	{
+		write(2, "minishell: ", 12);
+		write(2, arg, ft_strlen(arg));
+		return (write(2, ": Permission denied\n", 20), 126);
+	}
+	else if (ft_strchr(arg, '/') == 0)
+	{
+		write(2, arg, ft_strlen(arg));
+		return (write(2, ": command not found\n", 20), 127);
+	}
+	else
+	{
+		write(2, "minishell: ", 12);
+		write(2, arg, ft_strlen(arg));
+		return (write(2, ": No such file or directory\n", 28), 127);
+	}
 }
 
 int	error_exe(t_data *data, char *arg, int i)
 {
-	if (i != 1)
-		write(2, "minishell: ", 11);
-	if (i == 2 || i == 3 || i == 4)
-		perror(arg);
-	if (i == 0 || i == 1 || i == 4)
+	if (i == 0 || i == 2 || i == 3)
+		write(2, "minishell: ", 12);
+	if (i == 0 || i == 1)
 	{
-		if (i == 0 || i == 1)
-			write(2, arg, ft_strlen(arg));
+		write(2, arg, ft_strlen(arg));
 		if (i == 0)
 			write(2, ": No such file or directory\n", 28);
 		if (i == 1)
 			write(2, ": command not found\n", 20);
-		//if (i == 4)
-		//	return (126); return execve int
 		return (data->rt_value = 127, 127);
 	}
+	if (i == 2 || i == 3)
+		perror(arg);
 	if (i == 2)
 		ft_free_data(data, 1);
 	if (i == 3)
@@ -90,6 +89,8 @@ int	error_exe(t_data *data, char *arg, int i)
 		erase_lst(data->env_lst);
 		exit (-1);
 	}
+	if (i == 4)
+		return (check_dir(arg));
 	return (data->rt_value = 1, 1);
 }
 

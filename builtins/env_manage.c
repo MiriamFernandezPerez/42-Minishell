@@ -6,11 +6,11 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:14:34 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/15 21:47:11 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/17 15:49:26 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 t_env	*create_flag(t_env *new_node)
 {

@@ -11,14 +11,14 @@ OK_./hello
 .
 ..
 OK_$
-./
-../
-./existing_dir
+OK_./
+OK_../
+OK_./existing_dir
 OK_../fake_dir/
-./existing_file
+OK_./existing_file
 OK_./nonexistant_file
 OK_./executable_file
-.executable_file
+OK_.executable_file
 OK_executable_file
 
 #basic-no-env

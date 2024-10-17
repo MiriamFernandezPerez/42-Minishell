@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 15:55:46 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/11 16:48:58 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/17 18:40:02 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ void	close_fd_child(t_section *section)
 {
 	t_section	*current;
 
-	current = section;
+	if (!section->next)
+		return ;
+	current = section->next;
 	while (current)
 	{
 		close_fd(current);

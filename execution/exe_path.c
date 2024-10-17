@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:11:40 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/15 21:48:31 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/17 19:36:12 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,3 +87,32 @@ int	search_path(t_data *data, char **array, t_section *section)
 		return (error_exe(data, section->cmd[0], 0));
 }
 */
+
+char	**lst_to_arr(t_env *lst, t_data *data, char **array)
+{
+	int		i;
+
+	i = 0;
+	array = (char **)malloc((count_lst(lst) + 1) * sizeof (char *));
+	if (!array)
+		ft_malloc(data, NULL, NULL);
+	while (lst)
+	{
+		if (lst->name && lst->value)
+		{
+			array[i] = ft_strjoin_three(lst->name, "=", lst->value);
+			if (!array[i])
+				ft_malloc(data, array, NULL);
+		}
+		if (!lst->value)
+		{
+			array[i] = ft_strjoin(lst->name, "=");
+			if (!array[i])
+				ft_malloc(data, array, NULL);
+		}
+		lst = lst->next;
+		i++;
+	}
+	array[i] = '\0';
+	return (array);
+}

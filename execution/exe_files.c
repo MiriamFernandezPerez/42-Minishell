@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:17:45 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/15 15:03:04 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/17 18:22:20 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_heredoc(t_data *data, char *del)
 	if (pid == 0)
 	{
 		close(fd[0]);
-		signal(SIGINT, heredoc_sigint_handler);
+		signal(SIGINT, heredoc_sigint_handler); // podemos pasar el pipe aqui para cerrarlo?
 		while (1)
 		{
 			line = NULL;
@@ -47,7 +47,6 @@ int	ft_heredoc(t_data *data, char *del)
 			{
 				free (line);
 				close (fd[1]);
-				//exit (0);
 				break ;
 			}
 			write(fd[1], line, ft_strlen(line));
@@ -162,6 +161,8 @@ int	check_files(t_data *data, t_section *current, t_red *red)
 				if (red->redi == INPUT || red->redi == HEREDOC)
 					current->fd_in = create_file(red->file, red->redi, data,
 							current->fd_in);
+				if (current->fd_in == -2)
+					return (-2);
 				if (red->redi == TRUNC || red->redi == APPEND)
 					current->fd_out = create_file(red->file, red->redi, data,
 							current->fd_out);
