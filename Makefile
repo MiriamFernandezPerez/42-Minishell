@@ -41,6 +41,7 @@ SRC = 	minishell.c \
 		builtins/builtins_env.c \
 		builtins/builtins_export.c \
 		builtins/builtins_export_utils.c \
+		execution/exe_errors.c \
 		execution/exe_files.c \
 		execution/exe_path.c \
 		execution/exe_section_utils.c \

@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:11:40 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/17 19:36:12 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/17 22:09:46 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*check_path(t_section *section, t_data *data, char *path_lst)
 	char	*tmp;
 
 	j = 0;
-	array = split_env(path_lst);
+	array = split_env(path_lst, data);
 	if (!array)
 		ft_malloc(data, NULL, NULL);
 	tmp = ft_strjoin("/", section->cmd[0]);
@@ -80,13 +80,6 @@ int	search_path(t_data *data, char **array, t_section *section)
 	}
 	return (error_exe(data, section->cmd[0], 0));
 }
-/*
-{
-		if (access(section->cmd[0], X_OK) == 0)
-			return (section->path = section->cmd[0], 0);
-		return (error_exe(data, section->cmd[0], 0));
-}
-*/
 
 char	**lst_to_arr(t_env *lst, t_data *data, char **array)
 {
@@ -115,4 +108,24 @@ char	**lst_to_arr(t_env *lst, t_data *data, char **array)
 	}
 	array[i] = '\0';
 	return (array);
+}
+
+void	create_pipe(t_data *data)
+{
+	t_section	*current;
+	int			tmp[2];
+
+	current = data->sections;
+	while (current && current->next)
+	{
+		if (current->fd_out == -2 && current->next->fd_in == -2)
+		{
+			if (pipe(tmp) == -1)
+				error_exe(data, "pipe error", 2);
+			current->fd_out = tmp[1];
+			current->next->fd_in = tmp[0];
+		}
+		current = current->next;
+	}
+	return ;
 }

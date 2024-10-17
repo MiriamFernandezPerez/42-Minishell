@@ -101,7 +101,7 @@ int	make_cd(char **str, t_data *data)
 			ft_malloc(data, NULL, NULL);
 		}
 		if (getcwd(old_buf, 256) == 0)
-			return (ft_free_cd(NULL, old_buf, NULL, 1), 1); //NEW_BUF ?
+			return (ft_free_cd(NULL, old_buf, NULL, 1), 1);
 		if (chdir(str[1]) != 0)
 		{
 			free (old_buf);

@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/15 21:46:21 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/17 22:52:36 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ int	first_check(char *str)
 	i = 0;
 	while (str[i] && str[i] != '=')
 		i++;
-	if (str[i] != '=')
-		return (-1);
-	else
-		return (i);
+	return (i);
 }
 
 int	check_name(char *str, int i, t_env *current, t_data *data)
@@ -45,8 +42,6 @@ int	check_name(char *str, int i, t_env *current, t_data *data)
 	int		j;
 
 	i = first_check(str);
-	if (i == -1)
-		return (0);
 	name = malloc((i + 1) * sizeof(char));
 	if (!name)
 		ft_malloc(data, NULL, NULL);
@@ -58,6 +53,8 @@ int	check_name(char *str, int i, t_env *current, t_data *data)
 		j = 0;
 		while (str[i++])
 			j++;
+		if (j == 0)
+			return (free(name), 1);
 		value = check_value(data, j, name);
 		ft_strlcpy(value, &str[i - j], j + 1);
 		if (current->value)

@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:50:28 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/03 15:57:03 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/17 22:10:29 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	**put_path(char **array, char *str, char c, int path)
 	return (array);
 }
 
-char	**split_env(char *str)
+char	**split_env(char *str, t_data *data)
 {
 	char	**array;
 	int		path;
@@ -76,6 +76,6 @@ char	**split_env(char *str)
 	path = count_path(str, c);
 	array = (char **)malloc((path + 2) * sizeof(char *));
 	if (!array)
-		return (NULL); //ft_malloc
+		ft_malloc(data, NULL, NULL);
 	return (put_path(array, str, c, path));
 }

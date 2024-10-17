@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:22:00 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/17 20:41:08 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/17 22:03:44 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,7 @@ int	ft_waitpid_status(t_section *section, t_data *data)
 	tmp = status[i - 1][0];
 	if (WIFEXITED(tmp))
 		return (free_array_int(status), WEXITSTATUS(tmp));
-	//if (WIFSIGNALED(tmp))
 	return (free_array_int(status), WTERMSIG(tmp));
-	//return (0);
 }
 
 int	execution(t_data *data, t_section *section)
@@ -126,7 +124,7 @@ int	execution(t_data *data, t_section *section)
 				error_exe(data, "fork error", 2);
 			if (section->pid == 0)
 				data->rt_value = classic_exe(data, section);
-			if (data->rt_value == -1) //fermer minishell si pb de dup2 ds le fils et pere
+			if (data->rt_value == -1)
 				ft_free_data(data, 1);
 		}
 		close_fd(section);
@@ -135,8 +133,3 @@ int	execution(t_data *data, t_section *section)
 	data->rt_value = ft_waitpid_status(data->sections, data);
 	return (data->rt_value);
 }
-//expansion dentro el heredoc = poner un flag si el arg despues << tiene commilas
-//simple o doble y en la creation del heredoc usamos el flag para no expandir
-//(hay funcion para desexpandir?)
-
-//we need to put a limit on opening file y FD with errors message if not -> buffer overflow

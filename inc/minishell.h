@@ -6,20 +6,20 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/17 18:00:22 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/17 22:09:34 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-//Llibraries
+//Libraries
 # include "structure.h"
 # include "builtins.h"
 # include "execution.h"
 
 //Main minishell.c
-void		print_sections(t_data *data);
+void		do_prompt(t_data *data, int prompt);
 void		print_tokens(t_data *data);
 int			ft_initialize(t_data **data, char **env);
 int			main(int ac, char **av, char **env);

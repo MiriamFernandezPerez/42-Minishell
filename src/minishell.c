@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:07:08 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/17 18:56:56 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/17 22:12:37 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,44 +14,6 @@
 
 //Global Variable Initzialize
 int	g_signal_num = 0;
-
-/*Funtion to print sections not necessary*/
-/*void	print_sections(t_data *data)
-{
-	t_section	*current_section;
-	int			j;
-	int			section_num;
-
-	if (!data->sections)
-		return ;
-	section_num = 0;
-	current_section = data->sections;
-	printf("data->sections_qt: %d\n", data->sections_qt);
-	while (current_section)
-	{
-		printf("SECCION %d:\n", section_num + 1);
-		if (!current_section->cmd)
-			printf("  No hay comandos en esta sección\n");
-		else
-		{
-			j = 0;
-			while (current_section->cmd && current_section->cmd[j])
-			{
-				printf("  Comando %d: %s\n", j + 1, current_section->cmd[j]);
-				j++;
-			}
-			if (current_section->files)
-				printf("  Redir tipo %d, nombre archivo %s\n",
-					current_section->files->redi, current_section->files->file);
-			else
-				printf("Sin redirecciones\n");
-		}
-		current_section = current_section->next;
-		section_num++;
-		if (section_num >= data->sections_qt)
-			break ;
-	}
-}*/
 
 //Write Tokens array
 void	print_tokens(t_data *data)
@@ -99,18 +61,8 @@ int	ft_initialize(t_data **data, char **env)
 	return (0);
 }
 
-/*Main function*/
-int	main(int ac, char **av, char **env)
+void	do_prompt(t_data *data, int prompt)
 {
-	t_data	*data;
-	int		prompt;
-
-	prompt = 0;
-	(void)av;
-	data = NULL;
-	if (ac != 1)
-		return (ft_msn(NO_ARGS, 2));
-	ft_initialize(&data, env);
 	while (1)
 	{
 		signal(SIGQUIT, readline_sigquit_handler);
@@ -124,7 +76,7 @@ int	main(int ac, char **av, char **env)
 			if (check_files(data, data->sections, NULL) == -2)
 			{
 				ft_free_data(data, 0);
-				continue;
+				continue ;
 			}
 			create_pipe(data);
 			signal(SIGQUIT, exe_sigquit_handler);
@@ -133,6 +85,20 @@ int	main(int ac, char **av, char **env)
 		}
 		ft_free_data(data, 0);
 	}
+}
+
+int	main(int ac, char **av, char **env)
+{
+	t_data	*data;
+	int		prompt;
+
+	prompt = 0;
+	(void)av;
+	data = NULL;
+	if (ac != 1)
+		return (ft_msn(NO_ARGS, 2));
+	ft_initialize(&data, env);
+	do_prompt(data, prompt);
 	if (data)
 		ft_free_data(data, 1);
 	return (0);

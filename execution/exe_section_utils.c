@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 15:55:46 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/17 18:40:02 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/17 22:03:59 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_free_section(t_section *section, t_section *previous)
 		section = section->next;
 		free(previous);
 	}
-} // poner data->sections == NULL ?
+}
 
 void	close_fd(t_section *section)
 {
