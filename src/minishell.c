@@ -21,7 +21,6 @@ void	print_tokens(t_data *data)
 	int		i;
 
 	i = 0;
-	printf("QT TOKENS = %d\n", data->tokens_qt);
 	while (i < data->tokens_qt)
 	{
 		ft_putstr_fd("Token ", 1);

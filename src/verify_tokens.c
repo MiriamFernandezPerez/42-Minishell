@@ -71,19 +71,13 @@ int	verify_previous_type(t_data *d, int i, char *value)
 				|| d->tokens[i - 2]->type == APPEND))
 			return (write_msn(d, value), 1);
 		else if (d->tokens[i - 2] && (d->tokens[i - 2]->type == HEREDOC))
-		{
-			d->tokens[i]->value = value;
 			return (2);
-		}
 	}
 	else if (d->tokens[i - 1]->type == INPUT || d->tokens[i - 1]->type == TRUNC
 		|| d->tokens[i - 1]->type == APPEND)
 		return (write_msn(d, value), 1);
 	else if (d->tokens[i - 1] && (d->tokens[i - 1]->type == HEREDOC))
-	{
-		d->tokens[i]->value = value;
 		return (2);
-	}
 	return (0);
 }
 

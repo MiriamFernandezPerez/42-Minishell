@@ -68,7 +68,7 @@ char		*find_var_name(char *value, int *i, t_data *data);
 int			find_dollar(char *str);
 char		*quit_dollar(char *value, int *i);
 char		*expand_var(t_data *data, char *value);
-int			ft_expander(t_data *d, int i, char *cpy);
+int			ft_expander(t_data *d, int i, char *cpy, char *expanded);
 
 //expander_utils.c
 char		*allocate_result_buffer(t_data *data);
@@ -79,6 +79,8 @@ char		*expand_env_variables(t_data *data, char *input, char *res);
 
 //expander_checker.c
 void		check_var_spaces(t_data *data, char *input, int pos);
+void		check_previous_null(t_data *d, int i, char *cpy, char *expanded);
+int			check_previous_heredoc(t_data *data, int i);
 
 //verify_tokens.c
 void		print_err(int check);
@@ -102,9 +104,6 @@ void		add_rest_redir(t_section *section, t_tokens **tokens, int *i,
 char		**create_cmd(t_section *section, char *arg, t_data *data);
 int			size_cmd(char **cmd);
 char		**add_arg(t_section *section, char *arg, t_data *data);
-
-//executer.c
-void		ft_execute(t_data *data); // ???
 
 //signals.c
 void		readline_sigint_handler(int signum);

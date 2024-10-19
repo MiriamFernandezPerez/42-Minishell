@@ -23,12 +23,7 @@ t_section	*create_node(t_data *data)
 	node->cmd = NULL;
 	node->files = NULL;
 	node->path_array = NULL;
-	node->path = NULL; //malloc(sizeof (char));
-	/*if (!node->path)
-	{
-		free(node);
-		ft_malloc(data, NULL, NULL);
-	}*/
+	node->path = NULL;
 	node->flag = -2;
 	node->pid = -2;
 	node->fd_in = -2;
@@ -39,7 +34,7 @@ t_section	*create_node(t_data *data)
 
 void	add_redir(t_section *temp_section, t_data *data, int *i)
 {
-	if (!temp_section->files) //cmd
+	if (!temp_section->files)
 		add_first_redir(temp_section, data->tokens, i, data);
 	else
 		add_rest_redir(temp_section, data->tokens, i, data);
@@ -81,8 +76,8 @@ void	ft_sections(t_data *data)
 		else if (data->tokens[i]->type == PIPE)
 		{
 			temp_section->next = create_node(data);
-			if (!temp_section->next) //no necessitamos
-				exit(EXIT_FAILURE);//no necessitamos
+			if (!temp_section->next)
+				exit(EXIT_FAILURE);
 			temp_section = temp_section->next;
 			data->sections_qt++;
 		}
