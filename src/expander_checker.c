@@ -6,7 +6,7 @@
 /*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 21:42:18 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/19 03:48:06 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/10/19 04:24:26 by mirifern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ void	check_var_spaces(t_data *data, char *input, int pos)
 		ft_add_tokens(data, input, add_tokens, pos);
 }
 
-void	check_previous_null(t_data *d, int i, char *cpy, char *expanded)
+int	check_previous_null(t_data *d, int i, char *cpy, char *expanded)
 {
 	if (verify_previous_type(d, i, cpy) == 1)
-		return ;
+		return (1);
 	else if (verify_previous_type(d, i, cpy) == 2)
 	{
 		d->tokens[i]->type = ARG;
@@ -60,6 +60,7 @@ void	check_previous_null(t_data *d, int i, char *cpy, char *expanded)
 		d->tokens[i]->type = END;
 		free(cpy);
 	}
+	return (0);
 }
 
 int	check_previous_heredoc(t_data *d, int i)
@@ -73,5 +74,25 @@ int	check_previous_heredoc(t_data *d, int i)
 	}
 	else if (d->tokens[i - 1] && d->tokens[i - 1]->type == HEREDOC)
 		return (1);
+	return (0);
+}
+
+int	expand_check_and_prev(t_data *d, char *cpy, char *expanded, int *i)
+{
+	cpy = ft_strdup(d->tokens[*i]->value);
+	free(d->tokens[*i]->value);
+	expanded = expand_env_variables(d, cpy, NULL);
+	d->tokens[*i]->value = expanded;
+	check_var_spaces(d, d->tokens[*i]->value, *i);
+	if (!d->tokens[*i]->value[0])
+	{
+		if (check_previous_null(d, *i, cpy, expanded) == 1)
+			return (1);
+	}
+	else
+	{
+		d->tokens[*i]->type = ARG;
+		free(cpy);
+	}
 	return (0);
 }
