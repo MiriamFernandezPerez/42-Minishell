@@ -141,8 +141,8 @@ OK_echo $NOT_A_VAR $NOT_A_VAR $NOT_A_VAR $USER
 OK_echo hello $NOT_A_VAR $NOT_A_VAR $NOT_A_VAR
 OK_echo "hello $NOT_A_VAR $NOT_A_VAR $NOT_A_VAR $USER"
 OK_export ECHO=echo; $ECHO $ECHO
-export L="ls -la"; $L
-export L='ls -la'; $L
+OK_export L="ls -la"; $L
+OK_export L='ls -la'; $L
 
 #syntax
 OK_|
@@ -278,44 +278,44 @@ OK_export A===a; echo $A
 OK_export A====a; echo $A
 OK_export A=====a; echo $A
 OK_export A======a; echo $A
-export A=a=a=a=a=a; echo $A
-export HELLOWORLD=a; echo $HELLOWORLD
-export helloworld=a; echo $helloworld
-export hello_world=a; echo $hello_world
-export HELLOWORLD1=a; echo $HELLOWORLD1
-export H1ELL_0_W123Orld_a=a; echo $H1ELL_0_W123Orld_a
-export a0123456789=a; echo $a0123456789
-export abcdefghijklmnopqrstuvwxyz=a; echo $abcdefghijklmnopqrstuvwxyz
-export __________________________=a; echo $__________________________
-export _hello_=a; echo $_hello_
-export 1
-export 1=
-export 1=a
-export HELLOWORLD =a
-export HELLOWORLD= a
-export HELLO'WORLD'=a
-export HELLO"WORLD"=a
-export HELLO$WORLD=a
-export HELLO_WORLD=a
-export A='hello this world is wonderful'; echo $A
-export A="hello this world is wonderful"; echo $A
+OK_export A=a=a=a=a=a; echo $A
+OK_export HELLOWORLD=a; echo $HELLOWORLD
+OK_export helloworld=a; echo $helloworld
+OK_export hello_world=a; echo $hello_world
+OK_export HELLOWORLD1=a; echo $HELLOWORLD1
+OK_export H1ELL_0_W123Orld_a=a; echo $H1ELL_0_W123Orld_a
+OK_export a0123456789=a; echo $a0123456789
+OK_export abcdefghijklmnopqrstuvwxyz=a; echo $abcdefghijklmnopqrstuvwxyz
+OK_export __________________________=a; echo $__________________________
+OK_export _hello_=a; echo $_hello_
+OK_export 1
+OK_export 1=
+OK_export 1=a
+OK_export HELLOWORLD =a
+OK_export HELLOWORLD= a
+OK_export HELLO'WORLD'=a
+OK_export HELLO"WORLD"=a
+OK_export HELLO$WORLD=a
+OK_export HELLO_WORLD=a
+OK_export A='hello this world is wonderful'; echo $A
+OK_export A="hello this world is wonderful"; echo $A
 export A 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf ' C; echo $A$B$C
 export 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf ' C; echo $A$B$C
 export A 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf '; echo $A$B$C
 export A B C; echo $A$B$C
-export 'HELLO@'=hello
-export "HELLO'"=hello
-export 'HELLO"'=hello
-export 'HELLO$'=hello
-export 'HELLO!'=hello
-export 'HELLO|'=hello
-export 'HELLO&'=hello
-export 'HELLO\\'=hello
-export ALPHA="abc def ghi"; echo $ALPHA
-export ALPHA='abc def ghi'; echo $ALPHA
-export DIGITS="0 1 2 3 4 5 6 7 8 9"; echo $DIGITS
-export DIGITS='0 1 2 3 4 5 6 7 8 9'; echo $DIGITS
-export DIGITS=0 1 2 3 4 5 6 7 8 9; echo $DIGITS
+OK_export 'HELLO@'=hello
+OK_export "HELLO'"=hello
+OK_export 'HELLO"'=hello
+OK_export 'HELLO$'=hello
+OK_export 'HELLO!'=hello
+OK_export 'HELLO|'=hello
+OK_export 'HELLO&'=hello
+OK_export 'HELLO\\'=hello
+OK_export ALPHA="abc def ghi"; echo $ALPHA
+OK_export ALPHA='abc def ghi'; echo $ALPHA
+OK_export DIGITS="0 1 2 3 4 5 6 7 8 9"; echo $DIGITS
+OK_export DIGITS='0 1 2 3 4 5 6 7 8 9'; echo $DIGITS
+OK_export DIGITS=0 1 2 3 4 5 6 7 8 9; echo $DIGITS
 
 #export-no-env
 unset PATH; export hello=42

@@ -26,6 +26,7 @@ SRC = 	minishell.c \
 		src/expander.c\
 		src/expander_utils.c\
 		src/expander_checker.c\
+		src/add_expand_tokens.c\
 		src/verify_tokens.c\
 		src/sections.c\
 		src/sections_utils.c\

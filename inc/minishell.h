@@ -82,6 +82,13 @@ void		check_var_spaces(t_data *data, char *input, int pos);
 void		check_previous_null(t_data *d, int i, char *cpy, char *expanded);
 int			check_previous_heredoc(t_data *data, int i);
 
+//add_expand_tokens.c
+t_tokens	**init_new_tok(t_data *d, int add_tokens);
+int			copy_tok_before(t_data *d, t_tokens **new_tokens, int pos);
+int			insert_exp_tok(t_data *d, t_tokens **new, char **split_tok, int j);
+int			copy_rest_tok(t_data *d, t_tokens **new_tokens, int pos, int j);
+void		final_tok(t_data *d, t_tokens **new, int total, char **split_tok);
+
 //verify_tokens.c
 void		print_err(int check);
 int			check_type(int type);
