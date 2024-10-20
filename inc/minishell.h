@@ -34,6 +34,7 @@ int			ft_read_prompt(t_data *data);
 //read_prompt_utils.c
 void		trim_prompt(t_data *data);
 int			find_not_allowed_type(t_data *data);
+int			verify_num_heredoc(t_data * data);
 
 //parse.c
 int			end_quote(char *input, char c, int i);
@@ -97,6 +98,7 @@ int			check_type(int type);
 void		write_msn(t_data *data, char *value);
 int			verify_previous_type(t_data *d, int i, char *value);
 int			verify_next_type(t_data *d);
+
 
 //sections.c
 t_section	*create_node(t_data *data); //he cambiado el argumento por un free

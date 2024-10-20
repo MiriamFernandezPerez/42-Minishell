@@ -47,3 +47,25 @@ int	find_not_allowed_type(t_data *data)
 	}
 	return (0);
 }
+
+int verify_num_heredoc(t_data * data)
+{
+    int i;
+    int heredoc;
+
+    i = 0;
+    heredoc = 0;
+    while (data->tokens[i])
+	{
+        if (data->tokens[i]->type == HEREDOC)
+            heredoc++;
+        i++;
+    }
+    if (heredoc > 16)
+    {
+        ft_msn(MAX_HEREDOC, 2);
+        return (1);
+    }
+    else
+        return (0);
+}

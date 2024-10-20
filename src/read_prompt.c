@@ -59,7 +59,7 @@ int	token_expand_clean(t_data *data)
 	delete_token_type(data, END);
 	join_tokens(data, 0, 0);
 	delete_token_type(data, SPACES);
-	if (verify_next_type(data) == 1)
+	if (verify_num_heredoc(data) == 1 || verify_next_type(data) == 1)
 		return (1);
 	return (0);
 }
