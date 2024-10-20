@@ -66,7 +66,8 @@ extern int	g_signal_num;
 # define APPEND 8 // >>
 # define END 9
 # define ARG 10 // string or argument
-# define VAR 11//Variable $
+# define VAR 11 //Variable $
+# define NOEXP 12 //Delim no expand on heredoc
 
 typedef struct s_env
 {

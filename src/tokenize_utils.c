@@ -33,25 +33,28 @@ void	remove_quotes(char *str)
 
 /*Funcion que elimina las comillas de los tokens tipo SQUOTE y DQUOTE.
 Ademas verifica si dentro del DQUOTE hay variables para expandir*/
-void	clean_quotes(t_data *d)
+void	clean_quotes(t_data *d, char *res, int i, int index)
 {
-	int	i;
-	int	index;
-
-	i = 0;
-	index = 0;
 	while (i < d->tokens_qt)
 	{
 		if (d->tokens[i]->type == SQUOTE || d->tokens[i]->type == DQUOTE)
 		{
 			remove_quotes(d->tokens[i]->value);
-			if (d->tokens[i]->type == DQUOTE
+			if (verify_previous_type(d, i, d->tokens[i]->value) == 2)
+				d->tokens[i]->type = NOEXP;
+			else if (d->tokens[i]->type == DQUOTE
 				&& find_dollar(d->tokens[i]->value))
-				d->tokens[i]->type = VAR;
+			{
+				res = expand_env_variables(d, d->tokens[i]->value, res);
+				free(d->tokens[i]->value);
+				d->tokens[i]->value = res;
+				d->tokens[i]->type = ARG;
+			}
 			else
 				d->tokens[i]->type = ARG;
 		}
-		d->tokens[index++] = d->tokens[i];
+		else
+			d->tokens[index++] = d->tokens[i];
 		i++;
 	}
 	d->tokens_qt = index;

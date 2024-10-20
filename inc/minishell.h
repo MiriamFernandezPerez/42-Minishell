@@ -52,7 +52,7 @@ void		ft_tokenizer(t_data *d, int len, int start, int index);
 
 //tokenize_utils.c
 void		remove_quotes(char *str);
-void		clean_quotes(t_data *d);
+void		clean_quotes(t_data *d, char *res, int i, int index);
 void		ft_move_tokens(t_data *data, int *i, int *j);
 void		join_tokens(t_data *d, int i, int j);
 void		delete_token_type(t_data *d, int type);
