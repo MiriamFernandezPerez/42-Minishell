@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/17 19:54:24 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/21 18:22:46 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ typedef struct s_data
 	int					sections_qt;
 	int					rt_value;
 	t_env				*env_lst;
+	char				*current_dir;
 }						t_data;
 
 #endif

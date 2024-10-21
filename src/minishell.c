@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:07:08 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/17 22:12:37 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/21 18:50:52 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ int	ft_initialize(t_data **data, char **env)
 	(*data)->sections_qt = 0;
 	(*data)->rt_value = 0;
 	if (!env[0])
-	{
-		write(2, "Dear Evaluador,\nwe decided to not allow you to use\n", 51);
-		write(2, "our minishell without a full environnement settled\n", 51);
-		write(2, "please try again ;)\n", 20);
-		exit (EXIT_FAILURE);
-	}
+		return (print_errors(NULL, (*data), 3));
 	(*data)->env_lst = create_env(env, (*data));
+	(*data)->current_dir = ft_calloc(1, 256);
+	if (!(*data)->current_dir)
+		ft_malloc((*data), NULL, NULL);
+	if (getcwd((*data)->current_dir, 256) == 0)
+		return (ft_free_cd((*data), (*data)->current_dir, NULL, 1), 1);
 	return (0);
 }
 
@@ -72,7 +72,7 @@ void	do_prompt(t_data *data, int prompt)
 		if (prompt == 0)
 		{
 			signal(SIGINT, SIG_IGN);
-			if (check_files(data, data->sections, NULL) == -2)
+			if (check_files(data, data->sections, NULL) == -3)
 			{
 				ft_free_data(data, 0);
 				continue ;

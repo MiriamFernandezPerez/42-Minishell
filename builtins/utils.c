@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:25:15 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/03 15:55:12 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/21 18:36:55 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,13 @@ int	print_errors(char **str, t_data *data, int i)
 	}
 	if (i == 2)
 		write(2, "minishell: cd: HOME not set\n", 28);
+	if (i == 3)
+	{
+		write(2, "Dear Evaluador,\nwe decided to not allow you to use\n", 51);
+		write(2, "our minishell without a full environnement settled\n", 51);
+		write(2, "please try again ;)\n", 20);
+		exit (EXIT_FAILURE);
+	}
 	return (data->rt_value = 1, 1);
 }
 

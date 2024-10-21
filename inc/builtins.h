@@ -25,6 +25,7 @@ void	make_echo(char **str);
 t_env	*adjust_env(t_data *data, t_env *to_del);
 void	make_unset(char **str, t_data *data);
 int		make_env(t_data *data, char **str);
+void	change_cd_data(t_data *data, char *new);
 
 //builtins_export_utils
 char	*check_value(t_data *data, int j, char *name);
@@ -41,7 +42,7 @@ int		make_export(char **str, t_data *data);
 //builtins_cd
 void	ft_free_cd(t_data *data, char *old, char *new, int i);
 int		change_pwd(t_data *data, char *old, char *new);
-int		cd_home(char **str, t_data *data);
+int		cd_home(char **str, t_data *data, int i);
 int		make_cd(char **str, t_data *data);
 int		make_pwd(t_data *data);
 
@@ -70,6 +71,5 @@ int		print_errors(char **str, t_data *data, int i);
 void	ft_malloc(t_data *data, char **array, t_env *lst);
 void	free_array(char **arr);
 void	erase_lst(t_env *lst);
-//void	print_env(t_data *data);
 
 #endif

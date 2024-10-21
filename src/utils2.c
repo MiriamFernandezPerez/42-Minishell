@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:05:55 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/10 21:46:32 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/21 18:25:33 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	ft_free(t_tokens **arr)
 		return ;
 	while (arr[i])
 	{
-		free(arr[i]->value);
+		if (arr[i]->value)
+			free(arr[i]->value);
 		free(arr[i]);
 		i++;
 	}
@@ -53,6 +54,11 @@ void	ft_free_data(t_data *data, int flag)
 			erase_lst(data->env_lst);
 			if (flag == 1)
 				exit(1);
+		}
+		if (data->current_dir)
+		{
+			free(data->current_dir);
+			data->current_dir = NULL;
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:17:45 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/17 21:55:27 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/21 15:38:22 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	ft_heredoc(t_data *data, char *del)
 	close (fd[1]);
 	waitpid(pid, &status, 0);
 	if (status != 0)
-		return ((data->rt_value = 128 + SIGINT), -2);
+		return ((data->rt_value = 128 + SIGINT), -3);
 	return (fd[0]);
 }
 
@@ -127,8 +127,8 @@ int	check_files(t_data *data, t_section *current, t_red *red)
 				if (red->redi == INPUT || red->redi == HEREDOC)
 					current->fd_in = create_file(red->file, red->redi, data,
 							current->fd_in);
-				if (current->fd_in == -2)
-					return (-2);
+				if (current->fd_in == -3)
+					return (-3);
 				if (red->redi == TRUNC || red->redi == APPEND)
 					current->fd_out = create_file(red->file, red->redi, data,
 							current->fd_out);

@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/15 21:45:25 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/21 18:51:07 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,16 @@ int	make_env(t_data *data, char **str)
 		current = current->next;
 	}
 	return (0);
+}
+
+void	change_cd_data(t_data *data, char *new)
+{
+	free(data->current_dir);
+	data->current_dir = ft_strdup(new);
+	if (!data->current_dir)
+	{
+		free (new);
+		ft_malloc(data, NULL, NULL);
+	}
+	return ;
 }
