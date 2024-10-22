@@ -12,8 +12,6 @@
 
 #include "minishell.h"
 
-/*Funcion que maneja SIGINT en readline, printa un salto de linea, borra la
-linea actual, prepara un nuevo prompt y redibuja el prompt*/
 void	readline_sigint_handler(int signum)
 {
 	ft_putstr_fd("\n", STDOUT_FILENO);
@@ -23,7 +21,6 @@ void	readline_sigint_handler(int signum)
 	g_signal_num = 128 + signum;
 }
 
-/*Manejador para SIGQUIT durante readline*/
 void	readline_sigquit_handler(int signum)
 {
 	(void) signum;

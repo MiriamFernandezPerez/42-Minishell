@@ -81,7 +81,7 @@ char		*expand_env_variables(t_data *data, char *input, char *res);
 //expander_checker.c
 void		ft_add_tokens(t_data *d, char *input, int add_tokens, int pos);
 void		check_var_spaces(t_data *data, char *input, int pos);
-int			check_previous_null(t_data *d, int i, char *cpy, char *expanded);
+int			check_previous_null(t_data *d, int i, char *cpy);
 int			check_previous_heredoc(t_data *data, int i);
 int			expand_check_and_prev(t_data *d, char *cpy, char *expanded, int *i);
 

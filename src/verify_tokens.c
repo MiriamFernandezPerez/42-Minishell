@@ -6,13 +6,13 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 19:45:21 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/22 22:10:03 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/22 23:13:47 by mirifern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*Funcion que printa un error diferente por cada tipo de token delimitador*/
+/* Function that prints a different error for each type of delimiter token. */
 void	print_err(int check)
 {
 	if (check == 2)
@@ -27,7 +27,7 @@ void	print_err(int check)
 		ft_msn(ERR_APPEND, 2);
 }
 
-/*Funcion que devuelve el tipo de token que se detecta*/
+/* Function that returns the type of token that is detected. */
 int	check_type(int type)
 {
 	int	check;
@@ -63,7 +63,7 @@ void	write_msn(t_data *data, char *value)
 int	verify_previous_type(t_data *d, int i, char *value)
 {
 	if (i == 0)
-		return (1);
+		return (3);
 	if (d->tokens[i - 1] != NULL && d->tokens[i - 1]->type == SPACES)
 	{
 		if (d->tokens[i - 2] && (d->tokens[i - 2]->type == INPUT
@@ -81,8 +81,8 @@ int	verify_previous_type(t_data *d, int i, char *value)
 	return (0);
 }
 
-/*Funcion que verifica el siguiente tipo de token para evitar
-tokens del mismo tipo juntos cuando bash devuelve error*/
+/* Function that checks the next type of token to avoid 
+having tokens of the same type together when Bash returns an error. */
 int	verify_next_type(t_data *d)
 {
 	int	i;

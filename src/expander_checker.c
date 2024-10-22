@@ -26,7 +26,8 @@ void	ft_add_tokens(t_data *d, char *input, int add_tokens, int pos)
 	final_tok(d, new_tokens, j, split_tokens);
 }
 
-/*Funcion que checkea si depues de expandir hay algun espacio dentro del token*/
+/* Function that checks if, after expanding,
+there is any space within the token */
 void	check_var_spaces(t_data *data, char *input, int pos)
 {
 	int	i;
@@ -45,20 +46,22 @@ void	check_var_spaces(t_data *data, char *input, int pos)
 		ft_add_tokens(data, input, add_tokens, pos);
 }
 
-int	check_previous_null(t_data *d, int i, char *cpy, char *expanded)
+int	check_previous_null(t_data *d, int i, char *cpy)
 {
-	if (verify_previous_type(d, i, cpy) == 1)
-		return (1);
-	else if (verify_previous_type(d, i, cpy) == 2)
+	int	check;
+
+	check = verify_previous_type(d, i, cpy);
+	if (check == 3)
+		return (3);
+	else if (check == 2)
 	{
 		d->tokens[i]->type = ARG;
 		d->tokens[i]->value = cpy;
-		free(expanded);
 	}
 	else
 	{
 		d->tokens[i]->type = END;
-		free(cpy);
+		return (1);
 	}
 	return (0);
 }
@@ -86,8 +89,10 @@ int	expand_check_and_prev(t_data *d, char *cpy, char *expanded, int *i)
 	check_var_spaces(d, d->tokens[*i]->value, *i);
 	if (!d->tokens[*i]->value[0])
 	{
-		if (check_previous_null(d, *i, cpy, expanded) == 1)
+		if (check_previous_null(d, *i, cpy) == 1)
 			return (1);
+		else
+			free(cpy);
 	}
 	else
 	{

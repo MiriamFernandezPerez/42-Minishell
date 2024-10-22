@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-/*Funcion que busca el nombre de la variable del environment*/
+/* Function that searches for the variable name in the environment */
 char	*find_var_name(char *value, int *i, t_data *data)
 {
 	char	*env_var;
@@ -36,8 +36,7 @@ char	*find_var_name(char *value, int *i, t_data *data)
 	return (env_var);
 }
 
-/*Funcion que localiza dentro de un token de typo DQUOTE si hay alguna
-variable para expandir*/
+/* Function that locates any variable to expand within a DQUOTE type token */
 int	find_dollar(char *str)
 {
 	int	i;
@@ -52,8 +51,8 @@ int	find_dollar(char *str)
 	return (0);
 }
 
-/*Funcion que quita el dolar de la variable y el primer
-numero si existe*/
+/* Function that removes the dollar sign from the variable 
+and the first number if it exists */
 char	*quit_dollar(char *value, int *i)
 {
 	int		j;
@@ -75,9 +74,9 @@ char	*quit_dollar(char *value, int *i)
 	return (new_value);
 }
 
-/*Funcion que quita el primer $ y pasa el nombre de la variable
-al environment para expandir la variable a su valor, si existe
-la variable, sino devuelve NULL*/
+/* Function that removes the first $ and passes the variable name 
+to the environment to expand it to its value, if the variable exists, 
+otherwise it returns NULL */
 char	*expand_var(t_data *data, char *value)
 {
 	t_env	*current;
@@ -106,18 +105,17 @@ char	*expand_var(t_data *data, char *value)
 	return (NULL);
 }
 
-/*Funcion que identifica el tipo de token: se expandiran los de tipo VAR
-y DQUOTE si tienen el signo $ en la primera posicion.
-Si el primer caracter despues del $ es el signo ?, se expandira al valor
-de retorno rt_value de la estructura data.
-Si el primer caracter despues del $ es un numero, se eliminara el $ y el
-primer numero y se devolvera el resto de los caracteres como valor
-En el resto de los casos se evaluara el valor de la variable en el
-environment y se expandira al valor que devuelva o a NULL si no encuentra
-el nombre de la variable
-Si la variable no se puede expandir y por tanto se iguala a NULL y el token
-anterior es de tipo INPUT, TRUNC, o APPEND devuelvo un error, por eso creo una
-copia del value del token que siempre tengo que liberar*/
+/* Function that identifies the type of token:
+tokens of type VAR and DQUOTE will be expanded if they have the $ symbol.
+If the first character after the $ is the ? symbol,
+it will expand to the return value rt_value from the data structure.
+If the first character after the $ is a number, the $ and the first number
+will be removed, and the rest of the characters will be returned as the value.
+In other cases, the value of the variable will be evaluated from the
+environment, and it will expand to the value returned if its possible.
+If the variable cannot be expanded and thus equals NULL, and the previous
+token is of type INPUT, TRUNC, or APPEND, an error is returned. 
+For this reason, I create a copy of the token's value that I must always free.*/
 int	ft_expander(t_data *d)
 {
 	int	i;

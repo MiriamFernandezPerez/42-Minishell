@@ -58,7 +58,7 @@ void	add_rest_redir(t_section *section, t_tokens **tokens, int *i, t_data *d)
 	temp->next->next = NULL;
 }
 
-/* Funcion que crea el primer comando del array **/
+/* Function that creates the first command of the array */
 char	**create_cmd(t_section *section, char *arg, t_data *data)
 {
 	section->cmd = malloc(sizeof(char *) * 2);
@@ -71,7 +71,7 @@ char	**create_cmd(t_section *section, char *arg, t_data *data)
 	return (section->cmd);
 }
 
-/**CREAR size_cmd(cmd)*/
+/** CREATE size_cmd(cmd) */
 int	size_cmd(char **cmd)
 {
 	int	i;

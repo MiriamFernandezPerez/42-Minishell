@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-/*Funcion que quita las comillas de los argumentos*/
+/* Function that removes the quotes from the arguments */
 void	remove_quotes(char *str)
 {
 	char	*src;
@@ -31,8 +31,8 @@ void	remove_quotes(char *str)
 	*dst = '\0';
 }
 
-/*Funcion que elimina las comillas de los tokens tipo SQUOTE y DQUOTE.
-Ademas verifica si dentro del DQUOTE hay variables para expandir*/
+/* Function that removes the quotes from tokens of type SQUOTE and DQUOTE.
+Additionally, it checks if there are variables to expand within the DQUOTE.*/
 void	clean_quotes(t_data *d, char *res, int i)
 {
 	while (i < d->tokens_qt)

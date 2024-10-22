@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-/* Funcion para crear los nodos de las secciones*/
+/* Function to create the nodes for the sections */
 t_section	*create_node(t_data *data)
 {
 	t_section	*node;
@@ -47,16 +47,17 @@ int	ft_isredir(int type)
 	return (0);
 }
 
-// Inicializa la lista de secciones si no existe.
+/* Initializes the sections list if it does not exist.*/
 void	init_sections(t_data *data)
 {
 	if (!data->sections)
 		data->sections = create_node(data);
 }
 
-/*Funcion que llama a la que separa el input en comandos, si encuentra
-redireccion guarda el tipo de redireccion y le asigna el nombre del archivo
-que le sigue y despues separa en secciones cuando encuentra una pipe*/
+/* Function that calls the one that separates the input into commands. 
+If it finds a redirection, it saves the type of redirection and assigns 
+the name of the following file, and then separates into sections 
+when it encounters a pipe. */
 void	ft_sections(t_data *data)
 {
 	int			i;

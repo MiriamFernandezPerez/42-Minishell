@@ -22,8 +22,9 @@ char	*allocate_result_buffer(t_data *data)
 	return (result);
 }
 
-/*Funcion que asigna el valor de retorno cuando recibe la variable $?
-se devuelve como string pasando el int rt_value por la funcion ft_itoa*/
+/* Function that assigns the return value when it receives the variable $?
+It is returned as a string by passing the int rt_value through
+ the ft_itoa function */
 void	handle_rt_value(t_data *data, char **temp, char **res)
 {
 	char	*var_value;
