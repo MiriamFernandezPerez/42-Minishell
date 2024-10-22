@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/22 21:00:30 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/22 22:10:31 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void		ft_tokenizer(t_data *d, int len, int start, int index);
 
 //tokenize_utils.c
 void		remove_quotes(char *str);
-void		clean_quotes(t_data *d, char *res, int i, int index);
+void		clean_quotes(t_data *d, char *res, int i);
 void		ft_move_tokens(t_data *data, int *i, int *j);
 void		join_tokens(t_data *d, int i, int j);
 void		delete_token_type(t_data *d, int type);

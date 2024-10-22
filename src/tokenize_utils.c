@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 21:48:18 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/22 19:54:34 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/22 22:10:59 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,8 @@ void	remove_quotes(char *str)
 
 /*Funcion que elimina las comillas de los tokens tipo SQUOTE y DQUOTE.
 Ademas verifica si dentro del DQUOTE hay variables para expandir*/
-void	clean_quotes(t_data *d, char *res, int i, int index)
+void	clean_quotes(t_data *d, char *res, int i)
 {
-	(void) index;
 	while (i < d->tokens_qt)
 	{
 		if (d->tokens[i]->type == SQUOTE || d->tokens[i]->type == DQUOTE)
@@ -54,8 +53,6 @@ void	clean_quotes(t_data *d, char *res, int i, int index)
 			else
 				d->tokens[i]->type = ARG;
 		}
-		//else
-		//	d->tokens[index++] = d->tokens[i];
 		i++;
 	}
 	d->tokens_qt = i;

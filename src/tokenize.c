@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:09:23 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/21 15:53:10 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/22 22:11:18 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,5 +132,5 @@ void	ft_tokenizer(t_data *d, int len, int start, int index)
 	}
 	d->tokens[index] = NULL;
 	d->tokens_qt = index;
-	clean_quotes(d, NULL, 0, 0);
+	clean_quotes(d, NULL, 0);
 }

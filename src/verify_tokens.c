@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 19:45:21 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/10 20:57:59 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/22 22:10:03 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	write_msn(t_data *data, char *value)
 int	verify_previous_type(t_data *d, int i, char *value)
 {
 	if (i == 0)
-		return (2);
+		return (1);
 	if (d->tokens[i - 1] != NULL && d->tokens[i - 1]->type == SPACES)
 	{
 		if (d->tokens[i - 2] && (d->tokens[i - 2]->type == INPUT
