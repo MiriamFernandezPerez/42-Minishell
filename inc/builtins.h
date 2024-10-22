@@ -38,13 +38,17 @@ void	p_exp_loop(t_env *to_print, t_env *old, t_env *cur, t_env *env_lst);
 void	print_export(t_env *env_lst);
 void	export_malloc(char **str, int i, t_env *current, t_data *data);
 int		make_export(char **str, t_data *data);
+int		make_pwd(t_data *data);
 
 //builtins_cd
 void	ft_free_cd(t_data *data, char *old, char *new, int i);
-int		change_pwd(t_data *data, char *old, char *new);
-int		cd_home(char **str, t_data *data, int i);
+int		change_pwd(t_data *data, char *old, char *new, char **str);
+int		cd_home(char **str, t_data *data, char *old_buf, char *new_buf);
 int		make_cd(char **str, t_data *data);
-int		make_pwd(t_data *data);
+
+//builtins_cd_utils
+void	write_errors_cd(char **str, char *arg);
+int		check_dir_cd(char **str);
 
 //maths
 int		modulo_negativ(int a);

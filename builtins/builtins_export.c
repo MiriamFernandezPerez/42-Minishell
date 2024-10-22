@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/09/05 17:59:05 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/22 19:44:05 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,8 @@ int	make_export(char **str, t_data *data)
 	return (0);
 }
 
-//p_exp_loop = loops du print_export pour imprimer tous les nodes
-//sauf le premier
+int	make_pwd(t_data *data)
+{
+	printf("%s\n", data->current_dir);
+	return (0);
+}

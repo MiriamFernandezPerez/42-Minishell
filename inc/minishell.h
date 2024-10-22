@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/17 22:09:34 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/22 19:50:15 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int			ft_read_prompt(t_data *data);
 //read_prompt_utils.c
 void		trim_prompt(t_data *data);
 int			find_not_allowed_type(t_data *data);
-int			verify_num_heredoc(t_data * data);
+int			verify_num_heredoc(t_data *data);
 
 //parse.c
 int			end_quote(char *input, char c, int i);
@@ -59,10 +59,10 @@ void		delete_token_type(t_data *d, int type);
 
 //utils2.c
 void		ft_free(t_tokens **arr);
+void		ft_free_flag(t_data *data, int flag);
 void		ft_free_data(t_data *data, int flag);
 int			ft_msn(char *s, int fd);
 int			ft_isdelimiter(char c);
-void		final_free(t_data *data);
 
 //expander.c
 char		*find_var_name(char *value, int *i, t_data *data);
@@ -98,7 +98,6 @@ int			check_type(int type);
 void		write_msn(t_data *data, char *value);
 int			verify_previous_type(t_data *d, int i, char *value);
 int			verify_next_type(t_data *d);
-
 
 //sections.c
 t_section	*create_node(t_data *data); //he cambiado el argumento por un free

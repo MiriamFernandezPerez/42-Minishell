@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/21 18:22:46 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:37:00 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <sys/wait.h>
 # include <errno.h>
 # include <dirent.h>
+# include <sys/stat.h>
 
 //Global
 extern int	g_signal_num;

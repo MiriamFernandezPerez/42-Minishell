@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:25:15 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/22 14:51:33 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:54:28 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,8 @@ int	print_errors(char **str, t_data *data, int i)
 		write(2, ": too many arguments\n", 21);
 	}
 	if (i == 1)
-	{
-		write(2, "minishell : ", 12);
-		write(2, str[0], ft_strlen(str[0]));
-		write(2, ": ", 2);
-		write(2, str[1], ft_strlen(str[1]));
-		write(2, ": No such file or directory\n", 28);
-	}
-	if (i == 2)
 		write(2, "minishell: cd: HOME not set\n", 28);
-	if (i == 3)
+	if (i == 2)
 	{
 		write(2, "Dear Evaluador,\nwe decided to not allow you to use\n", 51);
 		write(2, "our minishell without a full environnement settled\n", 51);

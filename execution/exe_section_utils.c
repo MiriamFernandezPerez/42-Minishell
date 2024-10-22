@@ -6,11 +6,24 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 15:55:46 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/17 22:03:59 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/22 20:13:24 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	do_red(t_red *red, t_red *prev)
+{
+	while (red)
+	{
+		prev = red;
+		if (red->file)
+			free(red->file);
+		red = red->next;
+		free(prev);
+	}
+	return ;
+}
 
 void	ft_free_section(t_section *section, t_section *previous)
 {
@@ -25,14 +38,8 @@ void	ft_free_section(t_section *section, t_section *previous)
 			red = section->files;
 		if (section->cmd)
 			free_array(section->cmd);
-		while (red)
-		{
-			prev = red;
-			if (red->file)
-				free(red->file);
-			red = red->next;
-			free(prev);
-		}
+		prev = red;
+		do_red(red, prev);
 		if (section->path_array)
 			free_array(section->path_array);
 		if (section->path)

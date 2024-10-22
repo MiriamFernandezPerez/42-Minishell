@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:05:55 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/21 18:25:33 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/22 20:07:03 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,22 @@ void	ft_free(t_tokens **arr)
 	free(arr);
 }
 
+void	ft_free_flag(t_data *data, int flag)
+{
+	if (flag == 1 || flag == 2)
+	{
+		erase_lst(data->env_lst);
+		if (flag == 1)
+			exit(1);
+	}
+	if (flag == 1 && data->current_dir)
+	{
+		free(data->current_dir);
+		data->current_dir = NULL;
+	}
+	return ;
+}
+
 void	ft_free_data(t_data *data, int flag)
 {
 	if (data)
@@ -49,18 +65,9 @@ void	ft_free_data(t_data *data, int flag)
 			ft_free_section(data->sections, NULL);
 			data->sections = NULL;
 		}
-		if (flag == 1 || flag == 2)
-		{
-			erase_lst(data->env_lst);
-			if (flag == 1)
-				exit(1);
-		}
-		if (data->current_dir)
-		{
-			free(data->current_dir);
-			data->current_dir = NULL;
-		}
+		ft_free_flag(data, flag);
 	}
+	return ;
 }
 
 //Write msn function

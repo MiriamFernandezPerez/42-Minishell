@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/17 22:05:19 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/22 20:11:41 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ char		**lst_to_arr(t_env *lst, t_data *data, char **array);
 void		create_pipe(t_data *data);
 
 //exe_section-utils
+void		do_red(t_red *red, t_red *prev);
 void		ft_free_section(t_section *section, t_section *previous);
 void		close_fd(t_section *section);
 void		close_fd_child(t_section *section);

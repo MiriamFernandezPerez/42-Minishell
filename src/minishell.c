@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:07:08 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/21 18:50:52 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:54:57 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	ft_initialize(t_data **data, char **env)
 	(*data)->sections_qt = 0;
 	(*data)->rt_value = 0;
 	if (!env[0])
-		return (print_errors(NULL, (*data), 3));
+		return (print_errors(NULL, (*data), 2));
 	(*data)->env_lst = create_env(env, (*data));
 	(*data)->current_dir = ft_calloc(1, 256);
 	if (!(*data)->current_dir)

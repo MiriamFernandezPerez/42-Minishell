@@ -39,6 +39,7 @@ SRC = 	minishell.c \
 		builtins/env_manage.c \
 		builtins/env_array.c \
 		builtins/builtins_cd.c \
+		builtins/builtins_cd_utils.c \
 		builtins/builtins_env.c \
 		builtins/builtins_export.c \
 		builtins/builtins_export_utils.c \
