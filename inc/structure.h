@@ -51,7 +51,6 @@ extern int	g_signal_num;
 # define MAX_HEREDOC "bash: maximum here-document count exceeded\n"
 
 # define MAX_TOKENS 580000
-//# define TOKEN_SIZE 64
 
 //delimiters
 # define BACKSLASH -2 // '\'
