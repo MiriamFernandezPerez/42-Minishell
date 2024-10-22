@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/22 19:50:15 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/22 21:00:30 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int			verify_previous_type(t_data *d, int i, char *value);
 int			verify_next_type(t_data *d);
 
 //sections.c
-t_section	*create_node(t_data *data); //he cambiado el argumento por un free
+t_section	*create_node(t_data *data);
 void		add_redir(t_section *temp_section, t_data *data, int *i);
 int			ft_isredir(int type);
 void		init_sections(t_data *data);

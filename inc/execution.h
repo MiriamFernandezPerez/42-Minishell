@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:05:00 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/22 20:11:41 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/22 22:04:29 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,6 @@ void		close_fd_child(t_section *section);
 void		write_arg(char *arg);
 int			check_dir(char *arg);
 int			error_exe(t_data *data, char *arg, int i);
+int			access_errors(char *file, t_data *data, int fd, int i);
 
 #endif

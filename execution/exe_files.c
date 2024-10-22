@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:17:45 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/21 15:38:22 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/22 22:00:56 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,17 @@ int	create_file(char *file, int i, t_data *data, int fd)
 	if (fd > -1)
 		close(fd);
 	if (i == INPUT)
+	{
+		if (access(file, F_OK) == 0 && access(file, R_OK) != 0)
+			return (access_errors(file, data, fd, 0));
 		fd = open(file, O_RDONLY);
+	}
 	else if (i == TRUNC)
+	{
+		if (access(file, F_OK) == 0 && access(file, W_OK) != 0)
+			return (access_errors(file, data, fd, 1));
 		fd = open(file, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+	}
 	else if (i == APPEND)
 		fd = open(file, O_CREAT | O_APPEND | O_WRONLY, 0644);
 	else if (i == HEREDOC)

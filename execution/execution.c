@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:22:00 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/22 19:45:40 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/22 22:00:35 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	builtins_exe(t_data *data, t_section *section)
 	if (!fd[0] || !fd[1])
 		return (error_exe(data, "dup error", 2), data->rt_value);
 	if (section->fd_in == -1 || section->fd_out == -1)
-		exit (1);
+		return (1);
 	if (section->fd_in != -2)
 	{
 		if (dup2(section->fd_in, STDIN_FILENO) == -1)

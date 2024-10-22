@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:03:19 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/17 21:38:12 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/22 20:58:23 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,5 @@ void	exe_builtins_redi(t_data *data, int fd_in, int fd_out)
 	close (fd_out);
 	return ;
 }
-//function who put back STDIN and STDOUT to the origin
-//(because there is no child in builtins when we do dup2)
+/*function who put back STDIN and STDOUT to the origin
+(because there is no child in builtins when we do dup2)*/

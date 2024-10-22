@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:03:19 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/22 16:33:59 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/22 22:02:01 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,17 @@ int	error_exe(t_data *data, char *arg, int i)
 	if (i == 4)
 		return (check_dir(arg));
 	return (data->rt_value = 1, 1);
+}
+
+int	access_errors(char *file, t_data *data, int fd, int i)
+{
+	if (i == 0)
+		fd = open(file, O_RDONLY);
+	if (i == 1)
+		fd = open(file, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+	write(2, "minishell : ", 12);
+	write(2, file, ft_strlen(file));
+	write(2, ": Permission denied\n", 20);
+	data->rt_value = 1;
+	return (fd);
 }

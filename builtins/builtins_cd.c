@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/22 19:29:23 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/22 20:56:05 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,6 @@ int	make_cd(char **str, t_data *data)
 	return (0);
 }
 
-//getcwd = get the actual address (even if PWD is unset)
-//chdir = go to the directory in arguments
-//getenv = search and return a specific line in the environnement
+/*getcwd = get the actual address (even if PWD is unset)
+chdir = go to the directory in arguments
+getenv = search and return a specific line in the environnement*/
