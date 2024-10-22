@@ -90,9 +90,11 @@ int	cd_home(char **str, t_data *data, int i)
 	old_buf = data->current_dir;
 	if (chdir(tmp) == 0)
 		return (change_pwd(data, old_buf, new_buf));
+	else
+		perror("chdir error: ");
 	free (old_buf);
 	free (new_buf);
-	return (print_errors(str, data, 2), 1);
+	return (1);
 }
 
 int	make_cd(char **str, t_data *data)
