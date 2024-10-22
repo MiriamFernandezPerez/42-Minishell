@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 21:48:18 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/22 22:10:59 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/22 22:14:54 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@ void	join_tokens(t_data *d, int i, int j)
 
 	while (i < d->tokens_qt - 1)
 	{
-		if ((d->tokens[i]->type == ARG || d->tokens[i]->type == NOEXP) 
-			&& (d->tokens[i + 1]->type == ARG || d->tokens[i + 1]->type == NOEXP))
+		if ((d->tokens[i]->type == ARG || d->tokens[i]->type == 12)
+			&& (d->tokens[i + 1]->type == ARG || d->tokens[i + 1]->type == 12))
 		{
 			new_value = malloc(ft_strlen(d->tokens[i]->value)
 					+ ft_strlen(d->tokens[i + 1]->value) + 1);
