@@ -6,7 +6,7 @@
 /*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:17:55 by esellier          #+#    #+#             */
-/*   Updated: 2024/10/22 19:47:08 by esellier         ###   ########.fr       */
+/*   Updated: 2024/10/22 20:44:52 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,16 @@ int	first_check(char *str)
 	return (i);
 }
 
+void	change_value(t_env *current, char *value, char *name)
+{
+	if (current->value)
+		free(current->value);
+	current->value = value;
+	current->flag = 'v';
+	free(name);
+	return ;
+}
+
 int	check_name(char *str, int i, t_env *current, t_data *data)
 {
 	char	*name;
@@ -57,11 +67,7 @@ int	check_name(char *str, int i, t_env *current, t_data *data)
 			return (free(name), 1);
 		value = check_value(data, j, name);
 		ft_strlcpy(value, &str[i - j], j + 1);
-		if (current->value)
-			free(current->value);
-		current->value = value;
-		current->flag = 'v';
-		return (free(name), 1);
+		return (change_value(current, value, name), 1);
 	}
 	return (free(name), 0);
 }

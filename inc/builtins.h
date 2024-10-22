@@ -30,6 +30,7 @@ void	change_cd_data(t_data *data, char *new);
 //builtins_export_utils
 char	*check_value(t_data *data, int j, char *name);
 int		first_check(char *str);
+void	change_value(t_env *current, char *value, char *name);
 int		check_name(char *str, int i, t_env *current, t_data *data);
 int		check_args(char *str);
 
