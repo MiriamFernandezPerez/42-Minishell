@@ -33,9 +33,8 @@ void	remove_quotes(char *str)
 
 /*Funcion que elimina las comillas de los tokens tipo SQUOTE y DQUOTE.
 Ademas verifica si dentro del DQUOTE hay variables para expandir*/
-void	clean_quotes(t_data *d, char *res, int i, int index)
+void	clean_quotes(t_data *d, char *res, int i)
 {
-	(void) index;
 	while (i < d->tokens_qt)
 	{
 		if (d->tokens[i]->type == SQUOTE || d->tokens[i]->type == DQUOTE)
@@ -54,8 +53,6 @@ void	clean_quotes(t_data *d, char *res, int i, int index)
 			else
 				d->tokens[i]->type = ARG;
 		}
-		//else
-		//	d->tokens[index++] = d->tokens[i];
 		i++;
 	}
 	d->tokens_qt = i;
@@ -105,7 +102,8 @@ void	join_tokens(t_data *d, int i, int j)
 
 	while (i < d->tokens_qt - 1)
 	{
-		if (d->tokens[i]->type == ARG && d->tokens[i + 1]->type == ARG)
+		if ((d->tokens[i]->type == ARG || d->tokens[i]->type == NOEXP) 
+			&& (d->tokens[i + 1]->type == ARG || d->tokens[i + 1]->type == NOEXP))
 		{
 			new_value = malloc(ft_strlen(d->tokens[i]->value)
 					+ ft_strlen(d->tokens[i + 1]->value) + 1);

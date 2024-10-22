@@ -63,7 +63,7 @@ void	write_msn(t_data *data, char *value)
 int	verify_previous_type(t_data *d, int i, char *value)
 {
 	if (i == 0)
-		return (2);
+		return (1);
 	if (d->tokens[i - 1] != NULL && d->tokens[i - 1]->type == SPACES)
 	{
 		if (d->tokens[i - 2] && (d->tokens[i - 2]->type == INPUT
