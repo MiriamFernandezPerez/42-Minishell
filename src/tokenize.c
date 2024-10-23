@@ -12,8 +12,8 @@
 
 #include "minishell.h"
 
-/*funcion que busca el nombre completo de la variable 
-cuando empieza por $ hasta encontrar otro delimitador */
+/* Function that searches for the full name of the variable 
+when it starts with $ until it finds another delimiter. */
 int	end_variable(char *input, int i)
 {
 	while (input[i] != '\0')
@@ -72,14 +72,15 @@ void	tok_nodelimiter(t_data *data, int *ind, int *start, int *end)
 	*start = *end;
 }
 
-/*Funcion que establece que tipo de delimitador ha encontrado y separa por tipos
-1- Los que van entre comillas dobles o simples, 
-deberemos encontrar su correspondiente comilla de cierre.
-2- Si encuentra un << que lo distinga de < 
-3- Si encuentra un >> que lo distinga de > 
-4- Si encuentra un espacios seguidos simplemente que los omita
-5- Si encuentra $ debe guardarse como tipo VAR hasta el siguiente espacio
-5- De lo contrario sera un delimitador simple de tipo | < > */
+/* Function that determines what type of delimiter has been found 
+and separates by types:
+1 - Those that are within double or single quotes; we must find 
+their corresponding closing quote.
+2 - If it finds a << to distinguish it from <.
+3 - If it finds a >> to distinguish it from >.
+4 - If it finds consecutive spaces, it simply ignores them.
+5 - If it finds $, it should be stored as type VAR until the next space.
+6 - Otherwise, it will be a simple delimiter of type | < >. */
 void	define_delimiter(t_data *data, int *start, int *end, int *index)
 {
 	if (ft_isdelimiter(data->prompt[*start]) == SQUOTE
@@ -108,9 +109,9 @@ void	define_delimiter(t_data *data, int *start, int *end, int *index)
 		tok_delimiter(data, data->prompt, index, start);
 }
 
-/*Funcion que recorre el prompt en busca de delitadores tipo o 
-grupos de palabras entre comillas para separar las palabras
-en tokens cada uno con su tipo correspondiente*/
+/* Function that traverses the prompt looking for delimiters or 
+   groups of words within quotes to separate the words into tokens, 
+   each with its corresponding type. */
 void	ft_tokenizer(t_data *d, int len, int start, int index)
 {
 	int	end;
