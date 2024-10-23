@@ -112,7 +112,7 @@ void	define_delimiter(t_data *data, int *start, int *end, int *index)
 /* Function that traverses the prompt looking for delimiters or 
    groups of words within quotes to separate the words into tokens, 
    each with its corresponding type. */
-void	ft_tokenizer(t_data *d, int len, int start, int index)
+int	ft_tokenizer(t_data *d, int len, int start, int index)
 {
 	int	end;
 
@@ -133,5 +133,7 @@ void	ft_tokenizer(t_data *d, int len, int start, int index)
 	}
 	d->tokens[index] = NULL;
 	d->tokens_qt = index;
-	clean_quotes(d, NULL, 0);
+	if (clean_quotes(d, NULL, 0, 0) == 1)
+		return (1);
+	return (0);
 }

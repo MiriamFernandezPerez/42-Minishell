@@ -56,7 +56,6 @@ void	write_msn(t_data *data, char *value)
 	write(2, "bash: ", 6);
 	write(2, value, ft_strlen(value));
 	write(2, ": ambiguous redirect\n", 21);
-	free(value);
 	data->rt_value = 1;
 }
 

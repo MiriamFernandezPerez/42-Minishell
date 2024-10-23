@@ -48,11 +48,11 @@ int			end_variable(char *input, int i);
 void		tok_delimiter(t_data *data, char *input, int *ind, int *start);
 void		tok_nodelimiter(t_data *data, int *ind, int *start, int *end);
 void		define_delimiter(t_data *data, int *start, int *end, int *index);
-void		ft_tokenizer(t_data *d, int len, int start, int index);
+int			ft_tokenizer(t_data *d, int len, int start, int index);
 
 //tokenize_utils.c
 void		remove_quotes(char *str);
-void		clean_quotes(t_data *d, char *res, int i);
+int			clean_quotes(t_data *d, char *res, int i, int check);
 void		ft_move_tokens(t_data *data, int *i, int *j);
 void		join_tokens(t_data *d, int i, int j);
 void		delete_token_type(t_data *d, int type);

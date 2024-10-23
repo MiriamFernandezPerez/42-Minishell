@@ -119,17 +119,20 @@ For this reason, I create a copy of the token's value that I must always free.*/
 int	ft_expander(t_data *d)
 {
 	int	i;
+	int	check;
 
 	i = 0;
+	check = 0;
 	while (i < d->tokens_qt)
 	{
-		if (d->tokens[i]->type == VAR)
+		if (d->tokens[i]->type == VAR || d->tokens[i]->type == DQUOTE)
 		{
 			if (check_previous_heredoc(d, i) == 1)
 				d->tokens[i]->type = ARG;
 			else
 			{
-				if (expand_check_and_prev(d, NULL, NULL, &i) == 1)
+				check = expand_check_and_prev(d, NULL, NULL, &i);
+				if (check == 1)
 					return (1);
 			}
 		}

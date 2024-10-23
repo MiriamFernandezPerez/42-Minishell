@@ -58,11 +58,13 @@ int	check_previous_null(t_data *d, int i, char *cpy)
 		d->tokens[i]->type = ARG;
 		d->tokens[i]->value = cpy;
 	}
-	else
+	else if (check == 1)
 	{
 		d->tokens[i]->type = END;
-		return (1);
+		return (free(cpy), 1);
 	}
+	else
+		d->tokens[i]->type = END;
 	return (0);
 }
 

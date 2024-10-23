@@ -51,7 +51,8 @@ ARG tokens are together, and finaly verify all the tokens. If something is wrong
 return 1 still main o not excecute*/
 int	token_expand_clean(t_data *data)
 {
-	ft_tokenizer(data, ft_strlen(data->prompt), 0, 0);
+	if (ft_tokenizer(data, ft_strlen(data->prompt), 0, 0) == 1)
+		return (1);
 	if (ft_expander(data) == 1)
 		return (1);
 	if (find_not_allowed_type(data) == 1)

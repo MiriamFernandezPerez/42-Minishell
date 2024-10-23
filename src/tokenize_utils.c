@@ -33,16 +33,19 @@ void	remove_quotes(char *str)
 
 /* Function that removes the quotes from tokens of type SQUOTE and DQUOTE.
 Additionally, it checks if there are variables to expand within the DQUOTE.*/
-void	clean_quotes(t_data *d, char *res, int i)
+int	clean_quotes(t_data *d, char *res, int i, int check)
 {
 	while (i < d->tokens_qt)
 	{
 		if (d->tokens[i]->type == SQUOTE || d->tokens[i]->type == DQUOTE)
 		{
 			remove_quotes(d->tokens[i]->value);
-			if (verify_previous_type(d, i, d->tokens[i]->value) == 2)
+			check = verify_previous_type(d, i, d->tokens[i]->value); 
+			if (check == 2)
 				d->tokens[i]->type = NOEXP;
-			else if (d->tokens[i]->type == DQUOTE
+			else if (check == 1)
+				return (1);
+			if (d->tokens[i]->type == DQUOTE
 				&& find_dollar(d->tokens[i]->value))
 			{
 				res = expand_env_variables(d, d->tokens[i]->value, res);
@@ -56,6 +59,7 @@ void	clean_quotes(t_data *d, char *res, int i)
 		i++;
 	}
 	d->tokens_qt = i;
+	return (0);
 }
 
 void	ft_move_tokens(t_data *data, int *i, int *j)

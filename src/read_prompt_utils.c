@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-/*Funcion que elimina los espacios del prompt por delante y por detras*/
+/* Function that removes leading and trailing spaces from the prompt */
 void	trim_prompt(t_data *data)
 {
 	char	*trim_input;
