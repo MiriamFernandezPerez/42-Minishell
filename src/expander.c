@@ -43,6 +43,10 @@ int	find_dollar(char *str)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return (1); // aqui
+	write(2, "TEST\n", 5);
+	write(2, str, ft_strlen(str));
 	while (str[i] != '\0')
 	{
 		if (str[i] == '$')

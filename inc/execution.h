@@ -32,12 +32,13 @@ int			execution(t_data *data, t_section *section);
 char		*ft_strjoin_three(char const *s1, char const *s2, char const *s3);
 int			check_builtins(char **str);
 void		exe_builtins_redi(t_data *data, int fd_in, int fd_out);
+int			fd_pipe(t_data *data);
+int			fd_null(t_data *data, t_section *section, int fd);
 
 //exe_files
 void		do_heredoc(int *fd, char *del);
 int			ft_heredoc(t_data *data, char *del);
 int			create_file(char *file, int i, t_data *data, int fd);
-int			fd_null(t_data *data, t_section *section);
 int			check_files(t_data *data, t_section *current, t_red *red);
 
 //path

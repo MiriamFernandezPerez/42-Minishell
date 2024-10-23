@@ -59,5 +59,49 @@ void	exe_builtins_redi(t_data *data, int fd_in, int fd_out)
 	close (fd_out);
 	return ;
 }
-/*function who put back STDIN and STDOUT to the origin
+
+int	fd_pipe(t_data *data)
+{
+	int	fd_pipe[2];
+
+	fd_pipe[0] = 0;
+	fd_pipe[1] = 0;
+	pipe(fd_pipe);
+	if (dup2(fd_pipe[1], STDOUT_FILENO) == -1)
+		return (error_exe(data, "dup2 error", 3));
+	close(fd_pipe[1]);
+	close(fd_pipe[0]);
+	return (0);
+}
+
+int	fd_null(t_data *data, t_section *section, int fd)
+{
+	int	fd2;
+
+	if (section->fd_in == -2 && section != data->sections)
+	{
+		fd = open("/dev/null", O_RDONLY);
+		if (fd == -1)
+			error_exe(data, "open", 2);
+		if (dup2(fd, STDIN_FILENO) == -1)
+			return (error_exe(data, "dup2 error", 3));
+		close (fd);
+	}
+	if (section->fd_out == -2 && data->sections_qt > 1 && section->next
+		&& ft_strcmp(section->cmd[0], "cat") == 0)
+		return (fd_pipe(data));
+	else if ((section->fd_out == -2 && data->sections_qt > 1 && section->next)
+		|| ft_strcmp(section->cmd[0], "exit") == 0)
+	{
+		fd2 = open("/dev/null", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (fd2 == -1)
+			error_exe(data, "open", 2);
+		if (dup2(fd2, STDOUT_FILENO) == -1)
+			return (error_exe(data, "dup2 error", 3));
+		close (fd2);
+	}
+	return (0);
+}
+
+/*exe_builtins_redi = function who put back STDIN and STDOUT to the origin
 (because there is no child in builtins when we do dup2)*/

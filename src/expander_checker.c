@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_checker.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mirifern <mirifern@student.42barcel>       +#+  +:+       +#+        */
+/*   By: esellier <esellier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 21:42:18 by mirifern          #+#    #+#             */
-/*   Updated: 2024/10/19 04:24:26 by mirifern         ###   ########.fr       */
+/*   Updated: 2024/10/22 22:22:58 by esellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	expand_check_and_prev(t_data *d, char *cpy, char *expanded, int *i)
 	if (!d->tokens[*i]->value[0])
 	{
 		if (check_previous_null(d, *i, cpy, expanded) == 1)
-			return (1);
+			return (free(cpy), 1); //aqui
 	}
 	else
 	{

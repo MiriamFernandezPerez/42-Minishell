@@ -94,33 +94,6 @@ int	create_file(char *file, int i, t_data *data, int fd)
 	return (fd);
 }
 
-int	fd_null(t_data *data, t_section *section)
-{
-	int	fd;
-	int	fd2;
-
-	if (section->fd_in == -2 && section != data->sections)
-	{
-		fd = open("/dev/null", O_RDONLY);
-		if (fd == -1)
-			error_exe(data, "open", 2);
-		if (dup2(fd, STDIN_FILENO) == -1)
-			return (error_exe(data, "dup2 error", 3));
-		close (fd);
-	}
-	if ((section->fd_out == -2 && data->sections_qt > 1 && section->next)
-		|| ft_strcmp(section->cmd[0], "exit") == 0)
-	{
-		fd2 = open("/dev/null", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (fd2 == -1)
-			error_exe(data, "open", 2);
-		if (dup2(fd2, STDOUT_FILENO) == -1)
-			return (error_exe(data, "dup2 error", 3));
-		close (fd2);
-	}
-	return (0);
-}
-
 int	check_files(t_data *data, t_section *current, t_red *red)
 {
 	if (data->sections)

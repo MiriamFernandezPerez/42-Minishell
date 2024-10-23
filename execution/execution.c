@@ -56,7 +56,7 @@ int	classic_exe(t_data *data, t_section *section)
 		close (section->fd_out);
 	}
 	close_fd_child(section);
-	fd_null(data, section);
+	fd_null(data, section, 0);
 	if (check_builtins(section->cmd) == 0)
 		return (make_builtins(section->cmd, data, 1));
 	section->path_array = lst_to_arr(data->env_lst, data, section->path_array);
