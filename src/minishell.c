@@ -15,51 +15,6 @@
 //Global Variable Initzialize
 int	g_signal_num = 0;
 
-void	print_sections(t_data *data)
-{
-	t_section	*current_section;
-	int			j;
-	int			section_num;
-
-	if (!data->sections)
-		return ;
-	section_num = 0;
-	current_section = data->sections;
-	printf("data->sections_qt: %d\n", data->sections_qt);
-	while (current_section)
-	{
-		printf("SECCION %d:\n", section_num + 1);
-		if (!current_section->cmd)
-		{
-			printf("  No hay comandos en esta sección\n");
-			while (current_section->files)
-			{	
-				printf("  Redir tipo %d, nombre archivo %s\n", current_section->files->redi, current_section->files->file);
-				current_section->files = current_section->files->next;
-			}
-			//else 
-			//	printf("Sin redirecciones\n");
-		}
-		else
-		{
-			j = 0;
-			while (current_section->cmd && current_section->cmd[j])
-			{
-				printf("  Comando %d: %s\n", j + 1, current_section->cmd[j]);
-				j++;
-			}
-			if (current_section->files)
-				printf("  Redir tipo %d, nombre archivo %s\n", current_section->files->redi, current_section->files->file);
-			else 
-				printf("Sin redirecciones\n");
-		}
-		current_section = current_section->next;
-		section_num++;
-		if (section_num >= data->sections_qt)
-			break ;
-	}
-}
-
 //Write Tokens array
 void	print_tokens(t_data *data)
 {

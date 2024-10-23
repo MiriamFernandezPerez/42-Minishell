@@ -19,7 +19,6 @@
 # include "execution.h"
 
 //Main minishell.c
-void	print_sections(t_data *data);
 void		do_prompt(t_data *data, int prompt);
 void		print_tokens(t_data *data);
 int			ft_initialize(t_data **data, char **env);
@@ -36,6 +35,7 @@ int			ft_read_prompt(t_data *data);
 void		trim_prompt(t_data *data);
 int			find_not_allowed_type(t_data *data);
 int			verify_num_heredoc(t_data *data);
+int			check_previous_exp(t_data *d, int pos, char *cpy);
 
 //parse.c
 int			end_quote(char *input, char c, int i);
@@ -81,7 +81,7 @@ char		*expand_env_variables(t_data *data, char *input, char *res);
 
 //expander_checker.c
 void		ft_add_tokens(t_data *d, char *input, int add_tokens, int pos);
-int		check_var_spaces(t_data *data, char *input, int pos);
+int			check_var_spaces(t_data *d, char *input, int pos, char *cpy);
 int			check_previous_null(t_data *d, int i, char *cpy);
 int			check_previous_heredoc(t_data *data, int i);
 int			expand_check_and_prev(t_data *d, char *cpy, char *expanded, int *i);

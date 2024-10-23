@@ -69,3 +69,18 @@ int	verify_num_heredoc(t_data *data)
 	else
 		return (0);
 }
+
+int	check_previous_exp(t_data *d, int pos, char *cpy)
+{
+	if (pos > 1 && d->tokens[pos - 1] && d->tokens[pos - 1]->type == SPACES)
+		{
+			if (d->tokens[pos - 2] && (d->tokens[pos - 2]->type == INPUT
+					|| d->tokens[pos - 2]->type == TRUNC
+					|| d->tokens[pos - 2]->type == APPEND))
+				return (write_msn(d, cpy), 1);
+		}
+		else if (pos > 0 && d->tokens[pos - 1] && (d->tokens[pos - 1]->type == INPUT || d->tokens[pos - 1]->type == TRUNC
+			|| d->tokens[pos - 1]->type == APPEND))
+			return (write_msn(d, cpy), 1);
+	return(0);
+}
