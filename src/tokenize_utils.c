@@ -40,7 +40,7 @@ int	clean_quotes(t_data *d, char *res, int i, int check)
 		if (d->tokens[i]->type == SQUOTE || d->tokens[i]->type == DQUOTE)
 		{
 			remove_quotes(d->tokens[i]->value);
-			check = verify_previous_type(d, i, d->tokens[i]->value); 
+			check = verify_previous_type(d, i, d->tokens[i]->value, 0); 
 			if (check == 2)
 				d->tokens[i]->type = NOEXP;
 			else if (check == 1)

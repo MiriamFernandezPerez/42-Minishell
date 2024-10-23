@@ -53,13 +53,13 @@ int	check_type(int type)
 
 void	write_msn(t_data *data, char *value)
 {
-	write(2, "bash: ", 6);
+	write(2, "minishell: ", 11);
 	write(2, value, ft_strlen(value));
 	write(2, ": ambiguous redirect\n", 21);
 	data->rt_value = 1;
 }
 
-int	verify_previous_type(t_data *d, int i, char *value)
+int	verify_previous_type(t_data *d, int i, char *value, int flag)
 {
 	if (i == 0)
 		return (3);
@@ -68,13 +68,21 @@ int	verify_previous_type(t_data *d, int i, char *value)
 		if (d->tokens[i - 2] && (d->tokens[i - 2]->type == INPUT
 				|| d->tokens[i - 2]->type == TRUNC
 				|| d->tokens[i - 2]->type == APPEND))
-			return (write_msn(d, value), 1);
+		{
+			if (flag == 1)
+				return (write_msn(d, value), 1);
+			return (0);
+		}
 		else if (d->tokens[i - 2] && (d->tokens[i - 2]->type == HEREDOC))
 			return (2);
 	}
 	else if (d->tokens[i - 1]->type == INPUT || d->tokens[i - 1]->type == TRUNC
 		|| d->tokens[i - 1]->type == APPEND)
-		return (write_msn(d, value), 1);
+	{
+		if (flag == 1)
+			return (write_msn(d, value), 1);
+		return (0);
+	}
 	else if (d->tokens[i - 1] && (d->tokens[i - 1]->type == HEREDOC))
 		return (2);
 	return (0);

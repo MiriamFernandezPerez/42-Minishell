@@ -19,6 +19,7 @@
 # include "execution.h"
 
 //Main minishell.c
+void	print_sections(t_data *data);
 void		do_prompt(t_data *data, int prompt);
 void		print_tokens(t_data *data);
 int			ft_initialize(t_data **data, char **env);
@@ -80,7 +81,7 @@ char		*expand_env_variables(t_data *data, char *input, char *res);
 
 //expander_checker.c
 void		ft_add_tokens(t_data *d, char *input, int add_tokens, int pos);
-void		check_var_spaces(t_data *data, char *input, int pos);
+int		check_var_spaces(t_data *data, char *input, int pos);
 int			check_previous_null(t_data *d, int i, char *cpy);
 int			check_previous_heredoc(t_data *data, int i);
 int			expand_check_and_prev(t_data *d, char *cpy, char *expanded, int *i);
@@ -96,7 +97,7 @@ void		final_tok(t_data *d, t_tokens **new, int total, char **split_tok);
 void		print_err(int check);
 int			check_type(int type);
 void		write_msn(t_data *data, char *value);
-int			verify_previous_type(t_data *d, int i, char *value);
+int			verify_previous_type(t_data *d, int i, char *value, int flag);
 int			verify_next_type(t_data *d);
 
 //sections.c

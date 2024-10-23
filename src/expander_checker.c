@@ -28,29 +28,41 @@ void	ft_add_tokens(t_data *d, char *input, int add_tokens, int pos)
 
 /* Function that checks if, after expanding,
 there is any space within the token */
-void	check_var_spaces(t_data *data, char *input, int pos)
+int	check_var_spaces(t_data *d, char *input, int pos)
 {
 	int	i;
 	int	add_tokens;
 
 	i = 0;
 	add_tokens = 0;
-	(void) data;
+	//printf("input %s\n", input);
+	//print_tokens(d);
 	while (input[i] != '\0')
 	{
+/*		if (d->tokens[i - 1] != NULL && d->tokens[i - 1]->type == SPACES)
+		{
+			if (d->tokens[i - 2] && (d->tokens[i - 2]->type == INPUT
+					|| d->tokens[i - 2]->type == TRUNC
+					|| d->tokens[i - 2]->type == APPEND))
+				return (write_msn(d, input), 1);
+		}
+		else if (d->tokens[i -1] && (d->tokens[i - 1]->type == INPUT || d->tokens[i - 1]->type == TRUNC
+			|| d->tokens[i - 1]->type == APPEND))
+			return (write_msn(d, input), 1);*/
 		if (ft_isspace(input[i]))
 			add_tokens++;
 		i++;
 	}
 	if (add_tokens != 0)
-		ft_add_tokens(data, input, add_tokens, pos);
+		ft_add_tokens(d, input, add_tokens, pos);
+	return (0);
 }
 
 int	check_previous_null(t_data *d, int i, char *cpy)
 {
 	int	check;
 
-	check = verify_previous_type(d, i, cpy);
+	check = verify_previous_type(d, i, cpy, 1);
 	if (check == 3)
 		return (3);
 	else if (check == 2)
@@ -88,7 +100,8 @@ int	expand_check_and_prev(t_data *d, char *cpy, char *expanded, int *i)
 	free(d->tokens[*i]->value);
 	expanded = expand_env_variables(d, cpy, NULL);
 	d->tokens[*i]->value = expanded;
-	check_var_spaces(d, d->tokens[*i]->value, *i);
+	if (check_var_spaces(d, d->tokens[*i]->value, *i) == 1)
+		return (1);
 	if (!d->tokens[*i]->value[0])
 	{
 		if (check_previous_null(d, *i, cpy) == 1)
