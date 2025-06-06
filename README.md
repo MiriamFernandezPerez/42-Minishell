@@ -80,7 +80,7 @@ Aquí tienes una recopilación de recursos importantes para el proyecto:
 # 📝 Créditos
 
 - 💻 **Proyecto:** Minishell – Escuela 42  
-- ✍️ **Autor original:** Miriam Fernández Pérez  
+- ✍️ **Autoras originales:** Miriam Fernández Pérez y Emilie Sellier
 
 ---
 
